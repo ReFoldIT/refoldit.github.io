@@ -4,4 +4,6 @@
 
 ![](https://refoldit.github.io/img/snowflake/hero_first_logo.png)
 
-**Protein** &amp; **DNA** **Quantum** FoldIT
+**Chemistry**, **Protein** &amp; **DNA** **Quantum** FoldIT
+
+![](https://refoldit.github.io/img/info/biotech_folding.png)
