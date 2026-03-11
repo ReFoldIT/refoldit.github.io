@@ -6,4 +6,4 @@
 
 ![](https://refoldit.github.io/img/info/quantum_comp.png)
 
-![](https://refoldit.github.io/img/snowflake/biotech_folding.png)
+![](https://refoldit.github.io/img/snowflake/render/qFold.png)
