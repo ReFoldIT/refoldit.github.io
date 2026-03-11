@@ -1,2 +1,3 @@
-# refoldit.github.io
+# refoldit
+
 Protein &amp; DNA Quantum FoldIT
