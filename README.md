@@ -1,3 +1,3 @@
 # refoldit
 
-Protein &amp; DNA Quantum FoldIT
+**Protein** &amp; **DNA** **Quantum** FoldIT
