@@ -63,7 +63,7 @@
         }
 
         .hero-bg-1 {
-            background-image: url('https://refoldit.github.io/img/snowflake/hero_first_logo.png'); /* новое первое */
+            background-image: url('https://refoldit.github.io/img/snowflake/hero_first_logo.png');
             opacity: 1;
         }
 
@@ -193,10 +193,10 @@
         .floating-logos img.snow-6 { top: 80%; left: 8%; width: 46px; height: 46px; opacity: 0.3; }
         .floating-logos img.snow-7 { bottom: 8%; right: 30%; width: 54px; height: 54px; opacity: 0.35; }
 
-        /* Футер */
+        /* Футер - уменьшенный */
         .footer {
             background-color: #0077ff;
-            padding: 18px 32px;
+            padding: 12px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -207,9 +207,9 @@
             flex-shrink: 0;
         }
 
-        /* Общие правила для изображений в футере: максимум 52px по высоте на десктопе */
+        /* Общие правила для изображений в футере: максимум 40px по высоте на десктопе */
         .footer img {
-            max-height: 52px;
+            max-height: 40px;
             width: auto;
             display: block;
         }
@@ -231,7 +231,7 @@
 
         .divider {
             width: 2px;
-            height: 52px;
+            height: 40px;
             background-color: white;
             opacity: 0.9;
             border-radius: 1px;
@@ -252,64 +252,80 @@
             white-space: nowrap;
         }
 
-        /* Центральная часть (VK Play) */
-        .footer-center {
+        /* Центральная часть (VK Play) – только иконка */
+        .footer-center a {
+            display: block;
+            line-height: 0;
+        }
+
+        .footer-center img {
+            filter: none;
+        }
+
+        /* Правая часть (движки) */
+        .footer-right {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 6px;
         }
 
-        .footer-center a {
+        .footer-right a {
             display: block;
             line-height: 0;
         }
 
-        /* Убираем тень у логотипа VK Play */
-        .footer-center img {
-            filter: none;
+        /* Для UNIGINE оставляем стандартный размер 40px (задан выше) */
+        /* Для Nau Engine делаем меньше на 12px → 28px */
+        .footer-right .nau-logo {
+            max-height: 28px;
         }
 
-        .vk-text {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        /* По умолчанию показываем десктопные логотипы, мобильные скрыты */
+        .footer-right .desktop-logo {
+            display: block;
         }
-
-        /* Правая часть (движок) */
-        .footer-right img {
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        .footer-right .mobile-logo {
+            display: none;
         }
 
         /* Планшеты (max-width: 900px) */
         @media (max-width: 900px) {
             .footer {
-                padding: 16px 20px;
+                padding: 12px 20px;
             }
         }
 
         /* Мобильные (max-width: 700px) */
         @media (max-width: 700px) {
             .footer {
-                padding: 12px 16px;
+                padding: 10px 16px;
             }
             .footer img {
-                max-height: 60px;
+                max-height: 50px; /* базовый размер для мобильных */
             }
             .divider {
-                height: 60px;
+                height: 50px;
             }
-            .vk-text {
-                display: none;  /* Скрываем текст VK Play на мобильных */
+            /* Для UNIGINE размер 50px (наследуется) */
+            /* Для Nau Engine на мобильных: 50 - 12 = 38px */
+            .footer-right .nau-logo {
+                max-height: 38px;
             }
             .floating-logos img {
                 width: 30px !important;
                 height: 30px !important;
             }
+            /* Скрываем десктопные логотипы движков, показываем мобильные */
+            .footer-right .desktop-logo {
+                display: none;
+            }
+            .footer-right .mobile-logo {
+                display: block;
+            }
         }
 
-        /* Очень узкие экраны: скрываем текст у логотипа Росатома */
+        /* Очень узкие экраны: скрываем текст и разделитель у Росатома */
         @media (max-width: 480px) {
             .divider,
             .logo-text {
@@ -319,9 +335,8 @@
     </style>
 </head>
 <body>
-    <!-- Hero секция с переключающимися фонами (теперь 10 фонов) -->
+    <!-- Hero секция с переключающимися фонами (10 фонов) -->
     <section class="hero">
-        <!-- Десять слоёв для crossfade -->
         <div class="hero-bg hero-bg-1"></div>
         <div class="hero-bg hero-bg-2"></div>
         <div class="hero-bg hero-bg-3"></div>
@@ -357,9 +372,9 @@
 
     <!-- Футер -->
     <footer class="footer">
-        <!-- Левая часть: Росатом -->
+        <!-- Левая часть: Росатом с ссылкой на кванты.рф -->
         <div class="footer-left">
-            <a href="https://vkplay.ru/" target="_blank" class="logo-link">
+            <a href="https://кванты.рф/" target="_blank" class="logo-link">
                 <div class="logo-composite">
                     <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="РОСАТОМ">
                     <div class="divider"></div>
@@ -372,21 +387,27 @@
             </a>
         </div>
 
-        <!-- Центральная часть: VK Play + текст (на мобильных текст скрыт) -->
-   <div class="footer-center">
-            <a href="https://кванты.рф/" target="_blank">
+        <!-- Центральная часть: VK Play (только иконка) -->
+        <div class="footer-center">
+            <a href="https://vkplay.ru/" target="_blank">
                 <img src="https://comiccon2025.github.io/img/vk_play_logo.png" alt="VK Play">
             </a>
-           <!-- <span class="vk-text">VK Play</span> -->
         </div>
 
-        <!-- Правая часть: логотип движка -->
+        <!-- Правая часть: два движка вертикально с адаптивными логотипами -->
         <div class="footer-right">
-          <a href="https://unigine.com/" target="_blank">
-            <img src="https://comiccon2025.github.io/img/made_with_unigine2_white.png" alt="Made with UNIGINE">
-           </a>
+            <!-- UNIGINE (стандартный размер) -->
+            <a href="https://unigine.com/products/sim/advantages/" target="_blank">
+                <img src="https://refoldit.github.io/img/logo/unigine_horizontal_white.png" alt="UNIGINE" class="desktop-logo">
+                <img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE" class="mobile-logo">
+            </a>
+            <!-- Nau Engine (уменьшен на 12px) -->
+            <a href="https://nauengine.org/" target="_blank">
+                <img src="https://refoldit.github.io/img/logo/nau-horizontal-white.png" alt="Nau Engine" class="desktop-logo nau-logo">
+                <img src="https://refoldit.github.io/img/logo/nau-sign-white.png" alt="Nau Engine" class="mobile-logo nau-logo">
+            </a>
         </div>
-   </footer>
+    </footer>
 
     <script>
         (function() {
@@ -404,7 +425,6 @@
             const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
             let currentIndex = 0;
 
-            // Устанавливаем начальную прозрачность: первый видим, остальные скрыты
             backgrounds.forEach((bg, index) => {
                 bg.style.opacity = index === 0 ? '1' : '0';
             });
@@ -414,7 +434,7 @@
                 backgrounds[currentIndex].style.opacity = '0';
                 backgrounds[nextIndex].style.opacity = '1';
                 currentIndex = nextIndex;
-            }, 25000); // 25 секунд
+            }, 25000);
         })();
     </script>
 </body>
