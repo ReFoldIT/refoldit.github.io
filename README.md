@@ -8,4 +8,4 @@
 
 ![](https://refoldit.github.io/img/info/quantum_comp.png)
 
-![](https://refoldit.github.io/img/snowflake/render/qFold.png)
+![](https://refoldit.github.io/img/info/qFoldIT_1.0.png)
