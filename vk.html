@@ -363,6 +363,7 @@
             display: flex;
             gap: 16px;
             z-index: 20;
+            align-items: center;
         }
 
         .icon-btn {
@@ -378,6 +379,7 @@
             cursor: pointer;
             transition: opacity 0.2s, transform 0.1s;
             padding: 4px;
+            text-decoration: none;
         }
 
         .icon-btn:hover {
@@ -626,7 +628,7 @@
         </div>
     </main>
 
-    <!-- Нижний блок (бывший хедер) -->
+    <!-- Нижний блок (бывший хедер) с добавленной кнопкой Play -->
     <div class="bottom-header">
         <div class="line-main"></div>
         <div class="logo-wrap">
@@ -639,8 +641,9 @@
         </div>
         <div class="stripes-bottom"></div>
 
-        <!-- Кнопки в правом углу -->
+        <!-- Кнопки в правом углу: Play, настройки, справка -->
         <div class="header-buttons">
+            <a href="https://refoldit.github.io/menu.html" class="icon-btn"><i class="fas fa-play"></i></a>
             <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
             <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
         </div>
@@ -664,10 +667,11 @@
                 <div class="fake-checkbox active" id="autoRefreshToggle"></div>
             </div>
         </div>
+        <!-- Обновлённое модальное окно справки -->
         <div class="modal" id="helpModal">
             <button class="modal-close" id="closeHelp">&times;</button>
             <h3><i class="fas fa-question-circle"></i> Справка</h3>
-            <p>Это серверная статистика цифрового двойника МАС «Снежинка». Данные обновляются в реальном времени через <i class="fab fa-vk"></i> Cloud.</p>
+            <p>Cерверная статистика цифрового двойника МАС «Снежинка». Данные обновляются в реальном времени через <i class="fab fa-vk"></i> Cloud.</p>
             <p>При возникновении вопросов обращайтесь в поддержку: <i class="fas fa-envelope"></i> support@snowflake.vk</p>
             <p><i class="fas fa-gamepad"></i> Версия симулятора: 0.19.2 (alpha)</p>
         </div>
