@@ -21,7 +21,6 @@
             --bg-dark: #0A0C0F;
             --surface-dark: #1f1f1f;
             --text-secondary: #999999;
-            --header-height: 80px;
             --footer-height: 80px;
         }
 
@@ -53,108 +52,7 @@
             flex-direction: column;
         }
 
-        /* --- ШАПКА --- */
-        .header-box {
-            position: relative;
-            width: 100%;
-            height: var(--header-height);
-            overflow: hidden;
-            flex-shrink: 0;
-            background-color: var(--vk-blue);
-        }
-
-        .line-main {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background-color: var(--white);
-            z-index: 1;
-        }
-
-        .title-text {
-            position: absolute;
-            left: 100px;
-            top: 34px;
-            font-size: 20px;
-            font-weight: 900;
-            font-family: 'Arial Black', sans-serif;
-            color: var(--white);
-            z-index: 5;
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        .vk-cloud-part {
-            display: inline;
-        }
-
-        .logo-wrap {
-            position: absolute;
-            left: 20px;
-            top: 5px;
-            z-index: 10;
-        }
-
-        .hex {
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hex-spacer { width: 70px; height: 70px; background: var(--vk-blue); }
-        .hex-p1 { width: 58px; height: 58px; background: var(--white); }
-        .hex-w1 { width: 88%; height: 88%; background: var(--vk-blue); }
-        .hex-p2 { width: 84%; height: 84%; background: var(--white); }
-        .hex-inner { width: 74%; height: 74%; background: var(--vk-light); }
-
-        .stripes-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 18px;
-            background: repeating-linear-gradient(60deg, var(--white), var(--white) 6px, transparent 6px, transparent 12px);
-            z-index: 1;
-        }
-
-        .header-buttons {
-            position: absolute;
-            right: 24px;
-            top: 55.5%;
-            transform: translateY(-50%);
-            display: flex;
-            gap: 16px;
-            z-index: 20;
-        }
-
-        .icon-btn {
-            background: transparent;
-            border: none;
-            width: auto;
-            height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-            padding: 4px;
-        }
-
-        .icon-btn:hover {
-            opacity: 0.8;
-            transform: scale(1.1);
-        }
-
-        .icon-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР (СКРОЛЛИНГ) --- */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -255,7 +153,6 @@
             color: #b0b0b0;
         }
 
-        /* --- КОНТЕЙНЕР ГРАФИКА (по умолчанию резиновый) --- */
         .chart-container {
             display: flex;
             align-items: flex-end;
@@ -266,7 +163,7 @@
         }
 
         .chart-bar-wrapper {
-            flex: 1; /* на десктопе равномерное распределение */
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -391,102 +288,105 @@
             margin-left: 8px;
         }
 
-        /* --- ФУТЕР --- */
-        .footer {
-            background-color: #0077ff;
-            padding: 8px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-            z-index: 20;
+        /* --- НОВЫЙ НИЖНИЙ БЛОК (ХЕДЕР, ПЕРЕНЕСЁННЫЙ ВНИЗ) --- */
+        .bottom-header {
+            position: relative;
             width: 100%;
-            flex-shrink: 0;
             height: var(--footer-height);
-            min-height: var(--footer-height);
-            flex-wrap: nowrap;
+            overflow: hidden;
+            flex-shrink: 0;
+            background-color: var(--vk-blue);
         }
 
-        .footer img {
-            max-height: 40px;
-            width: auto;
-            display: block;
+        .line-main {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background-color: var(--white);
+            z-index: 1;
         }
 
-        .footer-left .logo-link {
+        .title-text {
+            position: absolute;
+            left: 100px;
+            top: 34px;
+            font-size: 20px;
+            font-weight: 900;
+            font-family: 'Arial Black', sans-serif;
+            color: var(--white);
+            z-index: 5;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .vk-cloud-part {
+            display: inline;
+        }
+
+        .logo-wrap {
+            position: absolute;
+            left: 20px;
+            top: 5px;
+            z-index: 10;
+        }
+
+        .hex {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .footer-left .logo-composite {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .footer-left .divider {
-            width: 2px;
-            height: 40px;
-            background-color: white;
-            opacity: 0.9;
-            border-radius: 1px;
-        }
-
-        .footer-left .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            font-size: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-center {
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            flex: 1;
-            flex-wrap: nowrap;
-            margin: 0 10px;
-        }
-
-        .footer-center a {
-            display: inline-block;
-            line-height: 0;
-        }
-
-        .footer-center img {
-            max-height: 32px;
-        }
-
-        .diam-footer-bg {
-            background-color: #FFD700;
-            border-radius: 3px;
-            padding: 3px 6px;
-            display: inline-flex;
             align-items: center;
             justify-content: center;
         }
 
-        .diam-footer-bg img {
-            max-height: 24px;
+        .hex-spacer { width: 70px; height: 70px; background: var(--vk-blue); }
+        .hex-p1 { width: 58px; height: 58px; background: var(--white); }
+        .hex-w1 { width: 88%; height: 88%; background: var(--vk-blue); }
+        .hex-p2 { width: 84%; height: 84%; background: var(--white); }
+        .hex-inner { width: 74%; height: 74%; background: var(--vk-light); }
+
+        .stripes-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 18px;
+            background: repeating-linear-gradient(60deg, var(--white), var(--white) 6px, transparent 6px, transparent 12px);
+            z-index: 1;
         }
 
-        .footer-right {
+        .header-buttons {
+            position: absolute;
+            right: 24px;
+            top: 55.5%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 20;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            width: auto;
+            height: auto;
             display: flex;
             align-items: center;
-            gap: 15px;
-            flex-shrink: 0;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            padding: 4px;
         }
 
-        .footer-right img {
-            max-height: 24px;
+        .icon-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
         }
 
         /* --- МОДАЛЬНЫЕ ОКНА --- */
@@ -588,46 +488,7 @@
         }
 
         /* --- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ --- */
-        @media (max-width: 900px) {
-            .footer-center img {
-                max-height: 28px;
-            }
-        }
-
         @media (max-width: 700px) {
-            .footer {
-                padding: 8px 12px;
-            }
-            .footer-left, .footer-right {
-                flex: 0 0 auto;
-            }
-            .footer-left .logo-text,
-            .footer-left .divider {
-                display: none;
-            }
-            .footer-right img {
-                max-height: 20px;
-            }
-            .footer-center img {
-                max-height: 24px;
-            }
-            .diam-footer-bg img {
-                max-height: 20px;
-            }
-
-            .footer-center a:nth-child(1),
-            .footer-center span:nth-child(4),
-            .footer-center a:nth-child(5),
-            .footer-center a:nth-child(7) {
-                display: none;
-            }
-
-            /* Уменьшаем padding в timeline-section */
-            .timeline-section {
-                padding: 20px 15px;
-            }
-
-            /* График с горизонтальным скроллом, столбцы фиксированной минимальной ширины */
             .chart-container {
                 overflow-x: auto;
                 justify-content: flex-start;
@@ -637,10 +498,13 @@
             }
             .chart-bar-wrapper {
                 flex: 0 0 auto;
-                min-width: 38px; /* чтобы помещались подписи */
+                min-width: 38px;
             }
             .chart-label {
                 font-size: 0.6rem;
+            }
+            .timeline-section {
+                padding: 20px 15px;
             }
         }
 
@@ -666,25 +530,12 @@
                 display: none;
             }
             .kpi-value { font-size: 2rem; }
-
-            .footer-center img {
-                max-height: 20px;
-            }
-            .footer-right img {
-                max-height: 18px;
-            }
-            .footer-left .logo-link img {
-                max-height: 30px;
-            }
             .chart-bar-wrapper {
                 min-width: 35px;
             }
         }
 
         @media (max-width: 480px) {
-            .footer-center img {
-                max-height: 18px;
-            }
             .chart-bar-wrapper {
                 min-width: 32px;
             }
@@ -692,24 +543,7 @@
     </style>
 </head>
 <body>
-    <!-- Шапка -->
-    <div class="header-box">
-        <div class="line-main"></div>
-        <div class="logo-wrap">
-            <div class="hex hex-spacer">
-                <div class="hex hex-p1"><div class="hex hex-w1"><div class="hex hex-p2"><div class="hex hex-inner"></div></div></div></div>
-            </div>
-        </div>
-        <div class="title-text">
-            <span class="vk-cloud-part"><i class="fab fa-vk"></i> Cloud / </span>МАС «Снежинка»
-        </div>
-        <div class="stripes-bottom"></div>
-
-        <div class="header-buttons">
-            <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
-            <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
-        </div>
-    </div>
+    <!-- Верхнего хедера больше нет, контент начинается сразу -->
 
     <!-- Основной контент -->
     <main class="main-content">
@@ -792,41 +626,25 @@
         </div>
     </main>
 
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="footer-left">
-            <a href="https://кванты.рф/" target="_blank" class="logo-link">
-                <div class="logo-composite">
-                    <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="РОСАТОМ">
-                    <div class="divider"></div>
-                    <div class="logo-text">
-                        <span>КВАНТОВЫЕ</span>
-                        <span>ТЕХНОЛОГИИ</span>
-                        <span>РОСАТОМ</span>
-                    </div>
-                </div>
-            </a>
+    <!-- Нижний блок (бывший хедер) -->
+    <div class="bottom-header">
+        <div class="line-main"></div>
+        <div class="logo-wrap">
+            <div class="hex hex-spacer">
+                <div class="hex hex-p1"><div class="hex hex-w1"><div class="hex hex-p2"><div class="hex hex-inner"></div></div></div></div>
+            </div>
         </div>
+        <div class="title-text">
+            <span class="vk-cloud-part"><i class="fab fa-vk"></i> Cloud / </span>МАС «Снежинка»
+        </div>
+        <div class="stripes-bottom"></div>
 
-        <div class="footer-center">
-            <a href="#"><img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="МАС Снежинка"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/rostech_logo_sign.png" alt="Ростех"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/sirius_mini_w.png" alt="Сириус"></a>
-            <span class="diam-footer-bg">
-                <a href="#"><img src="https://refoldit.github.io/img/logo/diam-logo-sticky.svg" alt="ДИАМ"></a>
-            </span>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/sber-cloud-logo.svg" alt="SberCloud"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/biocad-mini.png" alt="BIOCAD"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/biomol-mini-logo.svg" alt="Биомолекула"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/medical_genomics_mini_white.png" alt="Medical Genomics"></a>
-            <a href="#"><img src="https://refoldit.github.io/img/logo/genotek-mini.png" alt="Genotek"></a>
+        <!-- Кнопки в правом углу -->
+        <div class="header-buttons">
+            <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
         </div>
-
-        <div class="footer-right">
-            <a href="https://nauengine.org/" target="_blank"><img src="https://refoldit.github.io/img/logo/nau-sign-white.png" alt="Nau Engine"></a>
-            <a href="https://unigine.com/products/sim/advantages/" target="_blank"><img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE"></a>
-        </div>
-    </footer>
+    </div>
 
     <!-- Модальные окна -->
     <div class="modal-overlay" id="modalOverlay">
