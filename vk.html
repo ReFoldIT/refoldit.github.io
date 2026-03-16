@@ -2,20 +2,35 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>МАС «Снежинка» · цифровой двойник · VK Play</title>
-    <!-- Фавикон VK Play -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Снежинка · серверная статистика</title>
+    <!-- фавикон VK Play -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_124_10523)'%3e%3cpath d='M18.756 0C26.892 0 30.96 0 33.48 2.52C36 5.04 36 9.108 36 17.244V18.756C36 26.892 36 30.96 33.48 33.48C30.96 36 26.892 36 18.756 36H17.244C9.108 36 5.04 36 2.52 33.48C0 30.96 0 26.892 0 18.756V17.244C0 9.108 0 5.04 2.52 2.52C5.04 0 9.108 0 17.244 0H18.756Z' fill='%230077FF'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M35.8956 10.1542C36 12.0999 36 14.4283 36 17.2439V17.244V18.756V18.756C36 20.9229 36 22.8013 35.9524 24.4387H0.0476112C0 22.8013 0 20.9229 0 18.756V17.244C0 14.4283 0 12.0999 0.104447 10.1542H35.8956ZM0.0474971 24.4394L0.0479452 24.4547C4.76004 26.7552 11.0876 28.1568 17.9898 28.1568C24.8976 28.1568 31.2388 26.7487 35.9521 24.4449L35.9522 24.4394H0.0474971Z' fill='%230009B4'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M25.0373 16.5811C24.1462 16.5811 23.4239 17.3195 23.4239 18.2304C23.4239 19.1412 24.1462 19.8796 25.0373 19.8796C25.9284 19.8796 26.6507 19.1412 26.6507 18.2304C26.6507 17.3195 25.9284 16.5811 25.0373 16.5811ZM19.845 18.2304C19.845 15.299 22.1697 12.9227 25.0373 12.9227C27.9049 12.9227 30.2296 15.299 30.2296 18.2304C30.2296 21.1617 27.9049 23.5381 25.0373 23.5381C22.1697 23.5381 19.845 21.1617 19.845 18.2304Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.1827 15.8495L8.48861 13.1555L5.93991 15.7042L8.63398 18.3982L5.94007 21.0921L8.48877 23.6408L11.1827 20.9469L13.8765 23.6408L16.4252 21.0921L13.7314 18.3982L16.4254 15.7042L13.8767 13.1555L11.1827 15.8495Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_124_10523'%3e%3crect width='36' height='36' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e">
+    <!-- шрифт Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* === ОСНОВНЫЕ ЦВЕТА === */
+        :root {
+            --vk-blue: #005ff9;
+            --vk-light: #00b2ff;
+            --white: #ffffff;
+            --bg-dark: #0A0C0F;
+            --surface-dark: #1f1f1f;
+            --text-secondary: #999999;
+            --header-height: 80px;
+            --footer-height: 80px;
+        }
+
         /* Скрываем скроллбар */
         ::-webkit-scrollbar {
             width: 0;
             background: transparent;
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -28,175 +43,358 @@
         }
 
         body {
-            background-color: #0A0C0F;
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            font-family: "Inter", sans-serif;
             color: #E1E3E6;
-            line-height: 1.5;
             font-size: 15px;
             font-weight: 400;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            line-height: 1.5;
             display: flex;
             flex-direction: column;
         }
 
-        /* Hero секция занимает всё доступное место (flex: 1) */
-        .hero {
-            flex: 1;
-            width: 100%;
+        /* --- ШАПКА --- */
+        .header-box {
             position: relative;
+            width: 100%;
+            height: var(--header-height);
             overflow: hidden;
+            flex-shrink: 0;
+            background-color: var(--vk-blue);
         }
 
-        /* Фоновые изображения для перехода (10 слоёв) */
-        .hero-bg {
+        .line-main {
             position: absolute;
-            top: 0;
+            top: 20px;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: opacity 2s ease-in-out;
+            right: 0;
+            height: 8px;
+            background-color: var(--white);
             z-index: 1;
         }
 
-        .hero-bg-1 {
-            background-image: url('https://refoldit.github.io/img/snowflake/hero_first_logo.png');
-            opacity: 1;
-        }
-
-        .hero-bg-2 {
-            background-image: url('https://refoldit.github.io/img/snowflake/70qbit.png');
-            opacity: 0;
-        }
-
-        .hero-bg-3 {
-            background-image: url('https://comiccon2025.github.io/img/snowflake/hero_snow.png');
-            opacity: 0;
-        }
-
-        .hero-bg-4 {
-            background-image: url('https://comiccon2025.github.io/img/snowflake/car.png');
-            opacity: 0;
-        }
-
-        .hero-bg-5 {
-            background-image: url('https://comiccon2025.github.io/img/snowflake/lab.png');
-            opacity: 0;
-        }
-
-        .hero-bg-6 {
-            background-image: url('https://comiccon2025.github.io/img/room/room_plants_3.png');
-            opacity: 0;
-        }
-
-        .hero-bg-7 {
-            background-image: url('https://refoldit.github.io/img/snowflake/render/qFold.png');
-            opacity: 0;
-        }
-
-        .hero-bg-8 {
-            background-image: url('https://refoldit.github.io/img/snowflake/biotech_plants.png');
-            opacity: 0;
-        }
-
-        .hero-bg-9 {
-            background-image: url('https://refoldit.github.io/img/snowflake/art_character.png');
-            opacity: 0;
-        }
-
-        .hero-bg-10 {
-            background-image: url('https://refoldit.github.io/img/snowflake/biotech_plants_1.png');
-            opacity: 0;
-        }
-
-        /* Плавающие логотипы (общий контейнер) */
-        .floating-logos {
+        .title-text {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            left: 100px;
+            top: 34px;
+            font-size: 20px;
+            font-weight: 900;
+            font-family: 'Arial Black', sans-serif;
+            color: var(--white);
+            z-index: 5;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .vk-cloud-part {
+            display: inline;
+        }
+
+        .logo-wrap {
+            position: absolute;
+            left: 20px;
+            top: 5px;
             z-index: 10;
-            pointer-events: none;
         }
 
-        .floating-logos img {
+        .hex {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hex-spacer { width: 70px; height: 70px; background: var(--vk-blue); }
+        .hex-p1 { width: 58px; height: 58px; background: var(--white); }
+        .hex-w1 { width: 88%; height: 88%; background: var(--vk-blue); }
+        .hex-p2 { width: 84%; height: 84%; background: var(--white); }
+        .hex-inner { width: 74%; height: 74%; background: var(--vk-light); }
+
+        .stripes-bottom {
             position: absolute;
-            width: 48px;
-            height: 48px;
-            opacity: 0.4;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 18px;
+            background: repeating-linear-gradient(60deg, var(--white), var(--white) 6px, transparent 6px, transparent 12px);
+            z-index: 1;
         }
 
-        /* Анимации для плавающих элементов */
-        @keyframes float1 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(-12px, -18px) rotate(6deg) scale(1.05); }
-        }
-        @keyframes float2 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(15px, -10px) rotate(-5deg) scale(0.98); }
-        }
-        @keyframes float3 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-8px, 20px) rotate(10deg); }
-        }
-        @keyframes float4 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(20px, -12px) rotate(-8deg) scale(1.1); }
-        }
-        @keyframes float5 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-18px, 8px) rotate(4deg); }
-        }
-        @keyframes float6 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(10px, 15px) rotate(-3deg) scale(0.95); }
-        }
-        @keyframes float7 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-5px, -22px) rotate(7deg); }
+        .header-buttons {
+            position: absolute;
+            right: 24px;
+            top: 55.5%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 20;
         }
 
-        .floating-logos img.vk-1 { animation: float1 7.2s infinite alternate ease-in-out; }
-        .floating-logos img.vk-2 { animation: float2 8.5s infinite alternate ease-in-out; }
-        .floating-logos img.vk-3 { animation: float3 6.8s infinite alternate ease-in-out; }
-        .floating-logos img.vk-4 { animation: float4 9s infinite alternate ease-in-out; }
-        .floating-logos img.vk-5 { animation: float5 5.5s infinite alternate ease-in-out; }
-        .floating-logos img.vk-6 { animation: float6 7.9s infinite alternate ease-in-out; }
-        .floating-logos img.vk-7 { animation: float7 8.2s infinite alternate ease-in-out; }
-        .floating-logos img.snow-1 { animation: float2 6.3s infinite alternate ease-in-out; }
-        .floating-logos img.snow-2 { animation: float4 7.7s infinite alternate ease-in-out; }
-        .floating-logos img.snow-3 { animation: float6 9.1s infinite alternate ease-in-out; }
-        .floating-logos img.snow-4 { animation: float1 5.8s infinite alternate ease-in-out; }
-        .floating-logos img.snow-5 { animation: float3 8.9s infinite alternate ease-in-out; }
-        .floating-logos img.snow-6 { animation: float5 6.1s infinite alternate ease-in-out; }
-        .floating-logos img.snow-7 { animation: float7 7.4s infinite alternate ease-in-out; }
+        .icon-btn {
+            background: transparent;
+            border: none;
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            padding: 4px;
+        }
 
-        /* Позиции */
-        .floating-logos img.vk-1 { top: 12%; left: 5%; }
-        .floating-logos img.vk-2 { bottom: 18%; right: 7%; width: 64px; height: 64px; opacity: 0.3; }
-        .floating-logos img.vk-3 { top: 25%; right: 15%; opacity: 0.25; width: 40px; height: 40px; }
-        .floating-logos img.vk-4 { bottom: 30%; left: 12%; width: 56px; height: 56px; opacity: 0.35; }
-        .floating-logos img.vk-5 { top: 70%; left: 20%; width: 36px; height: 36px; opacity: 0.45; }
-        .floating-logos img.vk-6 { top: 45%; right: 25%; width: 52px; height: 52px; opacity: 0.3; }
-        .floating-logos img.vk-7 { bottom: 10%; left: 40%; width: 44px; height: 44px; opacity: 0.4; }
+        .icon-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
 
-        .floating-logos img.snow-1 { top: 15%; right: 8%; width: 50px; height: 50px; opacity: 0.4; }
-        .floating-logos img.snow-2 { bottom: 22%; left: 18%; width: 58px; height: 58px; opacity: 0.3; }
-        .floating-logos img.snow-3 { top: 60%; left: 30%; width: 42px; height: 42px; opacity: 0.35; }
-        .floating-logos img.snow-4 { top: 35%; right: 35%; width: 48px; height: 48px; opacity: 0.45; }
-        .floating-logos img.snow-5 { bottom: 40%; right: 12%; width: 38px; height: 38px; opacity: 0.4; }
-        .floating-logos img.snow-6 { top: 80%; left: 8%; width: 46px; height: 46px; opacity: 0.3; }
-        .floating-logos img.snow-7 { bottom: 8%; right: 30%; width: 54px; height: 54px; opacity: 0.35; }
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
 
-        /* Футер - уменьшенный */
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            width: 100%;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: rgba(20, 25, 30, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 24px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 119, 255, 0.3);
+            box-shadow: 0 20px 30px -10px #0077ff33;
+        }
+
+        .kpi-icon {
+            font-size: 2.2rem;
+            color: #0077FF;
+            margin-bottom: 15px;
+        }
+
+        .kpi-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #a0a0a0;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+        .kpi-trend {
+            font-size: 0.9rem;
+            color: #4caf92;
+        }
+
+        .kpi-trend i {
+            margin-right: 4px;
+        }
+
+        .timeline-section {
+            background: rgba(20, 25, 30, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 30px 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .timeline-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .timeline-header span {
+            background: #1e2a36;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+
+        /* --- КОНТЕЙНЕР ГРАФИКА (по умолчанию резиновый) --- */
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 200px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1; /* на десктопе равномерное распределение */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            background: linear-gradient(180deg, #0077FF 0%, #3399FF 100%);
+            border-radius: 8px 8px 4px 4px;
+            min-height: 4px;
+            transition: height 0.2s;
+            box-shadow: 0 0 10px #0077ff66;
+        }
+
+        .chart-label {
+            font-size: 0.7rem;
+            color: #aaa;
+            white-space: nowrap;
+        }
+
+        .timeline-footer {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid #2a3035;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .events-card {
+            background: rgba(20, 25, 30, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 25px;
+            border: 1px solid #2a2f35;
+        }
+
+        .events-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .event-list {
+            list-style: none;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #262b30;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-time {
+            color: #0077FF;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 65px;
+        }
+
+        .event-desc {
+            flex: 1;
+            color: #ddd;
+        }
+
+        .event-type {
+            background: #1f2a36;
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .stats-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #2a3035;
+        }
+
+        .stat-label {
+            color: #ccc;
+        }
+
+        .stat-number {
+            font-weight: 700;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .badge-new {
+            background: #0077FF;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            margin-left: 8px;
+        }
+
+        /* --- ФУТЕР --- */
         .footer {
             background-color: #0077ff;
-            padding: 12px 32px;
+            padding: 8px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -205,16 +403,17 @@
             z-index: 20;
             width: 100%;
             flex-shrink: 0;
+            height: var(--footer-height);
+            min-height: var(--footer-height);
+            flex-wrap: nowrap;
         }
 
-        /* Общие правила для изображений в футере: максимум 40px по высоте на десктопе */
         .footer img {
             max-height: 40px;
             width: auto;
             display: block;
         }
 
-        /* Левая часть (Росатом) */
         .footer-left .logo-link {
             display: flex;
             align-items: center;
@@ -223,13 +422,13 @@
             color: white;
         }
 
-        .logo-composite {
+        .footer-left .logo-composite {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .divider {
+        .footer-left .divider {
             width: 2px;
             height: 40px;
             background-color: white;
@@ -237,7 +436,7 @@
             border-radius: 1px;
         }
 
-        .logo-text {
+        .footer-left .logo-text {
             display: flex;
             flex-direction: column;
             line-height: 1.2;
@@ -248,131 +447,353 @@
             letter-spacing: 0.5px;
         }
 
-        .logo-text span {
-            white-space: nowrap;
+        .footer-center {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex: 1;
+            flex-wrap: nowrap;
+            margin: 0 10px;
         }
 
-        /* Центральная часть (VK Play) – только иконка */
         .footer-center a {
-            display: block;
+            display: inline-block;
             line-height: 0;
         }
 
         .footer-center img {
-            filter: none;
+            max-height: 32px;
         }
 
-        /* Правая часть (движки) */
+        .diam-footer-bg {
+            background-color: #FFD700;
+            border-radius: 3px;
+            padding: 3px 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diam-footer-bg img {
+            max-height: 24px;
+        }
+
         .footer-right {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 15px;
+            flex-shrink: 0;
         }
 
-        .footer-right a {
-            display: block;
-            line-height: 0;
+        .footer-right img {
+            max-height: 24px;
         }
 
-        /* Для UNIGINE оставляем стандартный размер 40px (задан выше) */
-        /* Для Nau Engine делаем меньше на 12px → 28px */
-        .footer-right .nau-logo {
-            max-height: 28px;
-        }
-
-        /* По умолчанию показываем десктопные логотипы, мобильные скрыты */
-        .footer-right .desktop-logo {
-            display: block;
-        }
-        .footer-right .mobile-logo {
+        /* --- МОДАЛЬНЫЕ ОКНА --- */
+        .modal-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        /* Планшеты (max-width: 900px) */
+        .modal {
+            background: var(--surface-dark);
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            color: white;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .fake-checkbox {
+            width: 44px;
+            height: 24px;
+            background: #333;
+            border-radius: 40px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .fake-checkbox::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: left 0.2s;
+        }
+
+        .fake-checkbox.active {
+            background: var(--vk-blue);
+        }
+
+        .fake-checkbox.active::after {
+            left: 23px;
+        }
+
+        /* --- АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ --- */
         @media (max-width: 900px) {
-            .footer {
-                padding: 12px 20px;
+            .footer-center img {
+                max-height: 28px;
             }
         }
 
-        /* Мобильные (max-width: 700px) */
         @media (max-width: 700px) {
             .footer {
-                padding: 10px 16px;
+                padding: 8px 12px;
             }
-            .footer img {
-                max-height: 50px; /* базовый размер для мобильных */
+            .footer-left, .footer-right {
+                flex: 0 0 auto;
             }
-            .divider {
-                height: 50px;
-            }
-            /* Для UNIGINE размер 50px (наследуется) */
-            /* Для Nau Engine на мобильных: 50 - 12 = 38px */
-            .footer-right .nau-logo {
-                max-height: 38px;
-            }
-            .floating-logos img {
-                width: 30px !important;
-                height: 30px !important;
-            }
-            /* Скрываем десктопные логотипы движков, показываем мобильные */
-            .footer-right .desktop-logo {
+            .footer-left .logo-text,
+            .footer-left .divider {
                 display: none;
             }
-            .footer-right .mobile-logo {
-                display: block;
+            .footer-right img {
+                max-height: 20px;
+            }
+            .footer-center img {
+                max-height: 24px;
+            }
+            .diam-footer-bg img {
+                max-height: 20px;
+            }
+
+            .footer-center a:nth-child(1),
+            .footer-center span:nth-child(4),
+            .footer-center a:nth-child(5),
+            .footer-center a:nth-child(7) {
+                display: none;
+            }
+
+            /* Уменьшаем padding в timeline-section */
+            .timeline-section {
+                padding: 20px 15px;
+            }
+
+            /* График с горизонтальным скроллом, столбцы фиксированной минимальной ширины */
+            .chart-container {
+                overflow-x: auto;
+                justify-content: flex-start;
+                gap: 3px;
+                height: 150px;
+                padding-bottom: 5px;
+            }
+            .chart-bar-wrapper {
+                flex: 0 0 auto;
+                min-width: 38px; /* чтобы помещались подписи */
+            }
+            .chart-label {
+                font-size: 0.6rem;
             }
         }
 
-        /* Очень узкие экраны: скрываем текст и разделитель у Росатома */
-        @media (max-width: 480px) {
-            .divider,
-            .logo-text {
+        @media (max-width: 560px) {
+            .logo-wrap {
+                left: 4px;
+                top: 0px;
+            }
+            .hex-spacer {
+                width: 73px;
+                height: 73px;
+            }
+            .hex-p1 {
+                width: 61px;
+                height: 61px;
+            }
+            .title-text {
+                left: 88px;
+                font-size: 18px;
+                top: 36px;
+            }
+            .vk-cloud-part {
                 display: none;
+            }
+            .kpi-value { font-size: 2rem; }
+
+            .footer-center img {
+                max-height: 20px;
+            }
+            .footer-right img {
+                max-height: 18px;
+            }
+            .footer-left .logo-link img {
+                max-height: 30px;
+            }
+            .chart-bar-wrapper {
+                min-width: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-center img {
+                max-height: 18px;
+            }
+            .chart-bar-wrapper {
+                min-width: 32px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero секция с переключающимися фонами (10 фонов) -->
-    <section class="hero">
-        <div class="hero-bg hero-bg-1"></div>
-        <div class="hero-bg hero-bg-2"></div>
-        <div class="hero-bg hero-bg-3"></div>
-        <div class="hero-bg hero-bg-4"></div>
-        <div class="hero-bg hero-bg-5"></div>
-        <div class="hero-bg hero-bg-6"></div>
-        <div class="hero-bg hero-bg-7"></div>
-        <div class="hero-bg hero-bg-8"></div>
-        <div class="hero-bg hero-bg-9"></div>
-        <div class="hero-bg hero-bg-10"></div>
-
-        <!-- Плавающие логотипы: Росатом и снежинка -->
-        <div class="floating-logos">
-            <!-- Росатом (7 штук) -->
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-1">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-2">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-3">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-4">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-5">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-6">
-            <img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="Росатом" class="vk-7">
-
-            <!-- Снежинка (7 штук) – белые -->
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-1">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-2">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-3">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-4">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-5">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-6">
-            <img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="Снежинка" class="snow-7">
+    <!-- Шапка -->
+    <div class="header-box">
+        <div class="line-main"></div>
+        <div class="logo-wrap">
+            <div class="hex hex-spacer">
+                <div class="hex hex-p1"><div class="hex hex-w1"><div class="hex hex-p2"><div class="hex hex-inner"></div></div></div></div>
+            </div>
         </div>
-    </section>
+        <div class="title-text">
+            <span class="vk-cloud-part"><i class="fab fa-vk"></i> Cloud / </span>МАС «Снежинка»
+        </div>
+        <div class="stripes-bottom"></div>
+
+        <div class="header-buttons">
+            <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="dashboard">
+            <!-- KPI карточки -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-user-astronaut"></i></div>
+                    <div class="kpi-label">Активных пользователей (24ч)</div>
+                    <div class="kpi-value" id="statUsers">12.4K</div>
+                    <div class="kpi-trend" id="trendUsers"><i class="fas fa-arrow-up"></i> +8%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-microchip"></i></div>
+                    <div class="kpi-label">Запущено задач (всего)</div>
+                    <div class="kpi-value" id="statTasks">2.34M</div>
+                    <div class="kpi-trend" id="trendTasks"><i class="fas fa-arrow-up"></i> +423K за месяц</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-atom"></i></div>
+                    <div class="kpi-label">Квантовых вычислений</div>
+                    <div class="kpi-value" id="statQuantum">892K</div>
+                    <div class="kpi-trend" id="trendQuantum"><i class="fas fa-clock"></i> +12% vs вчера</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-dna"></i></div>
+                    <div class="kpi-label">Структур найдено</div>
+                    <div class="kpi-value" id="statStructures">128.5K</div>
+                    <div class="kpi-trend" id="trendStructures"><i class="fas fa-trophy"></i> 1.2K новых</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-coins"></i></div>
+                    <div class="kpi-label">Заработано игроками (B2C)</div>
+                    <div class="kpi-value" id="statEarned">$4.2M</div>
+                    <div class="kpi-trend" id="trendEarned">+$310k за неделю</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fas fa-file-signature"></i></div>
+                    <div class="kpi-label">B2B лицензий (всего)</div>
+                    <div class="kpi-value" id="statLicenses">47</div>
+                    <div class="kpi-trend" id="trendLicenses">+3 в этом месяце</div>
+                </div>
+            </div>
+
+            <!-- таймлайн -->
+            <div class="timeline-section">
+                <div class="timeline-header">
+                    <h2><i class="fas fa-chart-line" style="margin-right: 12px;"></i> Активность платформы (последние 24 часа)</h2>
+                    <span id="updateTime">обновлено только что</span>
+                </div>
+                <div class="chart-container" id="chart24h"></div>
+                <div class="timeline-footer">
+                    <span id="peakLoad"><i class="far fa-clock"></i> пик нагрузки: 15:30 (2180 задач/мин)</span>
+                    <span id="quantumToday">квантовых задач сегодня: 12.4K</span>
+                </div>
+            </div>
+
+            <!-- события -->
+            <div class="events-grid">
+                <div class="events-card">
+                    <div class="events-title">
+                        <i class="fas fa-history" style="color: #0077FF;"></i> Последние события на платформе
+                    </div>
+                    <ul class="event-list" id="eventList"></ul>
+                </div>
+                <div class="events-card">
+                    <div class="events-title">
+                        <i class="fas fa-chart-pie"></i> Сегодня в цифрах
+                    </div>
+                    <div class="stats-mini">
+                        <div class="stat-row"><span class="stat-label">Новые пользователи</span><span class="stat-number" id="newUsers">+842</span></div>
+                        <div class="stat-row"><span class="stat-label">Фолдинг белка</span><span class="stat-number" id="foldingTasks">9.2K задач</span></div>
+                        <div class="stat-row"><span class="stat-label">Квантовая химия</span><span class="stat-number" id="quantumTasks">4.1K задач</span></div>
+                        <div class="stat-row"><span class="stat-label">Автономные исследования</span><span class="stat-number" id="autoResearch">342 запуска</span></div>
+                        <div class="stat-row"><span class="stat-label">Среднее время ответа API</span><span class="stat-number" id="apiTime">124 мс</span></div>
+                        <div class="stat-row"><span class="stat-label">Вознаграждений игрокам</span><span class="stat-number" id="rewards">₽ 1.2M <span class="badge-new">за сегодня</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Футер -->
     <footer class="footer">
-        <!-- Левая часть: Росатом с ссылкой на кванты.рф -->
         <div class="footer-left">
             <a href="https://кванты.рф/" target="_blank" class="logo-link">
                 <div class="logo-composite">
@@ -387,54 +808,287 @@
             </a>
         </div>
 
-        <!-- Центральная часть: VK Play (только иконка) -->
         <div class="footer-center">
-            <a href="https://vkplay.ru/" target="_blank">
-                <img src="https://comiccon2025.github.io/img/vk_play_logo.png" alt="VK Play">
-            </a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/snowflake_logo_white.png" alt="МАС Снежинка"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/rostech_logo_sign.png" alt="Ростех"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/sirius_mini_w.png" alt="Сириус"></a>
+            <span class="diam-footer-bg">
+                <a href="#"><img src="https://refoldit.github.io/img/logo/diam-logo-sticky.svg" alt="ДИАМ"></a>
+            </span>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/sber-cloud-logo.svg" alt="SberCloud"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/biocad-mini.png" alt="BIOCAD"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/biomol-mini-logo.svg" alt="Биомолекула"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/medical_genomics_mini_white.png" alt="Medical Genomics"></a>
+            <a href="#"><img src="https://refoldit.github.io/img/logo/genotek-mini.png" alt="Genotek"></a>
         </div>
 
-        <!-- Правая часть: два движка вертикально с адаптивными логотипами -->
         <div class="footer-right">
-            <!-- UNIGINE (стандартный размер) -->
-            <a href="https://unigine.com/products/sim/advantages/" target="_blank">
-                <img src="https://refoldit.github.io/img/logo/unigine_horizontal_white.png" alt="UNIGINE" class="desktop-logo">
-                <img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE" class="mobile-logo">
-            </a>
-            <!-- Nau Engine (уменьшен на 12px) -->
-            <a href="https://nauengine.org/" target="_blank">
-                <img src="https://refoldit.github.io/img/logo/nau-horizontal-white.png" alt="Nau Engine" class="desktop-logo nau-logo">
-                <img src="https://refoldit.github.io/img/logo/nau-sign-white.png" alt="Nau Engine" class="mobile-logo nau-logo">
-            </a>
+            <a href="https://nauengine.org/" target="_blank"><img src="https://refoldit.github.io/img/logo/nau-sign-white.png" alt="Nau Engine"></a>
+            <a href="https://unigine.com/products/sim/advantages/" target="_blank"><img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE"></a>
         </div>
     </footer>
 
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="settingsModal">
+            <button class="modal-close" id="closeSettings">&times;</button>
+            <h3><i class="fas fa-cog"></i> Настройки</h3>
+            <div class="setting-row">
+                <span>Тёмная тема</span>
+                <div class="fake-checkbox active" id="themeToggle"></div>
+            </div>
+            <div class="setting-row">
+                <span>Уведомления</span>
+                <div class="fake-checkbox" id="notifToggle"></div>
+            </div>
+            <div class="setting-row">
+                <span>Автообновление</span>
+                <div class="fake-checkbox active" id="autoRefreshToggle"></div>
+            </div>
+        </div>
+        <div class="modal" id="helpModal">
+            <button class="modal-close" id="closeHelp">&times;</button>
+            <h3><i class="fas fa-question-circle"></i> Справка</h3>
+            <p>Это серверная статистика цифрового двойника МАС «Снежинка». Данные обновляются в реальном времени через VK Cloud.</p>
+            <p>При возникновении вопросов обращайтесь в поддержку: <i class="fas fa-envelope"></i> support@snowflake.vk</p>
+            <p><i class="fas fa-gamepad"></i> Версия симулятора: 0.19.2 (alpha)</p>
+        </div>
+    </div>
+
+    <!-- Скрипт для живых метрик и модалок -->
     <script>
         (function() {
-            // Получаем все 10 фонов
-            const bg1 = document.querySelector('.hero-bg-1');
-            const bg2 = document.querySelector('.hero-bg-2');
-            const bg3 = document.querySelector('.hero-bg-3');
-            const bg4 = document.querySelector('.hero-bg-4');
-            const bg5 = document.querySelector('.hero-bg-5');
-            const bg6 = document.querySelector('.hero-bg-6');
-            const bg7 = document.querySelector('.hero-bg-7');
-            const bg8 = document.querySelector('.hero-bg-8');
-            const bg9 = document.querySelector('.hero-bg-9');
-            const bg10 = document.querySelector('.hero-bg-10');
-            const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10];
-            let currentIndex = 0;
+            const overlay = document.getElementById('modalOverlay');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const helpBtn = document.getElementById('helpBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const helpModal = document.getElementById('helpModal');
+            const closeSettings = document.getElementById('closeSettings');
+            const closeHelp = document.getElementById('closeHelp');
 
-            backgrounds.forEach((bg, index) => {
-                bg.style.opacity = index === 0 ? '1' : '0';
+            settingsBtn.addEventListener('click', () => {
+                settingsModal.style.display = 'block';
+                helpModal.style.display = 'none';
+                overlay.style.display = 'flex';
             });
 
-            setInterval(() => {
-                const nextIndex = (currentIndex + 1) % backgrounds.length;
-                backgrounds[currentIndex].style.opacity = '0';
-                backgrounds[nextIndex].style.opacity = '1';
-                currentIndex = nextIndex;
-            }, 25000);
+            helpBtn.addEventListener('click', () => {
+                helpModal.style.display = 'block';
+                settingsModal.style.display = 'none';
+                overlay.style.display = 'flex';
+            });
+
+            closeSettings.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+            closeHelp.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.style.display = 'none';
+                }
+            });
+
+            document.querySelectorAll('.fake-checkbox').forEach(t => {
+                t.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                });
+            });
+
+            // ---- Живые метрики ----
+            const statUsers = document.getElementById('statUsers');
+            const trendUsers = document.getElementById('trendUsers');
+            const statTasks = document.getElementById('statTasks');
+            const trendTasks = document.getElementById('trendTasks');
+            const statQuantum = document.getElementById('statQuantum');
+            const trendQuantum = document.getElementById('trendQuantum');
+            const statStructures = document.getElementById('statStructures');
+            const trendStructures = document.getElementById('trendStructures');
+            const statEarned = document.getElementById('statEarned');
+            const trendEarned = document.getElementById('trendEarned');
+            const statLicenses = document.getElementById('statLicenses');
+            const trendLicenses = document.getElementById('trendLicenses');
+            const updateTimeSpan = document.getElementById('updateTime');
+            const peakLoadSpan = document.getElementById('peakLoad');
+            const quantumTodaySpan = document.getElementById('quantumToday');
+            const newUsersSpan = document.getElementById('newUsers');
+            const foldingTasksSpan = document.getElementById('foldingTasks');
+            const quantumTasksSpan = document.getElementById('quantumTasks');
+            const autoResearchSpan = document.getElementById('autoResearch');
+            const apiTimeSpan = document.getElementById('apiTime');
+            const rewardsSpan = document.getElementById('rewards');
+            const eventList = document.getElementById('eventList');
+
+            let users = 12400;
+            let tasks = 2.34;
+            let quantum = 892000;
+            let structures = 128500;
+            let earned = 4.2;
+            let licenses = 47;
+
+            const eventTemplates = [
+                { type: 'фолдинг', desc: 'Пользователь {user} завершил фолдинг белка {protein}' },
+                { type: 'кванты', desc: 'Квантовый расчёт молекулы {mol} выполнен' },
+                { type: 'autoresearch', desc: 'Автономный исследователь нашёл новую конформацию' },
+                { type: 'B2B', desc: 'Гильдия «{guild}» выкупила эксклюзивную лицензию на структуру' },
+                { type: 'кванты', desc: 'Запущена симуляция водородного катализа на {node}' },
+                { type: 'механика', desc: 'Игрок {player} использовал механику «Вовремя остановись» и выиграл {amount}₽' },
+                { type: 'партнёр', desc: 'BIOCAD запросил отчёт по трём перспективным молекулам' },
+                { type: 'система', desc: 'Новый рекорд: {count} одновременных фолдингов' },
+                { type: 'инфра', desc: 'Обновлён API квантового симулятора (версия {ver})' },
+                { type: 'игрок', desc: 'Пользователь {user} заработал достижение «{ach}»' }
+            ];
+            const usersList = ['DeepMind42', 'StopppTime', 'ArcticFox', 'QuantumLeap', 'FoldingStar', 'NobelMind', 'ProteinHacker', 'ColdStart'];
+            const proteins = ['7XJ2', '3ABC', '1XYZ', '2F4K', '6L0M', '8P23'];
+            const molecules = ['C8H10N4O2 (кофеин)', 'C6H12O6 (глюкоза)', 'H2O', 'NaCl', 'C2H5OH', 'CH4'];
+            const guilds = ['Синтез', 'Кристалл', 'Фолдинг-тим', 'Квантовая долина'];
+            const nodes = ['rosatom_ion', 'sber_quantum', 'vk_qpu', 'msu_lab'];
+            const achievements = ['Идеальная остановка', 'Тысяча белков', 'Квантовый скачок', 'Золотая пипетка'];
+
+            function randomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function randomFloat(min, max, decimals = 1) {
+                let val = Math.random() * (max - min) + min;
+                return val.toFixed(decimals);
+            }
+
+            function formatNumber(num) {
+                if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+                if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+                return num.toString();
+            }
+
+            function generateEvent() {
+                let tmpl = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
+                let desc = tmpl.desc;
+                desc = desc.replace('{user}', usersList[Math.floor(Math.random() * usersList.length)]);
+                desc = desc.replace('{protein}', proteins[Math.floor(Math.random() * proteins.length)]);
+                desc = desc.replace('{mol}', molecules[Math.floor(Math.random() * molecules.length)]);
+                desc = desc.replace('{guild}', guilds[Math.floor(Math.random() * guilds.length)]);
+                desc = desc.replace('{node}', nodes[Math.floor(Math.random() * nodes.length)]);
+                desc = desc.replace('{amount}', randomInt(100, 1500));
+                desc = desc.replace('{count}', randomInt(3000, 4000));
+                desc = desc.replace('{ver}', (Math.random() * 0.5 + 2.3).toFixed(1));
+                desc = desc.replace('{ach}', achievements[Math.floor(Math.random() * achievements.length)]);
+                let time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                return { time, desc, type: tmpl.type };
+            }
+
+            function refreshStats() {
+                users += randomInt(-50, 120);
+                if (users < 11000) users = 11500;
+                tasks += (Math.random() * 0.03 - 0.01);
+                if (tasks < 2.2) tasks = 2.3;
+                quantum += randomInt(-200, 500);
+                if (quantum < 880000) quantum = 885000;
+                structures += randomInt(-50, 200);
+                if (structures < 127000) structures = 127500;
+                earned += (Math.random() * 0.05 - 0.02);
+                if (earned < 4.0) earned = 4.1;
+                licenses += randomInt(-1, 2);
+                if (licenses < 45) licenses = 46;
+
+                statUsers.innerText = formatNumber(users);
+                trendUsers.innerHTML = `<i class="fas fa-arrow-up"></i> +${randomInt(3, 15)}%`;
+
+                statTasks.innerText = tasks.toFixed(2) + 'M';
+                trendTasks.innerHTML = `<i class="fas fa-arrow-up"></i> +${randomInt(200, 500)}K за месяц`;
+
+                statQuantum.innerText = formatNumber(quantum);
+                trendQuantum.innerHTML = `<i class="fas fa-clock"></i> +${randomInt(5, 20)}% vs вчера`;
+
+                statStructures.innerText = formatNumber(structures);
+                trendStructures.innerHTML = `<i class="fas fa-trophy"></i> ${randomInt(0.5, 2.0).toFixed(1)}K новых`;
+
+                statEarned.innerText = '$' + earned.toFixed(2) + 'M';
+                trendEarned.innerText = '+' + randomInt(200, 400) + 'k за неделю';
+
+                statLicenses.innerText = licenses;
+                trendLicenses.innerText = '+' + randomInt(1, 5) + ' в этом месяце';
+
+                updateTimeSpan.innerText = 'обновлено ' + new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second:'2-digit' });
+
+                let peakHour = randomInt(0, 23);
+                let peakHourStr = peakHour.toString().padStart(2,'0') + ':00';
+                let peakValue = randomInt(1800, 2500);
+                peakLoadSpan.innerHTML = `<i class="far fa-clock"></i> пик нагрузки: ${peakHourStr} (${peakValue} задач/мин)`;
+
+                let todayQuantum = randomInt(10000, 15000);
+                quantumTodaySpan.innerText = `квантовых задач сегодня: ${formatNumber(todayQuantum)}`;
+
+                newUsersSpan.innerText = '+' + randomInt(600, 1100);
+                foldingTasksSpan.innerText = randomFloat(8.0, 11.0, 1) + 'K задач';
+                quantumTasksSpan.innerText = randomFloat(3.5, 5.2, 1) + 'K задач';
+                autoResearchSpan.innerText = randomInt(280, 400) + ' запуска';
+                apiTimeSpan.innerText = randomInt(110, 150) + ' мс';
+                rewardsSpan.innerHTML = `₽ ${randomFloat(1.0, 1.8, 1)}M <span class="badge-new">за сегодня</span>`;
+
+                const bars = document.querySelectorAll('.chart-bar');
+                for (let i = 0; i < bars.length; i++) {
+                    let height = 30 + Math.floor(Math.random() * 120);
+                    if (i >= 9 && i <= 12) height += 40;
+                    if (i >= 14 && i <= 18) height += 60;
+                    if (i >= 22 || i <= 5) height = 20 + Math.random() * 25;
+                    height = Math.min(180, height);
+                    bars[i].style.height = height + 'px';
+                }
+
+                let newEvent = generateEvent();
+                let newItem = document.createElement('li');
+                newItem.className = 'event-item';
+                newItem.innerHTML = `<span class="event-time">${newEvent.time}</span><span class="event-desc">${newEvent.desc}</span><span class="event-type">${newEvent.type}</span>`;
+                let list = eventList;
+                list.insertBefore(newItem, list.firstChild);
+                while (list.children.length > 10) {
+                    list.removeChild(list.lastChild);
+                }
+            }
+
+            function initChart() {
+                const chartContainer = document.getElementById('chart24h');
+                if (chartContainer) {
+                    let barsHtml = '';
+                    for (let i = 0; i < 24; i++) {
+                        const hour = i.toString().padStart(2, '0') + ':00';
+                        let height = 30 + Math.floor(Math.random() * 120);
+                        if (i >= 9 && i <= 12) height += 40;
+                        if (i >= 14 && i <= 18) height += 60;
+                        if (i >= 22 || i <= 5) height = 20 + Math.random() * 25;
+                        height = Math.min(180, height);
+                        barsHtml += `<div class="chart-bar-wrapper"><div class="chart-bar" style="height: ${height}px;"></div><div class="chart-label">${hour}</div></div>`;
+                    }
+                    chartContainer.innerHTML = barsHtml;
+                }
+            }
+
+            function initEvents() {
+                let events = [
+                    { time: '12:48', desc: 'Пользователь DeepMind42 завершил фолдинг белка 7XJ2', type: 'фолдинг' },
+                    { time: '12:41', desc: 'Квантовый расчёт молекулы C8H10N4O2 (кофеин) выполнен', type: 'кванты' },
+                    { time: '12:33', desc: 'Автономный исследователь нашёл новую конформацию', type: 'autoresearch' },
+                    { time: '12:22', desc: 'Гильдия «Синтез» выкупила эксклюзивную лицензию на структуру', type: 'B2B' },
+                    { time: '12:10', desc: 'Запущена симуляция водородного катализа на rosatom_ion', type: 'кванты' },
+                    { time: '11:58', desc: 'Игрок StopppTime использовал механику «Вовремя остановись» и выиграл 500₽', type: 'механика' },
+                    { time: '11:42', desc: 'BIOCAD запросил отчёт по трём перспективным молекулам', type: 'партнёр' },
+                    { time: '11:30', desc: 'Новый рекорд: 3500 одновременных фолдингов', type: 'система' },
+                    { time: '11:15', desc: 'Обновлён API квантового симулятора (версия 2.3)', type: 'инфра' },
+                    { time: '10:59', desc: 'Пользователь ArcticFox заработал достижение «Идеальная остановка»', type: 'игрок' },
+                ];
+                let html = '';
+                events.forEach(e => {
+                    html += `<li class="event-item"><span class="event-time">${e.time}</span><span class="event-desc">${e.desc}</span><span class="event-type">${e.type}</span></li>`;
+                });
+                eventList.innerHTML = html;
+            }
+
+            initChart();
+            initEvents();
+            setInterval(refreshStats, 5000);
         })();
     </script>
 </body>
