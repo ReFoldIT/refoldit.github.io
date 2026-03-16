@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Снежинка · игровое меню</title>
+    <!-- фавикон VK Play (такой же) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_124_10523)'%3e%3cpath d='M18.756 0C26.892 0 30.96 0 33.48 2.52C36 5.04 36 9.108 36 17.244V18.756C36 26.892 36 30.96 33.48 33.48C30.96 36 26.892 36 18.756 36H17.244C9.108 36 5.04 36 2.52 33.48C0 30.96 0 26.892 0 18.756V17.244C0 9.108 0 5.04 2.52 2.52C5.04 0 9.108 0 17.244 0H18.756Z' fill='%230077FF'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M35.8956 10.1542C36 12.0999 36 14.4283 36 17.2439V17.244V18.756V18.756C36 20.9229 36 22.8013 35.9524 24.4387H0.0476112C0 22.8013 0 20.9229 0 18.756V17.244C0 14.4283 0 12.0999 0.104447 10.1542H35.8956ZM0.0474971 24.4394L0.0479452 24.4547C4.76004 26.7552 11.0876 28.1568 17.9898 28.1568C24.8976 28.1568 31.2388 26.7487 35.9521 24.4449L35.9522 24.4394H0.0474971Z' fill='%230009B4'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M25.0373 16.5811C24.1462 16.5811 23.4239 17.3195 23.4239 18.2304C23.4239 19.1412 24.1462 19.8796 25.0373 19.8796C25.9284 19.8796 26.6507 19.1412 26.6507 18.2304C26.6507 17.3195 25.9284 16.5811 25.0373 16.5811ZM19.845 18.2304C19.845 15.299 22.1697 12.9227 25.0373 12.9227C27.9049 12.9227 30.2296 15.299 30.2296 18.2304C30.2296 21.1617 27.9049 23.5381 25.0373 23.5381C22.1697 23.5381 19.845 21.1617 19.845 18.2304Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.1827 15.8495L8.48861 13.1555L5.93991 15.7042L8.63398 18.3982L5.94007 21.0921L8.48877 23.6408L11.1827 20.9469L13.8765 23.6408L16.4252 21.0921L13.7314 18.3982L16.4254 15.7042L13.8767 13.1555L11.1827 15.8495Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_124_10523'%3e%3crect width='36' height='36' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e">
+    <!-- шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* === ОСНОВНЫЕ ЦВЕТА === */
+        :root {
+            --vk-blue: #005ff9;
+            --vk-light: #00b2ff;
+            --white: #ffffff;
+            --bg-dark: #0A0C0F;
+            --surface-dark: #1f1f1f;
+            --text-secondary: #999999;
+            --footer-height: 80px;
+        }
+
+        /* Скрываем скроллбар */
+        ::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: "Inter", sans-serif;
+            color: #E1E3E6;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР (СКРОЛЛИНГ) --- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            width: 100%;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Заголовок меню */
+        .menu-header {
+            margin-bottom: 40px;
+        }
+        .menu-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Сетка карточек меню */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: rgba(20, 25, 30, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 28px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 119, 255, 0.3);
+            box-shadow: 0 20px 30px -10px #0077ff33;
+        }
+
+        .menu-icon {
+            font-size: 3rem;
+            color: #0077FF;
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .menu-desc {
+            color: #aaa;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .menu-btn {
+            background: var(--vk-blue);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            text-decoration: none;
+        }
+
+        .menu-btn:hover {
+            background: #0047b3;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Блок информации об игроке (простой) */
+        .player-card {
+            background: rgba(20, 25, 30, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 20px 28px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .player-avatar {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(145deg, #0077FF, #00b2ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .player-info h3 {
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .player-info p {
+            color: #aaa;
+        }
+
+        .player-stats {
+            margin-left: auto;
+            display: flex;
+            gap: 32px;
+        }
+
+        .stat {
+            text-align: right;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* --- НОВЫЙ НИЖНИЙ БЛОК (ХЕДЕР, ПЕРЕНЕСЁННЫЙ ВНИЗ) --- */
+        .bottom-header {
+            position: relative;
+            width: 100%;
+            height: var(--footer-height);
+            overflow: hidden;
+            flex-shrink: 0;
+            background-color: var(--vk-blue);
+        }
+
+        .line-main {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background-color: var(--white);
+            z-index: 1;
+        }
+
+        .title-text {
+            position: absolute;
+            left: 100px;
+            top: 34px;
+            font-size: 20px;
+            font-weight: 900;
+            font-family: 'Arial Black', sans-serif;
+            color: var(--white);
+            z-index: 5;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .vk-cloud-part {
+            display: inline;
+        }
+
+        .logo-wrap {
+            position: absolute;
+            left: 20px;
+            top: 5px;
+            z-index: 10;
+        }
+
+        .hex {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hex-spacer { width: 70px; height: 70px; background: var(--vk-blue); }
+        .hex-p1 { width: 58px; height: 58px; background: var(--white); }
+        .hex-w1 { width: 88%; height: 88%; background: var(--vk-blue); }
+        .hex-p2 { width: 84%; height: 84%; background: var(--white); }
+        .hex-inner { width: 74%; height: 74%; background: var(--vk-light); }
+
+        .stripes-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 18px;
+            background: repeating-linear-gradient(60deg, var(--white), var(--white) 6px, transparent 6px, transparent 12px);
+            z-index: 1;
+        }
+
+        .header-buttons {
+            position: absolute;
+            right: 24px;
+            top: 55.5%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 20;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            padding: 4px;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* --- МОДАЛЬНЫЕ ОКНА --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: var(--surface-dark);
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            color: white;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .fake-checkbox {
+            width: 44px;
+            height: 24px;
+            background: #333;
+            border-radius: 40px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .fake-checkbox::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: left 0.2s;
+        }
+
+        .fake-checkbox.active {
+            background: var(--vk-blue);
+        }
+
+        .fake-checkbox.active::after {
+            left: 23px;
+        }
+
+        /* --- АДАПТАЦИЯ --- */
+        @media (max-width: 700px) {
+            .player-stats {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-around;
+            }
+            .player-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .logo-wrap {
+                left: 4px;
+                top: 0px;
+            }
+            .hex-spacer {
+                width: 73px;
+                height: 73px;
+            }
+            .hex-p1 {
+                width: 61px;
+                height: 61px;
+            }
+            .title-text {
+                left: 88px;
+                font-size: 18px;
+                top: 36px;
+            }
+            .vk-cloud-part {
+                display: none;
+            }
+            .menu-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Основной контент (меню) -->
+    <main class="main-content">
+        <div class="dashboard">
+            <!-- Заголовок меню -->
+            <div class="menu-header">
+                <h1>меню</h1>
+            </div>
+
+            <!-- Сетка игровых активностей -->
+            <div class="menu-grid">
+                <!-- 1. Фолдинг молекул, белков и ДНК -->
+                <div class="menu-card">
+                    <div class="menu-icon"><i class="fas fa-dna"></i></div>
+                    <div class="menu-title">Фолдинг</div>
+                    <div class="menu-desc">Занимайтесь фолдингом молекул, белков и ДНК как в игре FoldIT. Помогите науке открыть новые структуры.</div>
+                    <a href="#" class="menu-btn"><i class="fas fa-play"></i></a>
+                </div>
+
+                <!-- 2. Лабораторное оборудование -->
+                <div class="menu-card">
+                    <div class="menu-icon"><i class="fas fa-microscope"></i></div>
+                    <div class="menu-title">Лаборатория</div>
+                    <div class="menu-desc">Изучайте современное лабораторное оборудование, проводите виртуальные эксперименты и анализируйте результаты.</div>
+                    <a href="#" class="menu-btn"><i class="fas fa-play"></i></a>
+                </div>
+
+                <!-- 3. Вездеходер (Нефритовый дрифт) -->
+                <div class="menu-card">
+                    <div class="menu-icon"><i class="fas fa-truck"></i></div>
+                    <div class="menu-title">Вездеходер</div>
+                    <div class="menu-desc">Нефритовый дрифт - это дрифт на вездеходах по ледяному нефритовому озеру.</div>
+                    <a href="#" class="menu-btn"><i class="fas fa-play"></i></a>
+                </div>
+
+                <!-- 4. Дрон-рейсинг (иконка заменена на вертолёт для гарантии) -->
+                <div class="menu-card">
+                    <div class="menu-icon"><i class="fas fa-helicopter"></i></div>
+                    <div class="menu-title">Дрон-рейсинг</div>
+                    <div class="menu-desc">Соревнования на дронах в сложных метеоусловиях. Пролетайте через ледяные пещеры и научные модули.</div>
+                    <a href="#" class="menu-btn"><i class="fas fa-play"></i></a>
+                </div>
+            </div>
+
+            <!-- Информация об игроке (демо) -->
+            <div class="player-card">
+                <div class="player-avatar"><i class="fas fa-user-astronaut"></i></div>
+                <div class="player-info">
+                    <h3>Исследователь ICE-42</h3>
+                    <p><i class="fas fa-certificate" style="color: #0077FF;"></i> Уровень доступа: лаборант</p>
+                </div>
+                <div class="player-stats">
+                    <div class="stat">
+                        <div class="stat-label">Очки науки</div>
+                        <div class="stat-value">12.4K</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Рейтинг</div>
+                        <div class="stat-value">#382</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Нижний блок (бывший хедер) с изменённой кнопкой -->
+    <div class="bottom-header">
+        <div class="line-main"></div>
+        <div class="logo-wrap">
+            <div class="hex hex-spacer">
+                <div class="hex hex-p1"><div class="hex hex-w1"><div class="hex hex-p2"><div class="hex hex-inner"></div></div></div></div>
+            </div>
+        </div>
+        <div class="title-text">
+            <span class="vk-cloud-part"><i class="fab fa-vk"></i> Cloud / </span>МАС «Снежинка»
+        </div>
+        <div class="stripes-bottom"></div>
+
+        <!-- Кнопки в правом углу: ссылка на статистику, настройки, справка -->
+        <div class="header-buttons">
+            <a href="https://refoldit.github.io/vk.html" class="icon-btn" title="в статистику"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></a>
+            <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Модальные окна (настройки и справка, слегка обновлены) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="settingsModal">
+            <button class="modal-close" id="closeSettings">&times;</button>
+            <h3><i class="fas fa-cog"></i> Настройки</h3>
+            <div class="setting-row">
+                <span>Тёмная тема</span>
+                <div class="fake-checkbox active" id="themeToggle"></div>
+            </div>
+            <div class="setting-row">
+                <span>Уведомления</span>
+                <div class="fake-checkbox" id="notifToggle"></div>
+            </div>
+            <div class="setting-row">
+                <span>Автообновление</span>
+                <div class="fake-checkbox active" id="autoRefreshToggle"></div>
+            </div>
+        </div>
+        <div class="modal" id="helpModal">
+            <button class="modal-close" id="closeHelp">&times;</button>
+            <h3><i class="fas fa-question-circle"></i> Справка</h3>
+            <p>МАС «Снежинка» — многопользовательский научно-исследовательский симулятор. Выберите активность в меню и начните исследование.</p>
+            <p>Поддержка: <i class="fas fa-envelope"></i> support@snowflake.vk</p>
+            <p><i class="fas fa-gamepad"></i> Версия симулятора: 0.19.2 (alpha)</p>
+        </div>
+    </div>
+
+    <!-- Скрипты: только модальные окна и переключатели -->
+    <script>
+        (function() {
+            const overlay = document.getElementById('modalOverlay');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const helpBtn = document.getElementById('helpBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const helpModal = document.getElementById('helpModal');
+            const closeSettings = document.getElementById('closeSettings');
+            const closeHelp = document.getElementById('closeHelp');
+
+            settingsBtn.addEventListener('click', () => {
+                settingsModal.style.display = 'block';
+                helpModal.style.display = 'none';
+                overlay.style.display = 'flex';
+            });
+
+            helpBtn.addEventListener('click', () => {
+                helpModal.style.display = 'block';
+                settingsModal.style.display = 'none';
+                overlay.style.display = 'flex';
+            });
+
+            closeSettings.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+            closeHelp.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.style.display = 'none';
+                }
+            });
+
+            // Переключатели чекбоксов
+            document.querySelectorAll('.fake-checkbox').forEach(t => {
+                t.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Обработчики для кнопок "Играть" (просто заглушка)
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Это демо-меню. Здесь будет запущен соответствующий режим игры.');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
