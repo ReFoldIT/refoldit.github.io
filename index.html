@@ -429,7 +429,7 @@
         </div>
     </footer>
 
-   <!-- скрипт интеграции VK Play (GMRID 47268) -->
+    <!-- скрипт интеграции VK Play (GMRID 47268) -->
     <script type="text/javascript" src="https://vkplay.ru/app/47268/static/mailru.core.js"></script>
     <script>
         let externalApi = null;
@@ -473,10 +473,17 @@
                         document.getElementById('authorized').classList.remove('hidden');
                         document.getElementById('notAuthorized').classList.add('hidden');
 
+                        // Имя
                         document.getElementById('profileName').textContent = 
                             `${info.first_name || ''} ${info.last_name || ''}`.trim() || 'Игрок';
+                        
+                        // ID
                         document.getElementById('profileId').textContent = info.uid;
-                        document.getElementById('profileNick').textContent = info.nick || '—';
+
+                        // НИК — проверяем разные возможные поля
+                        let nick = info.nick || info.nickname || info.name || info.display_name || '';
+                        if (!nick) nick = '—';
+                        document.getElementById('profileNick').textContent = nick;
                     } else {
                         document.getElementById('loading').classList.add('hidden');
                         document.getElementById('notAuthorized').classList.remove('hidden');
