@@ -429,12 +429,11 @@
         </div>
     </footer>
 
-    <!-- скрипт интеграции VK Play (GMRID 47268) -->
+   <!-- скрипт интеграции VK Play (GMRID 47268) -->
     <script type="text/javascript" src="https://vkplay.ru/app/47268/static/mailru.core.js"></script>
     <script>
         let externalApi = null;
 
-        // Показываем loader, скрываем остальное
         document.getElementById('loading').classList.remove('hidden');
 
         (function apiHandshake(iframeApi) {
@@ -448,11 +447,9 @@
             const callbacks = {
                 appid: 47268,
 
-                // Колбэк статуса авторизации
                 getLoginStatusCallback: function(status) {
                     console.log('Статус авторизации:', status);
 
-                    // Проверяем разные варианты статуса
                     const isAuth = status && (
                         status.session || 
                         status.auth === true || 
@@ -461,45 +458,40 @@
                     );
 
                     if (isAuth) {
-                        // Если авторизован — запрашиваем полные данные
                         externalApi.userInfo();
                     } else {
-                        // Не авторизован — показываем блок входа
                         document.getElementById('loading').classList.add('hidden');
                         document.getElementById('notAuthorized').classList.remove('hidden');
+                        document.getElementById('authorized').classList.add('hidden');
                     }
                 },
 
-                // Колбэк с данными пользователя
                 userInfoCallback: function(info) {
                     console.log('Данные пользователя:', info);
                     if (info && info.uid) {
-                        // Показываем профиль
                         document.getElementById('loading').classList.add('hidden');
                         document.getElementById('authorized').classList.remove('hidden');
+                        document.getElementById('notAuthorized').classList.add('hidden');
 
                         document.getElementById('profileName').textContent = 
                             `${info.first_name || ''} ${info.last_name || ''}`.trim() || 'Игрок';
                         document.getElementById('profileId').textContent = info.uid;
                         document.getElementById('profileNick').textContent = info.nick || '—';
                     } else {
-                        // Ошибка — показываем вход
                         document.getElementById('loading').classList.add('hidden');
                         document.getElementById('notAuthorized').classList.remove('hidden');
+                        document.getElementById('authorized').classList.add('hidden');
                     }
                 },
 
-                // После регистрации — сразу запрашиваем данные
                 registerUserCallback: function(info) {
                     console.log('Регистрация:', info);
                     externalApi.userInfo();
                 },
 
-                // Дополнительный колбэк для токена (диагностика)
                 getAuthTokenCallback: function(token) {
                     console.log('Токен авторизации:', token);
                     if (token && token.hash) {
-                        // Если токен есть, можно запросить userInfo, если статус не сработал
                         if (!externalApi.userInfo) return;
                         externalApi.userInfo();
                     }
@@ -510,14 +502,13 @@
                 console.error('Ошибка подключения API:', err);
                 document.getElementById('loading').classList.add('hidden');
                 document.getElementById('notAuthorized').classList.remove('hidden');
+                document.getElementById('authorized').classList.add('hidden');
             }
 
             function connected(api) {
                 externalApi = api;
                 console.log('VK Play API подключён');
-                // Запрашиваем статус
                 externalApi.getLoginStatus();
-                // Для диагностики запросим токен через секунду
                 setTimeout(() => {
                     externalApi.getAuthToken();
                 }, 1000);
@@ -526,7 +517,6 @@
             iframeApi(callbacks).then(connected, error);
         }(window.iframeApi));
 
-        // Обработчики кнопок
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('loginBtn')?.addEventListener('click', function() {
                 if (externalApi) externalApi.authUser();
@@ -535,7 +525,6 @@
                 if (externalApi) externalApi.registerUser();
             });
             document.getElementById('logoutBtn')?.addEventListener('click', function() {
-                // Для выхода просто перезагружаем страницу
                 location.reload();
             });
         });
