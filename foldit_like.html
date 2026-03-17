@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>qFoldIT — Квантовый фолдинг молекул</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Canvas на весь экран */
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        /* График-хедер — поверх canvas */
+        #graph-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        /* График занимает всю ширину и высоту хедера */
+        #graph-header svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Контейнеры для иконок поверх графика — с лёгким стеклянным фоном, без теней и без границ */
+        .header-left, .header-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            color: white;
+            z-index: 31;
+            padding: 8px 24px;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: none;
+            box-shadow: none;
+            border-radius: 40px;
+        }
+        .header-left {
+            left: 20px;
+        }
+        .header-right {
+            right: 20px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            padding: 12px 24px;
+        }
+
+        /* Иконка атома */
+        .fa-atom {
+            font-size: 36px;
+            color: #4CAF50;
+        }
+        .fa-atom.spinning {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Блок статистики */
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+        }
+        .stat-item i {
+            font-size: 24px;
+        }
+        .stat-item .value {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 22px;
+        }
+
+        /* Левая боковая панель (стекло) — поверх canvas, начинается под хедером */
+        #left-panel {
+            position: fixed;
+            left: 0;
+            top: 100px;
+            bottom: 0;
+            width: 280px;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            z-index: 20;
+            pointer-events: auto;
+            overflow-y: auto;
+            transition: width 0.3s ease, padding 0.3s ease;
+        }
+        #left-panel.collapsed {
+            width: 50px;
+            padding: 20px 5px;
+            overflow: hidden;
+        }
+        #left-panel.collapsed .panel-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 25;
+            pointer-events: auto;
+        }
+        .toggle-btn:hover {
+            background: rgba(76, 175, 80, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Правая боковая панель (стекло) — поверх canvas, начинается под хедером */
+        #right-panel {
+            position: fixed;
+            right: 0;
+            top: 100px;
+            bottom: 0;
+            width: 280px;
+            background: rgba(30, 30, 40, 0.6);
+            backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(33, 150, 243, 0.3);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            z-index: 20;
+            pointer-events: auto;
+            overflow-y: auto;
+            transition: width 0.3s ease, padding 0.3s ease;
+        }
+        #right-panel.collapsed {
+            width: 50px;
+            padding: 20px 5px;
+            overflow: hidden;
+        }
+        #right-panel.collapsed .panel-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .panel-content {
+            transition: opacity 0.2s;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #4CAF50;
+        }
+        .slider-item {
+            margin-bottom: 15px;
+        }
+        .slider-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+            background: #333;
+            height: 5px;
+            border-radius: 5px;
+        }
+        .angle-value {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            background: #222;
+            padding: 2px;
+            border-radius: 4px;
+        }
+        i {
+            margin-right: 4px;
+        }
+        .fa-circle {
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+        #lengthControl {
+            margin-top: 15px;
+        }
+
+        /* Кнопки-иконки */
+        .icon-only-btn {
+            background: rgba(33, 150, 243, 0.8);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(33,150,243,0.3);
+        }
+        .icon-only-btn:hover {
+            background: rgba(25, 118, 210, 0.9);
+            transform: scale(1.1);
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* Центральная кнопка — поверх всего */
+        #controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            pointer-events: auto;
+        }
+        #quantumBtn {
+            padding: 12px 28px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 10px rgba(76,175,80,0.3);
+            backdrop-filter: blur(4px);
+            background: rgba(76, 175, 80, 0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        #quantumBtn:hover {
+            background: rgba(69, 160, 73, 0.9);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body id="main-body">
+
+    <!-- График-хедер с иконками поверх (сам хедер без фона) -->
+    <div id="graph-header">
+        <!-- SVG графика на всю ширину (только линия) -->
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <polyline id="energyGraph" points="" stroke="#4CAF50" stroke-width="3" fill="none"/>
+        </svg>
+
+        <!-- Иконка атома слева поверх графика со стеклянным фоном -->
+        <div class="header-left">
+            <i class="fas fa-atom" id="atom-icon"></i>
+        </div>
+
+        <!-- Статистика справа поверх графика со стеклянным фоном -->
+        <div class="header-right">
+            <div class="stat-item">
+                <i class="fas fa-chart-line"></i>
+                <span class="value" id="energy-value">0</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-handshake"></i>
+                <span class="value" id="contacts-value">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Левая боковая панель (только длина цепи и легенда) -->
+    <div id="left-panel">
+        <div class="toggle-btn" id="toggle-left">
+            <i class="fas fa-chevron-left" id="left-icon"></i>
+        </div>
+        <div class="panel-content">
+            <div class="panel-title"><i class="fas fa-dna"></i> qFoldIT</div>
+            <div id="lengthControl">
+                <label>Длина цепи: <span id="lengthValue">5</span></label>
+                <input type="range" id="chainLength" min="3" max="7" step="1" value="5" style="width:100%;">
+            </div>
+            <div style="margin-top: 20px; font-size: 13px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+                <span style="color:#ff8888;"><i class="fas fa-circle" style="color:#ff5555;"></i> Гидрофобный (H)</span><br>
+                <span style="color:#8888ff;"><i class="fas fa-circle" style="color:#5555ff;"></i> Полярный (P)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая боковая панель (слайдеры углов, кнопки только с иконками) -->
+    <div id="right-panel">
+        <div class="toggle-btn" id="toggle-right">
+            <i class="fas fa-chevron-right" id="right-icon"></i>
+        </div>
+        <div class="panel-content">
+            <div class="panel-title"><i class="fas fa-sliders-h"></i> Торсионные углы</div>
+            <div id="slidersContainer"></div>
+            <div class="button-group">
+                <button class="icon-only-btn" id="randomBtn" title="Случайная конформация"><i class="fas fa-dice"></i></button>
+                <button class="icon-only-btn" id="resetBtn" title="Сбросить в линию"><i class="fas fa-undo-alt"></i></button>
+            </div>
+            <p style="font-size:11px; text-align:center; margin:10px 0 0; opacity:0.6;">0°, 90°, 180°, 270°</p>
+        </div>
+    </div>
+
+    <!-- Центральная кнопка -->
+    <div id="controls">
+        <button id="quantumBtn"><i class="fas fa-atom"></i> qFoldIT</button>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+        let NUM_RESIDUES = 5;
+        let TYPES = ['H', 'P', 'H', 'P', 'H'];
+        const BOND_LENGTH = 1.2;
+        const CONTACT_DIST = 1.8;
+        const ANGLE_OPTIONS = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
+        const ANGLE_NAMES = ["0°", "90°", "180°", "270°"];
+
+        let currentAnglesIdx = [];
+        let positions = [];
+
+        // Для графика
+        let energyHistory = [];
+        const maxHistory = 100;
+
+        // Флаг отжига для анимации иконки
+        let isAnnealing = false;
+        const atomIcon = document.getElementById('atom-icon');
+        // Элементы для чисел
+        const energyValueSpan = document.getElementById('energy-value');
+        const contactsValueSpan = document.getElementById('contacts-value');
+
+        // ==================== СЦЕНА THREE ====================
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x111122);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(4, 3, 8);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // Освещение
+        const ambientLight = new THREE.AmbientLight(0x404060);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(1, 2, 1);
+        scene.add(dirLight);
+        const backLight = new THREE.PointLight(0x4466ff, 0.5);
+        backLight.position.set(-2, 1, -2);
+        scene.add(backLight);
+
+        const gridHelper = new THREE.GridHelper(10, 20, 0x336699, 0x224466);
+        gridHelper.position.y = -0.5;
+        scene.add(gridHelper);
+
+        // Контейнеры объектов
+        let spheres = [];
+        let bonds = [];
+        let contactLines = [];
+        let arrows = [];
+
+        // ==================== ИНИЦИАЛИЗАЦИЯ МОЛЕКУЛЫ ====================
+        function initAnglesAndTypes() {
+            currentAnglesIdx = new Array(NUM_RESIDUES - 1).fill(0);
+            TYPES = [];
+            for (let i = 0; i < NUM_RESIDUES; i++) {
+                TYPES.push(i % 2 === 0 ? 'H' : 'P');
+            }
+        }
+
+        // ==================== ФУНКЦИИ ПОСТРОЕНИЯ ====================
+        function computePositionsFromAngles(angleIndices) {
+            const pos = [{ x: 0, y: 0, z: 0 }];
+            let dir = { x: 1, y: 0, z: 0 };
+            for (let i = 0; i < angleIndices.length; i++) {
+                const angle = ANGLE_OPTIONS[angleIndices[i]];
+                const newDirX = dir.x * Math.cos(angle) - dir.y * Math.sin(angle);
+                const newDirY = dir.x * Math.sin(angle) + dir.y * Math.cos(angle);
+                dir = { x: newDirX, y: newDirY, z: 0 };
+                const last = pos[pos.length - 1];
+                pos.push({
+                    x: last.x + dir.x * BOND_LENGTH,
+                    y: last.y + dir.y * BOND_LENGTH,
+                    z: 0
+                });
+            }
+            return pos;
+        }
+
+        function updateMolecule() {
+            spheres.forEach(s => scene.remove(s));
+            bonds.forEach(b => scene.remove(b));
+            contactLines.forEach(c => scene.remove(c));
+            arrows.forEach(a => scene.remove(a));
+            spheres = []; bonds = []; contactLines = []; arrows = [];
+
+            positions = computePositionsFromAngles(currentAnglesIdx);
+
+            // Сферы
+            positions.forEach((p, i) => {
+                const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                const color = TYPES[i] === 'H' ? 0xff5555 : 0x5555ff;
+                const material = new THREE.MeshPhongMaterial({ color, emissive: TYPES[i] === 'H' ? 0x330000 : 0x000033, shininess: 30 });
+                const sphere = new THREE.Mesh(geometry, material);
+                sphere.position.set(p.x, p.y, p.z);
+                scene.add(sphere);
+                spheres.push(sphere);
+            });
+
+            // Связи и стрелки
+            for (let i = 0; i < positions.length - 1; i++) {
+                const start = positions[i];
+                const end = positions[i+1];
+                const direction = new THREE.Vector3(end.x - start.x, end.y - start.y, end.z - start.z);
+                const length = direction.length();
+                const mid = new THREE.Vector3(
+                    (start.x + end.x) / 2,
+                    (start.y + end.y) / 2,
+                    (start.z + end.z) / 2
+                );
+                const cylinderGeom = new THREE.CylinderGeometry(0.1, 0.1, length, 6);
+                const cylinderMat = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+                const cylinder = new THREE.Mesh(cylinderGeom, cylinderMat);
+                cylinder.position.copy(mid);
+                cylinder.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize());
+                scene.add(cylinder);
+                bonds.push(cylinder);
+
+                if (i > 0) {
+                    const prevDir = new THREE.Vector3(
+                        positions[i].x - positions[i-1].x,
+                        positions[i].y - positions[i-1].y,
+                        0
+                    ).normalize();
+                    const currentDir = direction.clone().normalize();
+                    const angle = Math.acos(prevDir.dot(currentDir));
+                    if (angle > 0.1) {
+                        const arrowHelper = new THREE.ArrowHelper(new THREE.Vector3(0,0,1), mid, 0.5, 0xffaa00, 0.2, 0.2);
+                        arrowHelper.rotation.z = angle;
+                        scene.add(arrowHelper);
+                        arrows.push(arrowHelper);
+                    }
+                }
+            }
+
+            const contactPairs = calculateEnergyAndContacts();
+            drawContacts(contactPairs);
+        }
+
+        function calculateEnergyAndContacts() {
+            let energy = 0;
+            let contacts = [];
+            for (let i = 0; i < NUM_RESIDUES; i++) {
+                if (TYPES[i] !== 'H') continue;
+                for (let j = i + 1; j < NUM_RESIDUES; j++) {
+                    if (TYPES[j] !== 'H') continue;
+                    if (Math.abs(i - j) === 1) continue;
+                    const p1 = positions[i];
+                    const p2 = positions[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dz = p1.z - p2.z;
+                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                    if (dist < CONTACT_DIST) {
+                        energy -= 1;
+                        contacts.push([i, j]);
+                    }
+                }
+            }
+            // Обновляем числа в хедере
+            energyValueSpan.textContent = energy;
+            contactsValueSpan.textContent = contacts.length;
+            return contacts;
+        }
+
+        function drawContacts(contactPairs) {
+            contactPairs.forEach(pair => {
+                const i = pair[0];
+                const j = pair[1];
+                const p1 = positions[i];
+                const p2 = positions[j];
+                const points = [new THREE.Vector3(p1.x, p1.y, p1.z), new THREE.Vector3(p2.x, p2.y, p2.z)];
+                const geom = new THREE.BufferGeometry().setFromPoints(points);
+                const mat = new THREE.LineDashedMaterial({ color: 0xffaa00, dashSize: 0.1, gapSize: 0.1 });
+                const line = new THREE.Line(geom, mat);
+                line.computeLineDistances();
+                scene.add(line);
+                contactLines.push(line);
+            });
+        }
+
+        // ==================== ИНТЕРФЕЙС ====================
+        function rebuildSliders() {
+            const container = document.getElementById('slidersContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < NUM_RESIDUES - 1; i++) {
+                const div = document.createElement('div');
+                div.className = 'slider-item';
+                div.innerHTML = `
+                    <label>Угол ${i+1} <span id="angleVal${i}" class="angle-value">0°</span></label>
+                    <input type="range" id="slider${i}" min="0" max="3" step="1" value="${currentAnglesIdx[i]}">
+                `;
+                container.appendChild(div);
+            }
+            for (let i = 0; i < NUM_RESIDUES - 1; i++) {
+                const slider = document.getElementById(`slider${i}`);
+                if (!slider) continue;
+                slider.addEventListener('input', (e) => {
+                    const idx = parseInt(e.target.id.replace('slider', ''));
+                    currentAnglesIdx[idx] = parseInt(e.target.value);
+                    document.getElementById(`angleVal${idx}`).innerText = ANGLE_NAMES[currentAnglesIdx[idx]];
+                    updateMolecule();
+                });
+            }
+        }
+
+        function updateSlidersFromAngles() {
+            for (let i = 0; i < NUM_RESIDUES - 1; i++) {
+                const slider = document.getElementById(`slider${i}`);
+                if (slider) {
+                    slider.value = currentAnglesIdx[i];
+                    document.getElementById(`angleVal${i}`).innerText = ANGLE_NAMES[currentAnglesIdx[i]];
+                }
+            }
+        }
+
+        // ==================== УПРАВЛЕНИЕ ДЛИНОЙ ЦЕПИ ====================
+        document.getElementById('chainLength').addEventListener('input', (e) => {
+            const newLen = parseInt(e.target.value);
+            document.getElementById('lengthValue').innerText = newLen;
+            NUM_RESIDUES = newLen;
+            initAnglesAndTypes();
+            rebuildSliders();
+            updateMolecule();
+            // при изменении длины цепи не нужно менять размер canvas, он всегда полный
+        });
+
+        function randomConformation() {
+            for (let i = 0; i < currentAnglesIdx.length; i++) {
+                currentAnglesIdx[i] = Math.floor(Math.random() * 4);
+            }
+            updateSlidersFromAngles();
+            updateMolecule();
+        }
+
+        function resetConformation() {
+            currentAnglesIdx.fill(0);
+            updateSlidersFromAngles();
+            updateMolecule();
+        }
+
+        // ==================== КВАНТОВЫЙ ОТЖИГ ====================
+        function quantumAnnealing() {
+            if (isAnnealing) return;
+            isAnnealing = true;
+            atomIcon.classList.add('spinning');
+            energyHistory = [];
+            const steps = 300;
+            const T_start = 2.0;
+            const T_end = 0.1;
+
+            let currentIdx = [...currentAnglesIdx];
+            let currentEnergy = computeEnergyForIndices(currentIdx);
+
+            function step(iteration) {
+                if (iteration >= steps) {
+                    for (let i = 0; i < currentAnglesIdx.length; i++) {
+                        currentAnglesIdx[i] = currentIdx[i];
+                    }
+                    updateSlidersFromAngles();
+                    updateMolecule();
+                    isAnnealing = false;
+                    atomIcon.classList.remove('spinning');
+                    return;
+                }
+
+                const T = T_start + (T_end - T_start) * (iteration / steps);
+                const newIdx = [...currentIdx];
+                const bondToChange = Math.floor(Math.random() * newIdx.length);
+                newIdx[bondToChange] = Math.floor(Math.random() * 4);
+                const newEnergy = computeEnergyForIndices(newIdx);
+                const deltaE = newEnergy - currentEnergy;
+
+                if (deltaE < 0 || Math.random() < Math.exp(-deltaE / T)) {
+                    currentIdx = newIdx;
+                    currentEnergy = newEnergy;
+                }
+
+                energyHistory.push(currentEnergy);
+                if (energyHistory.length > maxHistory) energyHistory.shift();
+                updateGraph();
+
+                if (iteration % 10 === 0 || iteration === steps-1) {
+                    for (let i = 0; i < currentAnglesIdx.length; i++) {
+                        currentAnglesIdx[i] = currentIdx[i];
+                    }
+                    updateSlidersFromAngles();
+                    updateMolecule();
+                    setTimeout(() => step(iteration + 1), 10);
+                } else {
+                    step(iteration + 1);
+                }
+            }
+            step(0);
+        }
+
+        function computeEnergyForIndices(angleIdx) {
+            const pos = computePositionsFromAngles(angleIdx);
+            let e = 0;
+            for (let i = 0; i < NUM_RESIDUES; i++) {
+                if (TYPES[i] !== 'H') continue;
+                for (let j = i + 1; j < NUM_RESIDUES; j++) {
+                    if (TYPES[j] !== 'H') continue;
+                    if (Math.abs(i - j) === 1) continue;
+                    const p1 = pos[i];
+                    const p2 = pos[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dz = p1.z - p2.z;
+                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                    if (dist < CONTACT_DIST) e -= 1;
+                }
+            }
+            return e;
+        }
+
+        function updateGraph() {
+            const graph = document.getElementById('energyGraph');
+            if (energyHistory.length < 2) return;
+            const minE = Math.min(...energyHistory);
+            const maxE = Math.max(...energyHistory);
+            const range = maxE - minE || 1;
+            const points = energyHistory.map((e, i) => {
+                const x = (i / (energyHistory.length - 1)) * 1000;
+                const y = 100 - ((e - minE) / range) * 80; // высота 100px
+                return `${x},${y}`;
+            }).join(' ');
+            graph.setAttribute('points', points);
+        }
+
+        // ==================== УПРАВЛЕНИЕ СВОРАЧИВАНИЕМ ПАНЕЛЕЙ ====================
+        const leftPanel = document.getElementById('left-panel');
+        const rightPanel = document.getElementById('right-panel');
+        const leftIcon = document.getElementById('left-icon');
+        const rightIcon = document.getElementById('right-icon');
+
+        document.getElementById('toggle-left').addEventListener('click', () => {
+            leftPanel.classList.toggle('collapsed');
+            if (leftPanel.classList.contains('collapsed')) {
+                leftIcon.className = 'fas fa-chevron-right';
+            } else {
+                leftIcon.className = 'fas fa-chevron-left';
+            }
+            // canvas не двигается, поэтому не нужно ничего корректировать
+        });
+
+        document.getElementById('toggle-right').addEventListener('click', () => {
+            rightPanel.classList.toggle('collapsed');
+            if (rightPanel.classList.contains('collapsed')) {
+                rightIcon.className = 'fas fa-chevron-left';
+            } else {
+                rightIcon.className = 'fas fa-chevron-right';
+            }
+        });
+
+        // ==================== АДАПТАЦИЯ РАЗМЕРА CANVAS ====================
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // ==================== ЗАПУСК ====================
+        initAnglesAndTypes();
+        rebuildSliders();
+        updateMolecule();
+
+        document.getElementById('quantumBtn').addEventListener('click', quantumAnnealing);
+        document.getElementById('randomBtn').addEventListener('click', randomConformation);
+        document.getElementById('resetBtn').addEventListener('click', resetConformation);
+
+        // Анимация камеры
+        let angle = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            angle += 0.001;
+            const radius = 8;
+            camera.position.x = radius * Math.sin(angle);
+            camera.position.z = radius * Math.cos(angle);
+            camera.position.y = 3;
+            camera.lookAt(0, 0.5, 0);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Изначально атом не крутится
+        atomIcon.classList.remove('spinning');
+    </script>
+</body>
+</html>
