@@ -40,6 +40,7 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            align-items: center;
         }
         .filter-select {
             background: #1f1f1f;
@@ -50,6 +51,64 @@
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             outline: none;
+        }
+        /* кастомный селект для гео */
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            min-width: 180px;
+        }
+        .select-trigger {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 40px;
+            padding: 8px 32px 8px 16px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .select-trigger img, .select-trigger i {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        .select-trigger i {
+            font-size: 1rem;
+        }
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 20px;
+            margin-top: 5px;
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+        }
+        .select-dropdown.active {
+            display: block;
+        }
+        .select-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.1s;
+        }
+        .select-option:hover {
+            background: #2a2f35;
+        }
+        .select-option img, .select-option i {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
         }
         .btn-export {
             background: #0077FF;
@@ -192,9 +251,43 @@
 <div class="app">
     <div class="filters-bar">
         <div class="filter-group">
-            <select id="timeRange" class="filter-select"><option value="day">День</option><option value="week">Неделя</option><option value="month" selected>Месяц</option><option value="quarter">Квартал</option></select>
-            <select id="geoFilter" class="filter-select"><option value="all">🌍 Все страны</option><option value="ru">🇷🇺 Россия</option><option value="brics">🇧🇷🇷🇺🇮🇳🇨🇳🇿🇦 БРИКС+</option><option value="arctic">❄️ Арктический совет</option><option value="ecowas">🌍 ЭКОВАС</option></select>
-            <select id="segmentFilter" class="filter-select"><option value="all">👥 Все игроки</option><option value="new">🆕 Новички</option><option value="veteran">🏆 Ветераны</option><option value="paying">💎 Платящие</option></select>
+            <select id="timeRange" class="filter-select">
+                <option value="day">День</option>
+                <option value="week">Неделя</option>
+                <option value="month" selected>Месяц</option>
+                <option value="quarter">Квартал</option>
+            </select>
+            
+            <!-- кастомный селект для гео с флагами и иконками -->
+            <div class="custom-select" id="geoSelect">
+                <div class="select-trigger" id="geoTrigger">
+                    <i class="fas fa-globe"></i> <span>Все страны</span>
+                </div>
+                <div class="select-dropdown" id="geoDropdown">
+                    <div class="select-option" data-value="all">
+                        <i class="fas fa-globe"></i> <span>Все страны</span>
+                    </div>
+                    <div class="select-option" data-value="ru">
+                        <img src="https://qfoldit.github.io/img/flags/ru.svg" alt="ru" style="width:20px; height:20px;"> <span>Россия</span>
+                    </div>
+                    <div class="select-option" data-value="brics">
+                        <i class="fas fa-handshake"></i> <span>БРИКС+</span>
+                    </div>
+                    <div class="select-option" data-value="arctic">
+                        <i class="fas fa-snowflake"></i> <span>Арктический совет</span>
+                    </div>
+                    <div class="select-option" data-value="ecowas">
+                        <i class="fas fa-tree"></i> <span>ЭКОВАС</span>
+                    </div>
+                </div>
+            </div>
+
+            <select id="segmentFilter" class="filter-select">
+                <option value="all">Все игроки</option>
+                <option value="new">Новички</option>
+                <option value="veteran">Ветераны</option>
+                <option value="paying">Платящие</option>
+            </select>
         </div>
         <button id="exportBtn" class="btn-export"><i class="fas fa-download"></i> Экспорт CSV</button>
     </div>
@@ -202,14 +295,14 @@
     <div class="main-scroll">
         <div class="dashboard">
             <div class="tabs">
-                <button class="tab-btn active" data-tab="game">🎮 Игровые</button>
-                <button class="tab-btn" data-tab="money">💰 Монетизация</button>
-                <button class="tab-btn" data-tab="science">🧬 Наука & Геймплей</button>
-                <button class="tab-btn" data-tab="tech">⚙️ Технические</button>
-                <button class="tab-btn" data-tab="social">🤝 Соц. & Партнёры</button>
-                <button class="tab-btn" data-tab="eco">🌱 Экология & Арктика</button>
-                <button class="tab-btn" data-tab="edu">📚 EdTech & Блокчейн</button>
-                <button class="tab-btn" data-tab="invest">📈 Инвесторам</button>
+                <button class="tab-btn active" data-tab="game"><i class="fas fa-gamepad"></i> Игровые</button>
+                <button class="tab-btn" data-tab="money"><i class="fas fa-coins"></i> Монетизация</button>
+                <button class="tab-btn" data-tab="science"><i class="fas fa-dna"></i> Наука & Геймплей</button>
+                <button class="tab-btn" data-tab="tech"><i class="fas fa-microchip"></i> Технические</button>
+                <button class="tab-btn" data-tab="social"><i class="fas fa-users"></i> Соц. & Партнёры</button>
+                <button class="tab-btn" data-tab="eco"><i class="fas fa-leaf"></i> Экология & Арктика</button>
+                <button class="tab-btn" data-tab="edu"><i class="fas fa-graduation-cap"></i> EdTech & Блокчейн</button>
+                <button class="tab-btn" data-tab="invest"><i class="fas fa-chart-line"></i> Инвесторам</button>
             </div>
 
             <div id="tab-game" class="tab-content active"><div class="metrics-grid" id="gameMetrics"></div><div class="two-cols"><div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div><div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div></div></div>
@@ -242,9 +335,54 @@
 <div id="modalOverlay" class="modal-overlay"><div class="modal" id="modalContent"><button class="modal-close" id="closeModal">&times;</button><div id="modalInner"></div></div></div>
 
 <script>
-    // ------ симуляция данных с учётом фильтров ------
+    // ------ кастомный селект гео ------
+    const geoSelect = document.getElementById('geoSelect');
+    const geoTrigger = document.getElementById('geoTrigger');
+    const geoDropdown = document.getElementById('geoDropdown');
+    let currentGeo = 'all';   // значение по умолчанию
+
+    function updateGeoTrigger(value) {
+        const option = Array.from(geoDropdown.children).find(opt => opt.dataset.value === value);
+        if (option) {
+            const iconClone = option.querySelector('img, i')?.cloneNode(true);
+            const textClone = option.querySelector('span')?.cloneNode(true);
+            geoTrigger.innerHTML = '';
+            if (iconClone) geoTrigger.appendChild(iconClone);
+            geoTrigger.appendChild(document.createTextNode(' '));
+            if (textClone) geoTrigger.appendChild(textClone);
+        }
+    }
+
+    function closeDropdown() {
+        geoDropdown.classList.remove('active');
+    }
+
+    geoTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        geoDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!geoSelect.contains(e.target)) closeDropdown();
+    });
+
+    geoDropdown.querySelectorAll('.select-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+            const newValue = opt.dataset.value;
+            if (newValue) {
+                currentGeo = newValue;
+                updateGeoTrigger(currentGeo);
+                closeDropdown();
+                refreshAllMetrics();   // пересчёт всех метрик
+            }
+        });
+    });
+
+    // инициализация отображения
+    updateGeoTrigger('all');
+
+    // остальные фильтры
     let currentTimeRange = 'month';
-    let currentGeo = 'all';
     let currentSegment = 'all';
     let charts = {};
 
@@ -271,7 +409,7 @@
     }
 
     function refreshAllMetrics() {
-        // Игровые метрики
+        // Игровые
         let dau = applyFilters(18200);
         let mau = applyFilters(111000);
         let wau = applyFilters(48500);
@@ -286,11 +424,11 @@
         let platforms = { PC: 53, Cloud: 32, Browser: 15 };
         let geoTop = { Россия: 56, Бразилия: 11, Индия: 10, Китай: 12, "ЮАР": 4 };
         document.getElementById('gameMetrics').innerHTML = `
-            <div class="card"><div class="card-title">DAU / MAU / WAU</div><div class="card-value">${dau.toLocaleString()} / ${mau.toLocaleString()} / ${wau.toLocaleString()}</div><div class="card-sub">Новые: +${newUsers.toLocaleString()}</div></div>
-            <div class="card"><div class="card-title">Retention</div><div class="card-value">D1: ${retention1}% / D7: ${retention7}%</div><div class="card-sub">D30: ${retention30}%</div></div>
-            <div class="card"><div class="card-title">Сессия</div><div class="card-value">${sessionMins} мин</div><div class="card-sub">${sessionsPerUser} сессий/день</div></div>
-            <div class="card"><div class="card-title">Churn</div><div class="card-value">7д: ${churn7}% / 30д: ${churn30}%</div></div>
-            <div class="card"><div class="card-title">Платформы</div><div class="card-value">PC ${platforms.PC}% / Cloud ${platforms.Cloud}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-users"></i> DAU / MAU / WAU</div><div class="card-value">${dau.toLocaleString()} / ${mau.toLocaleString()} / ${wau.toLocaleString()}</div><div class="card-sub"><i class="fas fa-user-plus"></i> Новые: +${newUsers.toLocaleString()}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${retention1}% / D7: ${retention7}%</div><div class="card-sub">D30: ${retention30}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${sessionMins} мин</div><div class="card-sub">${sessionsPerUser} сессий/день</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${churn7}% / 30д: ${churn30}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-desktop"></i> Платформы</div><div class="card-value">PC ${platforms.PC}% / Cloud ${platforms.Cloud}%</div></div>
         `;
         updateChart('dauMauChart', 'line', ['DAU', 'MAU'], [dau, mau], 'Игроки');
         updateChart('geoChart', 'bar', Object.keys(geoTop), Object.values(geoTop), '%');
@@ -305,9 +443,9 @@
         let brandRevenue = applyFilters(randomRange(0.5, 1.3, 1));
         let royalties = applyFilters(randomRange(0.25, 0.72, 2));
         document.getElementById('moneyMetrics').innerHTML = `
-            <div class="card"><div class="card-title">ARPU / ARPPU</div><div class="card-value">$${arpu} / $${arppu}</div><div class="card-sub">Конверсия: ${conversion}%</div></div>
-            <div class="card"><div class="card-title">Средний чек</div><div class="card-value">$${avgCheck}</div><div class="card-sub">LTV: $${ltv}</div></div>
-            <div class="card"><div class="card-title">Бренд. доход / Роялти</div><div class="card-value">$${brandRevenue}M / $${royalties}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> ARPU / ARPPU</div><div class="card-value">$${arpu} / $${arppu}</div><div class="card-sub"><i class="fas fa-percent"></i> Конверсия: ${conversion}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-receipt"></i> Средний чек</div><div class="card-value">$${avgCheck}</div><div class="card-sub">LTV: $${ltv}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-tag"></i> Бренд. доход / Роялти</div><div class="card-value">$${brandRevenue}M / $${royalties}M</div></div>
         `;
         updateChart('revenuePieChart', 'pie', Object.keys(revenueByType), Object.values(revenueByType));
         updateChart('arpuChart', 'line', ['ARPU', 'ARPPU'], [arpu, arppu], '$');
@@ -322,10 +460,10 @@
         let avgSolveTime = randomRange(38, 94);
         let scienceModules = { Фолдинг: foldings, "De novo": newMolecules, "Квант.химия": Math.floor(quantumCalls/3.2) };
         document.getElementById('scienceMetrics').innerHTML = `
-            <div class="card"><div class="card-title">Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${successPredict}%</div></div>
-            <div class="card"><div class="card-title">Новые молекулы (de novo)</div><div class="card-value">${newMolecules}</div><div class="card-sub">Артефактов сохранено: ${artifacts}</div></div>
-            <div class="card"><div class="card-title">Квантовый адаптер</div><div class="card-value">${quantumCalls.toLocaleString()}</div><div class="card-sub">вызовов API</div></div>
-            <div class="card"><div class="card-title">Автономные исслед.</div><div class="card-value">${autoResearch}</div><div class="card-sub">Ср. время задачи: ${avgSolveTime} сек</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${successPredict}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-flask"></i> Новые молекулы (de novo)</div><div class="card-value">${newMolecules}</div><div class="card-sub">Артефактов: ${artifacts}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-atom"></i> Квантовый адаптер</div><div class="card-value">${quantumCalls.toLocaleString()}</div><div class="card-sub">вызовов API</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${autoResearch}</div><div class="card-sub">Ср. время: ${avgSolveTime} сек</div></div>
         `;
         updateChart('scienceActivityChart', 'bar', Object.keys(scienceModules), Object.values(scienceModules), 'задач');
 
@@ -339,15 +477,15 @@
         let queueSize = randomRange(110, 520);
         let s3Avail = randomRange(98.5, 99.98, 1);
         document.getElementById('techMetrics').innerHTML = `
-            <div class="card"><div class="card-title">API запросов / Latency</div><div class="card-value">${apiReqs}M/день</div><div class="card-sub">${latency} мс</div></div>
-            <div class="card"><div class="card-title">Ошибки 4xx/5xx</div><div class="card-value">${err4xx} / ${err5xx}</div><div class="card-sub">за час</div></div>
-            <div class="card"><div class="card-title">CPU / RAM</div><div class="card-value">${cpuUsage}% / ${ramUsage}%</div><div class="card-sub">Очередь задач: ${queueSize}</div></div>
-            <div class="card"><div class="card-title">S3 Доступность</div><div class="card-value">${s3Avail}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> API запросов / Latency</div><div class="card-value">${apiReqs}M/день</div><div class="card-sub">${latency} мс</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-exclamation-circle"></i> Ошибки 4xx/5xx</div><div class="card-value">${err4xx} / ${err5xx}</div><div class="card-sub">за час</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-microchip"></i> CPU / RAM</div><div class="card-value">${cpuUsage}% / ${ramUsage}%</div><div class="card-sub">Очередь задач: ${queueSize}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-database"></i> S3 Доступность</div><div class="card-value">${s3Avail}%</div></div>
         `;
         updateChart('apiLatencyChart', 'line', ['мс'], [latency], 'мс');
         updateChart('errorsChart', 'line', ['4xx','5xx'], [err4xx, err5xx], 'кол-во');
 
-        // Социальные и партнёры (без брендов)
+        // Социальные и партнёры
         let activeTeams = randomRange(132, 360);
         let openStructures = randomRange(1180, 2300);
         let licensed = randomRange(24, 58);
@@ -356,13 +494,13 @@
         let kFactor = randomRange(0.26, 0.54, 2);
         let brandEngagement = randomRange(2450, 5100);
         document.getElementById('socialMetrics').innerHTML = `
-            <div class="card"><div class="card-title">Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${openStructures}</div></div>
-            <div class="card"><div class="card-title">Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum}M</div></div>
-            <div class="card"><div class="card-title">K-factor / Активность</div><div class="card-value">${kFactor}</div><div class="card-sub">Форум: ${forumActivity} постов/нед</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${openStructures}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-file-signature"></i> Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${kFactor}</div><div class="card-sub">Форум: ${forumActivity} постов/нед</div></div>
         `;
         updateChart('brandEngagementChart', 'bar', ['Взаимодействия'], [brandEngagement], 'кол-во');
 
-        // Экология (обобщённо)
+        // Экология
         let energyMwh = randomRange(115, 225);
         let renewablePct = randomRange(61, 86);
         let hydrogenKg = randomRange(290, 590);
@@ -371,10 +509,10 @@
         let permafrostTemp = randomRange(-5.8, -1.9, 1);
         let co2Level = randomRange(410, 428);
         document.getElementById('ecoMetrics').innerHTML = `
-            <div class="card"><div class="card-title">Выработка энергии</div><div class="card-value">${energyMwh} МВт·ч</div><div class="card-sub">ВИЭ ${renewablePct}%</div></div>
-            <div class="card"><div class="card-title">Водород / CO₂ снижение</div><div class="card-value">${hydrogenKg} кг/день</div><div class="card-sub">-${co2Saved} т CO₂/день</div></div>
-            <div class="card"><div class="card-title">Заправок / Мерзлота</div><div class="card-value">${refuels}</div><div class="card-sub">Темп. мерзлоты: ${permafrostTemp}°C</div></div>
-            <div class="card"><div class="card-title">CO₂ атмосфера</div><div class="card-value">${co2Level} ppm</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Выработка энергии</div><div class="card-value">${energyMwh} МВт·ч</div><div class="card-sub">ВИЭ ${renewablePct}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-water"></i> Водород / CO₂ снижение</div><div class="card-value">${hydrogenKg} кг/день</div><div class="card-sub">-${co2Saved} т CO₂/день</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-charging-station"></i> Заправок / Мерзлота</div><div class="card-value">${refuels}</div><div class="card-sub">Темп. мерзлоты: ${permafrostTemp}°C</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-smog"></i> CO₂ атмосфера</div><div class="card-value">${co2Level} ppm</div></div>
         `;
         updateChart('co2Chart', 'line', ['CO₂'], [co2Level], 'ppm');
 
@@ -387,10 +525,10 @@
         let tokenVolume = randomRange(1.1, 4.2, 1);
         let activeWallets = randomRange(820, 2300);
         document.getElementById('eduMetrics').innerHTML = `
-            <div class="card"><div class="card-title">Обучающие миссии</div><div class="card-value">${missionsCompleted}</div><div class="card-sub">Средний балл: ${avgScore}%</div></div>
-            <div class="card"><div class="card-title">VR/AR сессии</div><div class="card-value">${vrSessions}</div><div class="card-sub">Сертификатов: ${certificates}</div></div>
-            <div class="card"><div class="card-title">Блокчейн транзакций</div><div class="card-value">${blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${tokenVolume}M</div></div>
-            <div class="card"><div class="card-title">Активные кошельки</div><div class="card-value">${activeWallets}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${missionsCompleted}</div><div class="card-sub">Средний балл: ${avgScore}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${vrSessions}</div><div class="card-sub">Сертификатов: ${certificates}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${tokenVolume}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${activeWallets}</div></div>
         `;
         updateChart('blockchainChart', 'bar', ['Транзакции'], [blockchainTx], 'шт');
 
@@ -401,9 +539,9 @@
         let publications = randomRange(3, 10);
         let partnerships = randomRange(6, 16);
         document.getElementById('investMetrics').innerHTML = `
-            <div class="card"><div class="card-title">Рост DAU (MoM)</div><div class="card-value">+${dauGrowth}%</div><div class="card-sub">Выручка Q4: $5.7M</div></div>
-            <div class="card"><div class="card-title">ROI маркетинг</div><div class="card-value">${roi}%</div><div class="card-sub">Научных публикаций: ${publications}</div></div>
-            <div class="card"><div class="card-title">Партнёрские интеграции</div><div class="card-value">${partnerships}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Рост DAU (MoM)</div><div class="card-value">+${dauGrowth}%</div><div class="card-sub">Выручка Q4: $5.7M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> ROI маркетинг</div><div class="card-value">${roi}%</div><div class="card-sub">Научных публикаций: ${publications}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Партнёрские интеграции</div><div class="card-value">${partnerships}</div></div>
         `;
         updateChart('revenueQuarterChart', 'bar', ['Q1','Q2','Q3','Q4'], revenueQuarter, 'M$');
 
@@ -415,7 +553,7 @@
             { time: new Date().toLocaleTimeString(), desc: `Рекордная активность научных модулей: ${foldings} фолдингов за сутки` }
         ];
         const newEv = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
-        eventsDiv.innerHTML = `<div class="event-item"><span class="event-time">${newEv.time}</span><span>${newEv.desc}</span></div>` + eventsDiv.innerHTML;
+        eventsDiv.innerHTML = `<div class="event-item"><span class="event-time">${newEv.time}</span><span><i class="fas fa-flask"></i> ${newEv.desc}</span></div>` + eventsDiv.innerHTML;
         if(eventsDiv.children.length > 8) eventsDiv.removeChild(eventsDiv.lastChild);
     }
 
@@ -440,17 +578,14 @@
     });
 
     const timeSelect = document.getElementById('timeRange');
-    const geoSelect = document.getElementById('geoFilter');
     const segmentSelect = document.getElementById('segmentFilter');
-    function updateFilters() {
+    function updateStandardFilters() {
         currentTimeRange = timeSelect.value;
-        currentGeo = geoSelect.value;
         currentSegment = segmentSelect.value;
         refreshAllMetrics();
     }
-    timeSelect.addEventListener('change', updateFilters);
-    geoSelect.addEventListener('change', updateFilters);
-    segmentSelect.addEventListener('change', updateFilters);
+    timeSelect.addEventListener('change', updateStandardFilters);
+    segmentSelect.addEventListener('change', updateStandardFilters);
 
     document.getElementById('exportBtn').addEventListener('click', () => {
         let csv = "Метрика,Значение\n";
@@ -463,8 +598,8 @@
     });
 
     const modalOverlay = document.getElementById('modalOverlay');
-    document.getElementById('settingsBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3>Настройки</h3><div class="setting-row"><span>Тёмная тема</span><div class="fake-checkbox active"></div></div><div class="setting-row"><span>Автообновление</span><div class="fake-checkbox active"></div></div>`; modalOverlay.style.display='flex'; };
-    document.getElementById('helpBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3>Справка</h3><p>Дашборд «Снежинка» — все KPI игры. Фильтры меняют сегменты. Данные симулируются в реальном времени.</p><p>support@snowflake.vk</p>`; modalOverlay.style.display='flex'; };
+    document.getElementById('settingsBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3><i class="fas fa-cog"></i> Настройки</h3><div class="setting-row"><span>Тёмная тема</span><div class="fake-checkbox active"></div></div><div class="setting-row"><span>Автообновление</span><div class="fake-checkbox active"></div></div>`; modalOverlay.style.display='flex'; };
+    document.getElementById('helpBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3><i class="fas fa-question-circle"></i> Справка</h3><p>Дашборд «Снежинка» — все KPI игры. Фильтры меняют сегменты. Данные симулируются в реальном времени.</p><p><i class="fas fa-envelope"></i> support@snowflake.vk</p>`; modalOverlay.style.display='flex'; };
     document.getElementById('closeModal').onclick = () => modalOverlay.style.display='none';
     modalOverlay.onclick = (e) => { if(e.target === modalOverlay) modalOverlay.style.display='none'; };
 
