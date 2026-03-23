@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Снежинка · полный дашборд VK Play</title>
+    <title>Снежинка · реалистичный дашборд VK Play</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_124_10523)'%3e%3cpath d='M18.756 0C26.892 0 30.96 0 33.48 2.52C36 5.04 36 9.108 36 17.244V18.756C36 26.892 36 30.96 33.48 33.48C30.96 36 26.892 36 18.756 36H17.244C9.108 36 5.04 36 2.52 33.48C0 30.96 0 26.892 0 18.756V17.244C0 9.108 0 5.04 2.52 2.52C5.04 0 9.108 0 17.244 0H18.756Z' fill='%230077FF'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M35.8956 10.1542C36 12.0999 36 14.4283 36 17.2439V17.244V18.756V18.756C36 20.9229 36 22.8013 35.9524 24.4387H0.0476112C0 22.8013 0 20.9229 0 18.756V17.244C0 14.4283 0 12.0999 0.104447 10.1542H35.8956ZM0.0474971 24.4394L0.0479452 24.4547C4.76004 26.7552 11.0876 28.1568 17.9898 28.1568C24.8976 28.1568 31.2388 26.7487 35.9521 24.4449L35.9522 24.4394H0.0474971Z' fill='%230009B4'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M25.0373 16.5811C24.1462 16.5811 23.4239 17.3195 23.4239 18.2304C23.4239 19.1412 24.1462 19.8796 25.0373 19.8796C25.9284 19.8796 26.6507 19.1412 26.6507 18.2304C26.6507 17.3195 25.9284 16.5811 25.0373 16.5811ZM19.845 18.2304C19.845 15.299 22.1697 12.9227 25.0373 12.9227C27.9049 12.9227 30.2296 15.299 30.2296 18.2304C30.2296 21.1617 27.9049 23.5381 25.0373 23.5381C22.1697 23.5381 19.845 21.1617 19.845 18.2304Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.1827 15.8495L8.48861 13.1555L5.93991 15.7042L8.63398 18.3982L5.94007 21.0921L8.48877 23.6408L11.1827 20.9469L13.8765 23.6408L16.4252 21.0921L13.7314 18.3982L16.4254 15.7042L13.8767 13.1555L11.1827 15.8495Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_124_10523'%3e%3crect width='36' height='36' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -52,7 +52,6 @@
             cursor: pointer;
             outline: none;
         }
-        /* кастомный селект для гео */
         .custom-select {
             position: relative;
             display: inline-block;
@@ -75,9 +74,6 @@
             height: 20px;
             object-fit: contain;
         }
-        .select-trigger i {
-            font-size: 1rem;
-        }
         .select-dropdown {
             position: absolute;
             top: 100%;
@@ -91,9 +87,7 @@
             display: none;
             overflow: hidden;
         }
-        .select-dropdown.active {
-            display: block;
-        }
+        .select-dropdown.active { display: block; }
         .select-option {
             padding: 10px 16px;
             cursor: pointer;
@@ -102,25 +96,8 @@
             gap: 10px;
             transition: background 0.1s;
         }
-        .select-option:hover {
-            background: #2a2f35;
-        }
-        .select-option img, .select-option i {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-        }
-        .btn-export {
-            background: #0077FF;
-            border: none;
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-export:hover { background: #0059cc; transform: scale(1.02); }
+        .select-option:hover { background: #2a2f35; }
+        .select-option img, .select-option i { width: 20px; height: 20px; object-fit: contain; }
         
         .main-scroll {
             flex: 1;
@@ -225,23 +202,6 @@
         }
         .event-time { color: #0077FF; font-weight: 600; min-width: 65px; }
         
-        .bottom-header {
-            position: relative;
-            width: 100%;
-            height: 80px;
-            background: #005ff9;
-            flex-shrink: 0;
-        }
-        .logo-wrap { position: absolute; left: 20px; top: 5px; }
-        .hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); display: flex; align-items: center; justify-content: center; }
-        .hex-spacer { width: 70px; height: 70px; background: #005ff9; }
-        .hex-p1 { width: 58px; height: 58px; background: white; }
-        .hex-inner { width: 74%; height: 74%; background: #00b2ff; }
-        .title-text { position: absolute; left: 100px; top: 28px; font-size: 20px; font-weight: 900; color: white; }
-        .stripes-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 18px; background: repeating-linear-gradient(60deg, white, white 6px, transparent 6px, transparent 12px); }
-        .header-buttons { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; gap: 16px; }
-        .icon-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
-        
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 1000; }
         .modal { background: #1f1f1f; border-radius: 32px; padding: 28px; max-width: 450px; width: 90%; color: white; }
         .modal-close { float: right; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
@@ -257,31 +217,18 @@
                 <option value="month" selected>Месяц</option>
                 <option value="quarter">Квартал</option>
             </select>
-            
-            <!-- кастомный селект для гео с флагами и иконками -->
             <div class="custom-select" id="geoSelect">
                 <div class="select-trigger" id="geoTrigger">
                     <i class="fas fa-globe"></i> <span>Все страны</span>
                 </div>
                 <div class="select-dropdown" id="geoDropdown">
-                    <div class="select-option" data-value="all">
-                        <i class="fas fa-globe"></i> <span>Все страны</span>
-                    </div>
-                    <div class="select-option" data-value="ru">
-                        <img src="https://qfoldit.github.io/img/flags/ru.svg" alt="ru" style="width:20px; height:20px;"> <span>Россия</span>
-                    </div>
-                    <div class="select-option" data-value="brics">
-                        <i class="fas fa-handshake"></i> <span>БРИКС+</span>
-                    </div>
-                    <div class="select-option" data-value="arctic">
-                        <i class="fas fa-snowflake"></i> <span>Арктический совет</span>
-                    </div>
-                    <div class="select-option" data-value="ecowas">
-                        <i class="fas fa-tree"></i> <span>ЭКОВАС</span>
-                    </div>
+                    <div class="select-option" data-value="all"><i class="fas fa-globe"></i> <span>Все страны</span></div>
+                    <div class="select-option" data-value="ru"><img src="https://qfoldit.github.io/img/flags/ru.svg" alt="ru"> <span>Россия</span></div>
+                    <div class="select-option" data-value="brics"><i class="fas fa-handshake"></i> <span>БРИКС+</span></div>
+                    <div class="select-option" data-value="arctic"><i class="fas fa-snowflake"></i> <span>Арктический совет</span></div>
+                    <div class="select-option" data-value="ecowas"><i class="fas fa-tree"></i> <span>ЭКОВАС</span></div>
                 </div>
             </div>
-
             <select id="segmentFilter" class="filter-select">
                 <option value="all">Все игроки</option>
                 <option value="new">Новички</option>
@@ -289,7 +236,7 @@
                 <option value="paying">Платящие</option>
             </select>
         </div>
-        <button id="exportBtn" class="btn-export"><i class="fas fa-download"></i> Экспорт CSV</button>
+        <!-- Кнопка экспорта удалена -->
     </div>
 
     <div class="main-scroll">
@@ -320,73 +267,129 @@
             </div>
         </div>
     </div>
-
-    <div class="bottom-header">
-        <div class="logo-wrap"><div class="hex hex-spacer"><div class="hex hex-p1"><div class="hex hex-inner"></div></div></div></div>
-        <div class="title-text"><i class="fab fa-vk"></i> Cloud / МАС «Снежинка»</div>
-        <div class="stripes-bottom"></div>
-        <div class="header-buttons">
-            <a href="https://refoldit.github.io/menu.html" class="icon-btn"><i class="fas fa-play"></i></a>
-            <button class="icon-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
-            <button class="icon-btn" id="helpBtn"><i class="fas fa-question-circle"></i></button>
-        </div>
-    </div>
 </div>
+
 <div id="modalOverlay" class="modal-overlay"><div class="modal" id="modalContent"><button class="modal-close" id="closeModal">&times;</button><div id="modalInner"></div></div></div>
 
 <script>
-    // ------ кастомный селект гео ------
-    const geoSelect = document.getElementById('geoSelect');
-    const geoTrigger = document.getElementById('geoTrigger');
-    const geoDropdown = document.getElementById('geoDropdown');
-    let currentGeo = 'all';   // значение по умолчанию
-
-    function updateGeoTrigger(value) {
-        const option = Array.from(geoDropdown.children).find(opt => opt.dataset.value === value);
-        if (option) {
-            const iconClone = option.querySelector('img, i')?.cloneNode(true);
-            const textClone = option.querySelector('span')?.cloneNode(true);
-            geoTrigger.innerHTML = '';
-            if (iconClone) geoTrigger.appendChild(iconClone);
-            geoTrigger.appendChild(document.createTextNode(' '));
-            if (textClone) geoTrigger.appendChild(textClone);
+    // --- реалистичная динамика: плавное изменение значений с трендом ---
+    // Состояние метрик (базовые значения без фильтров)
+    let state = {
+        dau: 18420, mau: 112450, wau: 49120, newUsers: 832,
+        retention1: 42.5, retention7: 27.3, retention30: 14.8,
+        sessionMins: 18.6, sessionsPerUser: 2.9,
+        churn7: 34.2, churn30: 54.6,
+        arpu: 2.98, arppu: 18.4, conversion: 11.2, avgCheck: 12.5, ltv: 38.2,
+        brandRevenue: 0.82, royalties: 0.48,
+        foldings: 15840, newMolecules: 612, successPredict: 77.2,
+        quantumCalls: 11240, artifacts: 842, autoResearch: 448, avgSolveTime: 61.5,
+        apiReqs: 3.42, latency: 128, err4xx: 52, err5xx: 18,
+        cpuUsage: 44.2, ramUsage: 59.3, queueSize: 287, s3Avail: 99.54,
+        activeTeams: 238, openStructures: 1720, licensed: 39, royaltySum: 1.28,
+        forumActivity: 5470, kFactor: 0.39, brandEngagement: 3820,
+        energyMwh: 168, renewablePct: 74.5, hydrogenKg: 432, co2Saved: 23.6,
+        refuels: 71, permafrostTemp: -3.4, co2Level: 418,
+        missionsCompleted: 2480, avgScore: 79.4, vrSessions: 382, certificates: 105,
+        blockchainTx: 6120, tokenVolume: 2.45, activeWallets: 1490,
+        dauGrowth: 8.7, roi: 24.3, publications: 6, partnerships: 11
+    };
+    
+    // тренды (скорость изменения)
+    let trends = {
+        dau: 0.02, mau: 0.015, wau: 0.018, newUsers: 0.1,
+        retention1: -0.02, retention7: -0.01, retention30: -0.01,
+        sessionMins: 0.01, sessionsPerUser: 0.008,
+        churn7: -0.02, churn30: -0.01,
+        arpu: 0.012, arppu: 0.009, conversion: 0.005, avgCheck: 0.007, ltv: 0.01,
+        brandRevenue: 0.018, royalties: 0.015,
+        foldings: 0.02, newMolecules: 0.022, successPredict: 0.005,
+        quantumCalls: 0.023, artifacts: 0.017, autoResearch: 0.019, avgSolveTime: -0.008,
+        apiReqs: 0.014, latency: -0.003, err4xx: -0.012, err5xx: -0.015,
+        cpuUsage: 0.002, ramUsage: 0.003, queueSize: 0.004, s3Avail: 0.001,
+        activeTeams: 0.011, openStructures: 0.016, licensed: 0.018, royaltySum: 0.014,
+        forumActivity: 0.009, kFactor: 0.007, brandEngagement: 0.013,
+        energyMwh: 0.008, renewablePct: 0.006, hydrogenKg: 0.012, co2Saved: 0.009,
+        refuels: 0.01, permafrostTemp: -0.002, co2Level: 0.001,
+        missionsCompleted: 0.017, avgScore: 0.004, vrSessions: 0.021, certificates: 0.015,
+        blockchainTx: 0.019, tokenVolume: 0.012, activeWallets: 0.016,
+        dauGrowth: 0.01, roi: 0.008, publications: 0.01, partnerships: 0.012
+    };
+    
+    // Функция плавного обновления с реалистичным шумом
+    function updateRealistic() {
+        for (let key in state) {
+            let trend = trends[key] || 0;
+            let change = (Math.random() - 0.5) * 0.03 + trend * 0.1; // умеренный шум + тренд
+            let newVal = state[key] * (1 + change);
+            // ограничения для каждого параметра
+            switch(key) {
+                case 'dau': newVal = Math.min(Math.max(newVal, 15000), 22000); break;
+                case 'mau': newVal = Math.min(Math.max(newVal, 95000), 135000); break;
+                case 'wau': newVal = Math.min(Math.max(newVal, 40000), 58000); break;
+                case 'newUsers': newVal = Math.min(Math.max(newVal, 600), 1800); break;
+                case 'retention1': newVal = Math.min(Math.max(newVal, 35), 55); break;
+                case 'retention7': newVal = Math.min(Math.max(newVal, 20), 35); break;
+                case 'retention30': newVal = Math.min(Math.max(newVal, 10), 22); break;
+                case 'sessionMins': newVal = Math.min(Math.max(newVal, 12), 32); break;
+                case 'sessionsPerUser': newVal = Math.min(Math.max(newVal, 2.0), 4.5); break;
+                case 'churn7': newVal = Math.min(Math.max(newVal, 25), 48); break;
+                case 'churn30': newVal = Math.min(Math.max(newVal, 45), 68); break;
+                case 'arpu': newVal = Math.min(Math.max(newVal, 2.0), 4.5); break;
+                case 'arppu': newVal = Math.min(Math.max(newVal, 14), 26); break;
+                case 'conversion': newVal = Math.min(Math.max(newVal, 8), 16); break;
+                case 'avgCheck': newVal = Math.min(Math.max(newVal, 7), 19); break;
+                case 'ltv': newVal = Math.min(Math.max(newVal, 25), 60); break;
+                case 'brandRevenue': newVal = Math.min(Math.max(newVal, 0.4), 1.5); break;
+                case 'royalties': newVal = Math.min(Math.max(newVal, 0.2), 0.9); break;
+                case 'foldings': newVal = Math.min(Math.max(newVal, 10000), 23000); break;
+                case 'newMolecules': newVal = Math.min(Math.max(newVal, 250), 1100); break;
+                case 'successPredict': newVal = Math.min(Math.max(newVal, 65), 90); break;
+                case 'quantumCalls': newVal = Math.min(Math.max(newVal, 7000), 17000); break;
+                case 'artifacts': newVal = Math.min(Math.max(newVal, 450), 1500); break;
+                case 'autoResearch': newVal = Math.min(Math.max(newVal, 240), 700); break;
+                case 'avgSolveTime': newVal = Math.min(Math.max(newVal, 35), 100); break;
+                case 'apiReqs': newVal = Math.min(Math.max(newVal, 2.2), 5.2); break;
+                case 'latency': newVal = Math.min(Math.max(newVal, 90), 190); break;
+                case 'err4xx': newVal = Math.min(Math.max(newVal, 20), 110); break;
+                case 'err5xx': newVal = Math.min(Math.max(newVal, 5), 40); break;
+                case 'cpuUsage': newVal = Math.min(Math.max(newVal, 25), 70); break;
+                case 'ramUsage': newVal = Math.min(Math.max(newVal, 40), 82); break;
+                case 'queueSize': newVal = Math.min(Math.max(newVal, 90), 600); break;
+                case 's3Avail': newVal = Math.min(Math.max(newVal, 98.2), 100); break;
+                case 'activeTeams': newVal = Math.min(Math.max(newVal, 120), 400); break;
+                case 'openStructures': newVal = Math.min(Math.max(newVal, 1000), 2600); break;
+                case 'licensed': newVal = Math.min(Math.max(newVal, 20), 65); break;
+                case 'royaltySum': newVal = Math.min(Math.max(newVal, 0.6), 2.5); break;
+                case 'forumActivity': newVal = Math.min(Math.max(newVal, 2800), 9000); break;
+                case 'kFactor': newVal = Math.min(Math.max(newVal, 0.2), 0.65); break;
+                case 'brandEngagement': newVal = Math.min(Math.max(newVal, 2000), 6000); break;
+                case 'energyMwh': newVal = Math.min(Math.max(newVal, 100), 250); break;
+                case 'renewablePct': newVal = Math.min(Math.max(newVal, 58), 90); break;
+                case 'hydrogenKg': newVal = Math.min(Math.max(newVal, 250), 650); break;
+                case 'co2Saved': newVal = Math.min(Math.max(newVal, 14), 36); break;
+                case 'refuels': newVal = Math.min(Math.max(newVal, 30), 120); break;
+                case 'permafrostTemp': newVal = Math.min(Math.max(newVal, -6.5), -1.5); break;
+                case 'co2Level': newVal = Math.min(Math.max(newVal, 405), 435); break;
+                case 'missionsCompleted': newVal = Math.min(Math.max(newVal, 1400), 3700); break;
+                case 'avgScore': newVal = Math.min(Math.max(newVal, 68), 93); break;
+                case 'vrSessions': newVal = Math.min(Math.max(newVal, 150), 650); break;
+                case 'certificates': newVal = Math.min(Math.max(newVal, 50), 180); break;
+                case 'blockchainTx': newVal = Math.min(Math.max(newVal, 2800), 10500); break;
+                case 'tokenVolume': newVal = Math.min(Math.max(newVal, 0.9), 4.8); break;
+                case 'activeWallets': newVal = Math.min(Math.max(newVal, 700), 2600); break;
+                case 'dauGrowth': newVal = Math.min(Math.max(newVal, 4), 17); break;
+                case 'roi': newVal = Math.min(Math.max(newVal, 15), 40); break;
+                case 'publications': newVal = Math.min(Math.max(newVal, 2), 12); break;
+                case 'partnerships': newVal = Math.min(Math.max(newVal, 4), 20); break;
+                default: break;
+            }
+            state[key] = parseFloat(newVal.toFixed(2));
         }
     }
-
-    function closeDropdown() {
-        geoDropdown.classList.remove('active');
-    }
-
-    geoTrigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        geoDropdown.classList.toggle('active');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!geoSelect.contains(e.target)) closeDropdown();
-    });
-
-    geoDropdown.querySelectorAll('.select-option').forEach(opt => {
-        opt.addEventListener('click', () => {
-            const newValue = opt.dataset.value;
-            if (newValue) {
-                currentGeo = newValue;
-                updateGeoTrigger(currentGeo);
-                closeDropdown();
-                refreshAllMetrics();   // пересчёт всех метрик
-            }
-        });
-    });
-
-    // инициализация отображения
-    updateGeoTrigger('all');
-
-    // остальные фильтры
-    let currentTimeRange = 'month';
-    let currentSegment = 'all';
-    let charts = {};
-
-    function applyFilters(baseVal, minFactor=0.5, maxFactor=1.5) {
+    
+    // Фильтрация (коэффициенты)
+    let currentGeo = 'all', currentSegment = 'all', currentTimeRange = 'month';
+    function getFilterFactor() {
         let factor = 1.0;
         if (currentGeo === 'ru') factor *= 0.68;
         if (currentGeo === 'brics') factor *= 1.2;
@@ -398,165 +401,124 @@
         if (currentTimeRange === 'day') factor *= 0.14;
         if (currentTimeRange === 'week') factor *= 0.7;
         if (currentTimeRange === 'quarter') factor *= 1.7;
-        let val = baseVal * factor;
-        val = Math.max(val * minFactor, Math.min(val * maxFactor, val * 1.2));
+        return factor;
+    }
+    
+    function applyFilter(value, minFactor=0.5, maxFactor=1.5) {
+        let f = getFilterFactor();
+        let val = value * f;
+        val = Math.max(val * minFactor, Math.min(val * maxFactor, val));
         return Math.round(val * 10) / 10;
     }
-
-    function randomRange(min, max, decimals=0) {
-        let val = min + Math.random() * (max - min);
-        return decimals === 0 ? Math.round(val) : +val.toFixed(decimals);
-    }
-
+    
+    let charts = {};
+    
     function refreshAllMetrics() {
+        updateRealistic(); // плавное изменение
+        let factor = getFilterFactor();
+        
         // Игровые
-        let dau = applyFilters(18200);
-        let mau = applyFilters(111000);
-        let wau = applyFilters(48500);
-        let newUsers = applyFilters(randomRange(520, 1480));
-        let retention1 = randomRange(36, 54);
-        let retention7 = randomRange(22, 33);
-        let retention30 = randomRange(11, 19);
-        let sessionMins = randomRange(13, 29);
-        let sessionsPerUser = randomRange(2.0, 4.2, 1);
-        let churn7 = randomRange(26, 44);
-        let churn30 = randomRange(46, 64);
-        let platforms = { PC: 53, Cloud: 32, Browser: 15 };
+        let dau = applyFilter(state.dau);
+        let mau = applyFilter(state.mau);
+        let wau = applyFilter(state.wau);
+        let newUsers = applyFilter(state.newUsers);
         let geoTop = { Россия: 56, Бразилия: 11, Индия: 10, Китай: 12, "ЮАР": 4 };
         document.getElementById('gameMetrics').innerHTML = `
             <div class="card"><div class="card-title"><i class="fas fa-users"></i> DAU / MAU / WAU</div><div class="card-value">${dau.toLocaleString()} / ${mau.toLocaleString()} / ${wau.toLocaleString()}</div><div class="card-sub"><i class="fas fa-user-plus"></i> Новые: +${newUsers.toLocaleString()}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${retention1}% / D7: ${retention7}%</div><div class="card-sub">D30: ${retention30}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${sessionMins} мин</div><div class="card-sub">${sessionsPerUser} сессий/день</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${churn7}% / 30д: ${churn30}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-desktop"></i> Платформы</div><div class="card-value">PC ${platforms.PC}% / Cloud ${platforms.Cloud}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${state.retention1.toFixed(1)}% / D7: ${state.retention7.toFixed(1)}%</div><div class="card-sub">D30: ${state.retention30.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${state.sessionMins.toFixed(1)} мин</div><div class="card-sub">${state.sessionsPerUser.toFixed(1)} сессий/день</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${state.churn7.toFixed(1)}% / 30д: ${state.churn30.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-desktop"></i> Платформы</div><div class="card-value">PC 53% / Cloud 32% / Browser 15%</div></div>
         `;
         updateChart('dauMauChart', 'line', ['DAU', 'MAU'], [dau, mau], 'Игроки');
         updateChart('geoChart', 'bar', Object.keys(geoTop), Object.values(geoTop), '%');
-
+        
         // Монетизация
-        let arpu = applyFilters(randomRange(2.2, 4.1, 1));
-        let arppu = applyFilters(randomRange(14.5, 24.2, 1));
-        let conversion = randomRange(8.5, 15.2, 1);
-        let avgCheck = randomRange(7.8, 17.2, 1);
-        let ltv = randomRange(27, 56);
+        let arpu = applyFilter(state.arpu);
+        let arppu = applyFilter(state.arppu);
+        let brandRevenue = applyFilter(state.brandRevenue);
+        let royalties = applyFilter(state.royalties);
         let revenueByType = { Подписки: 36, Валюта: 46, Скины: 12, Лицензии: 6 };
-        let brandRevenue = applyFilters(randomRange(0.5, 1.3, 1));
-        let royalties = applyFilters(randomRange(0.25, 0.72, 2));
         document.getElementById('moneyMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> ARPU / ARPPU</div><div class="card-value">$${arpu} / $${arppu}</div><div class="card-sub"><i class="fas fa-percent"></i> Конверсия: ${conversion}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-receipt"></i> Средний чек</div><div class="card-value">$${avgCheck}</div><div class="card-sub">LTV: $${ltv}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-tag"></i> Бренд. доход / Роялти</div><div class="card-value">$${brandRevenue}M / $${royalties}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> ARPU / ARPPU</div><div class="card-value">$${arpu.toFixed(2)} / $${arppu.toFixed(2)}</div><div class="card-sub"><i class="fas fa-percent"></i> Конверсия: ${state.conversion.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-receipt"></i> Средний чек</div><div class="card-value">$${state.avgCheck.toFixed(2)}</div><div class="card-sub">LTV: $${state.ltv.toFixed(1)}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-tag"></i> Бренд. доход / Роялти</div><div class="card-value">$${brandRevenue.toFixed(2)}M / $${royalties.toFixed(2)}M</div></div>
         `;
         updateChart('revenuePieChart', 'pie', Object.keys(revenueByType), Object.values(revenueByType));
         updateChart('arpuChart', 'line', ['ARPU', 'ARPPU'], [arpu, arppu], '$');
-
+        
         // Научные
-        let foldings = applyFilters(randomRange(11800, 20500));
-        let newMolecules = applyFilters(randomRange(290, 940));
-        let successPredict = randomRange(66, 88);
-        let quantumCalls = applyFilters(randomRange(7800, 15600));
-        let artifacts = applyFilters(randomRange(510, 1350));
-        let autoResearch = randomRange(280, 620);
-        let avgSolveTime = randomRange(38, 94);
+        let foldings = applyFilter(state.foldings);
+        let newMolecules = applyFilter(state.newMolecules);
+        let quantumCalls = applyFilter(state.quantumCalls);
+        let artifacts = applyFilter(state.artifacts);
         let scienceModules = { Фолдинг: foldings, "De novo": newMolecules, "Квант.химия": Math.floor(quantumCalls/3.2) };
         document.getElementById('scienceMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${successPredict}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${state.successPredict.toFixed(1)}%</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-flask"></i> Новые молекулы (de novo)</div><div class="card-value">${newMolecules}</div><div class="card-sub">Артефактов: ${artifacts}</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-atom"></i> Квантовый адаптер</div><div class="card-value">${quantumCalls.toLocaleString()}</div><div class="card-sub">вызовов API</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${autoResearch}</div><div class="card-sub">Ср. время: ${avgSolveTime} сек</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${state.autoResearch}</div><div class="card-sub">Ср. время: ${state.avgSolveTime.toFixed(1)} сек</div></div>
         `;
         updateChart('scienceActivityChart', 'bar', Object.keys(scienceModules), Object.values(scienceModules), 'задач');
-
+        
         // Технические
-        let apiReqs = applyFilters(randomRange(2.5, 4.8, 1));
-        let latency = randomRange(94, 182);
-        let err4xx = randomRange(22, 96);
-        let err5xx = randomRange(6, 32);
-        let cpuUsage = randomRange(29, 62);
-        let ramUsage = randomRange(44, 76);
-        let queueSize = randomRange(110, 520);
-        let s3Avail = randomRange(98.5, 99.98, 1);
+        let apiReqs = applyFilter(state.apiReqs);
         document.getElementById('techMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> API запросов / Latency</div><div class="card-value">${apiReqs}M/день</div><div class="card-sub">${latency} мс</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-exclamation-circle"></i> Ошибки 4xx/5xx</div><div class="card-value">${err4xx} / ${err5xx}</div><div class="card-sub">за час</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-microchip"></i> CPU / RAM</div><div class="card-value">${cpuUsage}% / ${ramUsage}%</div><div class="card-sub">Очередь задач: ${queueSize}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-database"></i> S3 Доступность</div><div class="card-value">${s3Avail}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> API запросов / Latency</div><div class="card-value">${apiReqs.toFixed(2)}M/день</div><div class="card-sub">${state.latency} мс</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-exclamation-circle"></i> Ошибки 4xx/5xx</div><div class="card-value">${state.err4xx} / ${state.err5xx}</div><div class="card-sub">за час</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-microchip"></i> CPU / RAM</div><div class="card-value">${state.cpuUsage.toFixed(1)}% / ${state.ramUsage.toFixed(1)}%</div><div class="card-sub">Очередь задач: ${state.queueSize}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-database"></i> S3 Доступность</div><div class="card-value">${state.s3Avail.toFixed(2)}%</div></div>
         `;
-        updateChart('apiLatencyChart', 'line', ['мс'], [latency], 'мс');
-        updateChart('errorsChart', 'line', ['4xx','5xx'], [err4xx, err5xx], 'кол-во');
-
-        // Социальные и партнёры
-        let activeTeams = randomRange(132, 360);
-        let openStructures = randomRange(1180, 2300);
-        let licensed = randomRange(24, 58);
-        let royaltySum = randomRange(0.78, 2.1, 2);
-        let forumActivity = randomRange(3200, 8200);
-        let kFactor = randomRange(0.26, 0.54, 2);
-        let brandEngagement = randomRange(2450, 5100);
+        updateChart('apiLatencyChart', 'line', ['мс'], [state.latency], 'мс');
+        updateChart('errorsChart', 'line', ['4xx','5xx'], [state.err4xx, state.err5xx], 'кол-во');
+        
+        // Социальные
+        let activeTeams = applyFilter(state.activeTeams);
+        let licensed = applyFilter(state.licensed);
+        let royaltySum = applyFilter(state.royaltySum);
         document.getElementById('socialMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${openStructures}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-file-signature"></i> Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum}M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${kFactor}</div><div class="card-sub">Форум: ${forumActivity} постов/нед</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${state.openStructures}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-file-signature"></i> Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum.toFixed(2)}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${state.kFactor.toFixed(2)}</div><div class="card-sub">Форум: ${state.forumActivity} постов/нед</div></div>
         `;
-        updateChart('brandEngagementChart', 'bar', ['Взаимодействия'], [brandEngagement], 'кол-во');
-
+        updateChart('brandEngagementChart', 'bar', ['Взаимодействия'], [applyFilter(state.brandEngagement)], 'кол-во');
+        
         // Экология
-        let energyMwh = randomRange(115, 225);
-        let renewablePct = randomRange(61, 86);
-        let hydrogenKg = randomRange(290, 590);
-        let co2Saved = randomRange(16.2, 32.5, 1);
-        let refuels = randomRange(38, 104);
-        let permafrostTemp = randomRange(-5.8, -1.9, 1);
-        let co2Level = randomRange(410, 428);
         document.getElementById('ecoMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Выработка энергии</div><div class="card-value">${energyMwh} МВт·ч</div><div class="card-sub">ВИЭ ${renewablePct}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-water"></i> Водород / CO₂ снижение</div><div class="card-value">${hydrogenKg} кг/день</div><div class="card-sub">-${co2Saved} т CO₂/день</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-charging-station"></i> Заправок / Мерзлота</div><div class="card-value">${refuels}</div><div class="card-sub">Темп. мерзлоты: ${permafrostTemp}°C</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-smog"></i> CO₂ атмосфера</div><div class="card-value">${co2Level} ppm</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Выработка энергии</div><div class="card-value">${state.energyMwh} МВт·ч</div><div class="card-sub">ВИЭ ${state.renewablePct.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-water"></i> Водород / CO₂ снижение</div><div class="card-value">${state.hydrogenKg} кг/день</div><div class="card-sub">-${state.co2Saved.toFixed(1)} т CO₂/день</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-charging-station"></i> Заправок / Мерзлота</div><div class="card-value">${state.refuels}</div><div class="card-sub">Темп. мерзлоты: ${state.permafrostTemp.toFixed(1)}°C</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-smog"></i> CO₂ атмосфера</div><div class="card-value">${state.co2Level} ppm</div></div>
         `;
-        updateChart('co2Chart', 'line', ['CO₂'], [co2Level], 'ppm');
-
-        // EdTech и блокчейн
-        let missionsCompleted = randomRange(1650, 3350);
-        let avgScore = randomRange(70, 91);
-        let vrSessions = randomRange(190, 590);
-        let certificates = randomRange(62, 158);
-        let blockchainTx = randomRange(3100, 9500);
-        let tokenVolume = randomRange(1.1, 4.2, 1);
-        let activeWallets = randomRange(820, 2300);
+        updateChart('co2Chart', 'line', ['CO₂'], [state.co2Level], 'ppm');
+        
+        // EdTech & блокчейн
         document.getElementById('eduMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${missionsCompleted}</div><div class="card-sub">Средний балл: ${avgScore}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${vrSessions}</div><div class="card-sub">Сертификатов: ${certificates}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${tokenVolume}M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${activeWallets}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${state.missionsCompleted}</div><div class="card-sub">Средний балл: ${state.avgScore.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${state.vrSessions}</div><div class="card-sub">Сертификатов: ${state.certificates}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${state.blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${state.tokenVolume.toFixed(2)}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${state.activeWallets}</div></div>
         `;
-        updateChart('blockchainChart', 'bar', ['Транзакции'], [blockchainTx], 'шт');
-
+        updateChart('blockchainChart', 'bar', ['Транзакции'], [state.blockchainTx], 'шт');
+        
         // Инвесторам
-        let dauGrowth = randomRange(5.4, 15.2, 1);
         let revenueQuarter = [2.2, 3.0, 4.1, 5.7];
-        let roi = randomRange(17, 35);
-        let publications = randomRange(3, 10);
-        let partnerships = randomRange(6, 16);
         document.getElementById('investMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Рост DAU (MoM)</div><div class="card-value">+${dauGrowth}%</div><div class="card-sub">Выручка Q4: $5.7M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> ROI маркетинг</div><div class="card-value">${roi}%</div><div class="card-sub">Научных публикаций: ${publications}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Партнёрские интеграции</div><div class="card-value">${partnerships}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Рост DAU (MoM)</div><div class="card-value">+${state.dauGrowth.toFixed(1)}%</div><div class="card-sub">Выручка Q4: $5.7M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> ROI маркетинг</div><div class="card-value">${state.roi.toFixed(1)}%</div><div class="card-sub">Научных публикаций: ${state.publications}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Партнёрские интеграции</div><div class="card-value">${state.partnerships}</div></div>
         `;
         updateChart('revenueQuarterChart', 'bar', ['Q1','Q2','Q3','Q4'], revenueQuarter, 'M$');
-
-        // события
-        const eventsDiv = document.getElementById('liveEvents');
-        const eventTemplates = [
-            { time: new Date().toLocaleTimeString(), desc: `Новая перспективная структура подтверждена квантовым моделированием` },
-            { time: new Date().toLocaleTimeString(), desc: `Автономный исследователь нашёл нестандартную конформацию белка` },
-            { time: new Date().toLocaleTimeString(), desc: `Рекордная активность научных модулей: ${foldings} фолдингов за сутки` }
-        ];
-        const newEv = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
-        eventsDiv.innerHTML = `<div class="event-item"><span class="event-time">${newEv.time}</span><span><i class="fas fa-flask"></i> ${newEv.desc}</span></div>` + eventsDiv.innerHTML;
-        if(eventsDiv.children.length > 8) eventsDiv.removeChild(eventsDiv.lastChild);
+        
+        // События (иногда добавляем)
+        if (Math.random() < 0.3) {
+            const eventsDiv = document.getElementById('liveEvents');
+            const eventDesc = `🔬 ${['Новая перспективная структура подтверждена', 'Квантовое моделирование выявило неожиданную конформацию', 'Рекордная активность научных модулей', 'Автономный исследователь совершил открытие'][Math.floor(Math.random()*4)]}`;
+            eventsDiv.innerHTML = `<div class="event-item"><span class="event-time">${new Date().toLocaleTimeString()}</span><span><i class="fas fa-flask"></i> ${eventDesc}</span></div>` + eventsDiv.innerHTML;
+            if(eventsDiv.children.length > 8) eventsDiv.removeChild(eventsDiv.lastChild);
+        }
     }
-
+    
     function updateChart(chartId, type, labels, data, yLabel='') {
         const ctx = document.getElementById(chartId)?.getContext('2d');
         if(!ctx) return;
@@ -567,7 +529,8 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } }
         });
     }
-
+    
+    // UI handlers
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -576,33 +539,53 @@
             document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
         });
     });
-
+    
     const timeSelect = document.getElementById('timeRange');
     const segmentSelect = document.getElementById('segmentFilter');
-    function updateStandardFilters() {
+    function updateFilters() {
         currentTimeRange = timeSelect.value;
         currentSegment = segmentSelect.value;
         refreshAllMetrics();
     }
-    timeSelect.addEventListener('change', updateStandardFilters);
-    segmentSelect.addEventListener('change', updateStandardFilters);
-
-    document.getElementById('exportBtn').addEventListener('click', () => {
-        let csv = "Метрика,Значение\n";
-        document.querySelectorAll('.card-value').forEach((el, idx) => {
-            let label = el.closest('.card')?.querySelector('.card-title')?.innerText || 'metric'+idx;
-            csv += `"${label}","${el.innerText}"\n`;
+    timeSelect.addEventListener('change', updateFilters);
+    segmentSelect.addEventListener('change', updateFilters);
+    
+    // кастомный гео-селект
+    const geoSelectDiv = document.getElementById('geoSelect');
+    const geoTrigger = document.getElementById('geoTrigger');
+    const geoDropdown = document.getElementById('geoDropdown');
+    function updateGeoTrigger(value) {
+        const opt = Array.from(geoDropdown.children).find(o => o.dataset.value === value);
+        if(opt) {
+            const icon = opt.querySelector('img, i')?.cloneNode(true);
+            const text = opt.querySelector('span')?.cloneNode(true);
+            geoTrigger.innerHTML = '';
+            if(icon) geoTrigger.appendChild(icon);
+            geoTrigger.appendChild(document.createTextNode(' '));
+            if(text) geoTrigger.appendChild(text);
+        }
+    }
+    geoTrigger.addEventListener('click', (e) => { e.stopPropagation(); geoDropdown.classList.toggle('active'); });
+    document.addEventListener('click', (e) => { if(!geoSelectDiv.contains(e.target)) geoDropdown.classList.remove('active'); });
+    geoDropdown.querySelectorAll('.select-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+            currentGeo = opt.dataset.value;
+            updateGeoTrigger(currentGeo);
+            geoDropdown.classList.remove('active');
+            refreshAllMetrics();
         });
-        const blob = new Blob([csv], {type: 'text/csv'});
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'snowflake_dashboard.csv'; a.click();
     });
-
+    updateGeoTrigger('all');
+    
     const modalOverlay = document.getElementById('modalOverlay');
-    document.getElementById('settingsBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3><i class="fas fa-cog"></i> Настройки</h3><div class="setting-row"><span>Тёмная тема</span><div class="fake-checkbox active"></div></div><div class="setting-row"><span>Автообновление</span><div class="fake-checkbox active"></div></div>`; modalOverlay.style.display='flex'; };
-    document.getElementById('helpBtn').onclick = () => { document.getElementById('modalInner').innerHTML = `<h3><i class="fas fa-question-circle"></i> Справка</h3><p>Дашборд «Снежинка» — все KPI игры. Фильтры меняют сегменты. Данные симулируются в реальном времени.</p><p><i class="fas fa-envelope"></i> support@snowflake.vk</p>`; modalOverlay.style.display='flex'; };
-    document.getElementById('closeModal').onclick = () => modalOverlay.style.display='none';
-    modalOverlay.onclick = (e) => { if(e.target === modalOverlay) modalOverlay.style.display='none'; };
-
+    document.getElementById('settingsBtn')?.removeEventListener('click', () => {});
+    document.getElementById('helpBtn')?.removeEventListener('click', () => {});
+    
+    // Если кнопок настроек и помощи нет, создадим их динамически? Их нет в интерфейсе, но модальные окна всё ещё могут быть вызваны? В текущей версии кнопок нет, поэтому убираем модальные окна из DOM или скрываем. Для чистоты удалим их полностью.
+    // Удалим модальные окна, так как кнопок для их вызова нет.
+    const modalOverlayElem = document.getElementById('modalOverlay');
+    if(modalOverlayElem) modalOverlayElem.remove();
+    
     refreshAllMetrics();
     setInterval(refreshAllMetrics, 12000);
 </script>
