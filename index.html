@@ -48,35 +48,36 @@
             flex-wrap: wrap;
             align-items: center;
         }
-        .filter-select {
-            background: #1f1f1f;
-            border: 1px solid #333;
-            border-radius: 40px;
-            padding: 8px 16px;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-            outline: none;
-        }
-        .custom-select {
-            position: relative;
-            display: inline-block;
-            min-width: 180px;
-        }
-        .select-trigger {
+        /* Общие стили для всех выпадающих списков — кастомные, без дефолтных элементов */
+        .filter-select, .custom-select .select-trigger {
             background: #1f1f1f;
             border: 1px solid #333;
             border-radius: 40px;
             padding: 8px 32px 8px 16px;
             color: white;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-        .select-trigger i, .select-trigger span {
+            outline: none;
             font-size: 1rem;
+            line-height: 1.4;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px;
+        }
+        /* Для кастомного селекта убираем стандартную стрелку из фона, так как она будет через псевдоэлемент? Но для единообразия добавляем стрелку так же фоном */
+        .custom-select .select-trigger {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        /* Стили для кастомного выпадающего меню */
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            min-width: 180px;
         }
         .select-dropdown {
             position: absolute;
@@ -132,7 +133,6 @@
             max-width: 1600px;
             margin: 0 auto;
         }
-        /* Блок профиля: аватарка сверху, имя и ID под ней */
         .player-card {
             background: linear-gradient(135deg, rgba(20,30,45,0.95) 0%, rgba(10,18,28,0.95) 100%);
             backdrop-filter: blur(12px);
@@ -256,16 +256,6 @@
             background: #005fcc;
             transform: scale(1.02);
         }
-        .btn-large-outline {
-            background: transparent;
-            border: 2px solid #0077FF;
-            color: #0077FF;
-        }
-        .btn-large-outline:hover {
-            background: #0077FF;
-            color: white;
-        }
-        /* Структурированные карточки метрик — добавим заголовки и разделение */
         .section-title {
             font-size: 1.4rem;
             font-weight: 700;
@@ -289,7 +279,6 @@
             padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: 0.2s;
-            position: relative;
         }
         .card:hover { border-color: #0077FF33; transform: translateY(-2px); }
         .card-title {
@@ -312,6 +301,18 @@
             font-size: 0.8rem;
             color: #4caf92;
             margin-top: 8px;
+        }
+        /* дополнительные стили для многострочных метрик */
+        .metric-line {
+            display: block;
+            margin-bottom: 6px;
+        }
+        .metric-line:last-child {
+            margin-bottom: 0;
+        }
+        .metric-label {
+            color: #aaa;
+            font-size: 0.85rem;
         }
         .tabs {
             display: flex;
@@ -482,33 +483,33 @@
 
             <div class="tabs">
                 <button class="tab-btn active" data-tab="game"><i class="fas fa-gamepad"></i> Игровые</button>
-                <button class="tab-btn" data-tab="science"><i class="fas fa-dna"></i> Наука & Геймплей</button>
                 <button class="tab-btn" data-tab="social"><i class="fas fa-users"></i> Соц. & Партнёры</button>
                 <button class="tab-btn" data-tab="edu"><i class="fas fa-graduation-cap"></i> EdTech & Блокчейн</button>
             </div>
 
-            <!-- Зонированные блоки метрик: добавляем заголовки секций -->
+            <!-- Вкладка Игровые -->
             <div id="tab-game" class="tab-content active">
+                <div class="section-title"><i class="fas fa-dna"></i> Научные достижения сообщества</div>
+                <div class="metrics-grid" id="scienceMetrics"></div>
                 <div class="section-title"><i class="fas fa-chart-simple"></i> Ключевые метрики аудитории</div>
                 <div class="metrics-grid" id="gameMetrics"></div>
-                <div class="section-title"><i class="fas fa-chart-line"></i> Динамика аудитории</div>
+                <div class="section-title"><i class="fas fa-chart-line"></i> Динамика аудитории и научная активность</div>
                 <div class="two-cols">
                     <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div>
                     <div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div>
                 </div>
+                <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Активность научных модулей (задачи/день)</div><canvas id="scienceActivityChart" height="180"></canvas></div>
             </div>
-            <div id="tab-science" class="tab-content">
-                <div class="section-title"><i class="fas fa-dna"></i> Научные достижения сообщества</div>
-                <div class="metrics-grid" id="scienceMetrics"></div>
-                <div class="section-title"><i class="fas fa-chart-bar"></i> Активность научных модулей</div>
-                <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Задачи в день</div><canvas id="scienceActivityChart" height="180"></canvas></div>
-            </div>
+
+            <!-- Вкладка Соц. & Партнёры -->
             <div id="tab-social" class="tab-content">
                 <div class="section-title"><i class="fas fa-users"></i> Социальная активность и партнёрства</div>
                 <div class="metrics-grid" id="socialMetrics"></div>
                 <div class="section-title"><i class="fas fa-handshake"></i> Вовлечённость с брендами</div>
                 <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Вовлечённость с брендированными объектами</div><canvas id="brandEngagementChart" height="180"></canvas></div>
             </div>
+
+            <!-- Вкладка EdTech & Блокчейн -->
             <div id="tab-edu" class="tab-content">
                 <div class="section-title"><i class="fas fa-graduation-cap"></i> Образовательные программы и блокчейн</div>
                 <div class="metrics-grid" id="eduMetrics"></div>
@@ -645,8 +646,8 @@
     let mauData = [112450, 113200, 114100, 115000, 115800, 116500, 117200];
     let geoLabels = ['Россия', 'Бразилия', 'Индия', 'Китай', 'ЮАР'];
     let geoValues = [56, 11, 10, 12, 4];
-    let scienceLabels = ['Фолдинг', 'De novo', 'Квант.химия'];
-    let scienceValues = [15840, 612, 3512];
+    let scienceLabels = ['Фолдинг', 'De novo', 'Квант.химия', 'L‑systems'];
+    let scienceValues = [15840, 612, 3512, 1250];
     let brandValues = [3820];
     let blockchainValues = [6120];
 
@@ -681,7 +682,9 @@
             let change = (Math.random() - 0.5) * 0.03;
             if (i===0) return Math.max(10000, Math.min(23000, v * (1 + change)));
             if (i===1) return Math.max(250, Math.min(1100, v * (1 + change)));
-            return Math.max(2000, Math.min(6000, v * (1 + change)));
+            if (i===2) return Math.max(2000, Math.min(6000, v * (1 + change)));
+            if (i===3) return Math.max(800, Math.min(2200, v * (1 + change)));
+            return v;
         });
         brandValues[0] = Math.max(2000, Math.min(6000, brandValues[0] + (Math.random() - 0.5) * 80));
         blockchainValues[0] = Math.max(2800, Math.min(10500, blockchainValues[0] + (Math.random() - 0.5) * 150));
@@ -754,17 +757,55 @@
         if (currentTimeRange === 'week') factor *= 0.7;
         if (currentTimeRange === 'quarter') factor *= 1.7;
         const apply = (v) => Math.round(v * factor * 10) / 10;
+
+        // --- gameMetrics (ключевые метрики аудитории) ---
         let dau = apply(metricsState.dau);
         let mau = apply(metricsState.mau);
         let wau = apply(metricsState.wau);
         let newUsers = apply(metricsState.newUsers);
         document.getElementById('gameMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-users"></i> DAU / MAU / WAU</div><div class="card-value">${dau.toLocaleString()} / ${mau.toLocaleString()} / ${wau.toLocaleString()}</div><div class="card-sub"><i class="fas fa-user-plus"></i> Новые: +${newUsers.toLocaleString()}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${metricsState.retention1.toFixed(1)}% / D7: ${metricsState.retention7.toFixed(1)}%</div><div class="card-sub">D30: ${metricsState.retention30.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${metricsState.sessionMins.toFixed(1)} мин</div><div class="card-sub">${metricsState.sessionsPerUser.toFixed(1)} сессий/день</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${metricsState.churn7.toFixed(1)}% / 30д: ${metricsState.churn30.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-desktop"></i> Платформы</div><div class="card-value">PC 53% / Cloud 32% / Browser 15%</div></div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-users"></i> Аудитория</div>
+                <div class="card-value">
+                    <span class="metric-line">DAU: ${dau.toLocaleString()}</span>
+                    <span class="metric-line">MAU: ${mau.toLocaleString()}</span>
+                    <span class="metric-line">WAU: ${wau.toLocaleString()}</span>
+                    <span class="metric-line" style="font-size:1rem; color:#4caf92;">+${newUsers.toLocaleString()} новых</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-simple"></i> Удержание (Retention)</div>
+                <div class="card-value">
+                    <span class="metric-line">D1: ${metricsState.retention1.toFixed(1)}%</span>
+                    <span class="metric-line">D7: ${metricsState.retention7.toFixed(1)}%</span>
+                    <span class="metric-line">D30: ${metricsState.retention30.toFixed(1)}%</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div>
+                <div class="card-value">
+                    <span class="metric-line">${metricsState.sessionMins.toFixed(1)} мин</span>
+                    <span class="metric-line">${metricsState.sessionsPerUser.toFixed(1)} сессий/день</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-exclamation-triangle"></i> Отток (Churn)</div>
+                <div class="card-value">
+                    <span class="metric-line">7 дней: ${metricsState.churn7.toFixed(1)}%</span>
+                    <span class="metric-line">30 дней: ${metricsState.churn30.toFixed(1)}%</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-desktop"></i> Платформы</div>
+                <div class="card-value">
+                    <span class="metric-line">PC: 53%</span>
+                    <span class="metric-line">Cloud: 32%</span>
+                    <span class="metric-line">Browser: 15%</span>
+                </div>
+            </div>
         `;
+
+        // --- scienceMetrics ---
         let foldings = apply(metricsState.foldings);
         let newMolecules = apply(metricsState.newMolecules);
         let quantumCalls = apply(metricsState.quantumCalls);
@@ -776,20 +817,31 @@
             <div class="card"><div class="card-title"><i class="fas fa-atom"></i> Квантовый адаптер</div><div class="card-value">${quantumCalls.toLocaleString()}</div><div class="card-sub">вызовов API</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${autoResearch.toLocaleString()}</div><div class="card-sub">Ср. время: ${metricsState.avgSolveTime.toFixed(1)} сек</div></div>
         `;
+
+        // --- socialMetrics ---
         let activeTeams = apply(metricsState.activeTeams);
         let licensed = apply(metricsState.licensed);
         let royaltySum = apply(metricsState.royaltySum);
         document.getElementById('socialMetrics').innerHTML = `
             <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${metricsState.openStructures}</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-file-signature"></i> Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum.toFixed(2)}M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${metricsState.kFactor.toFixed(2)}</div><div class="card-sub">Форум: ${metricsState.forumActivity} постов/нед</div></div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-line"></i> Социальная активность</div>
+                <div class="card-value">
+                    <span class="metric-line">K‑factor: ${metricsState.kFactor.toFixed(2)}</span>
+                    <span class="metric-line">Форум: ${metricsState.forumActivity} постов/нед</span>
+                </div>
+            </div>
         `;
+
+        // --- eduMetrics ---
         document.getElementById('eduMetrics').innerHTML = `
             <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${metricsState.missionsCompleted}</div><div class="card-sub">Средний балл: ${metricsState.avgScore.toFixed(1)}%</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${metricsState.vrSessions}</div><div class="card-sub">Сертификатов: ${metricsState.certificates}</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${metricsState.blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${metricsState.tokenVolume.toFixed(2)}M</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${metricsState.activeWallets}</div></div>
         `;
+
         if (Math.random() < 0.3) {
             const eventsDiv = document.getElementById('liveEvents');
             const eventDesc = `🔬 ${['Новая перспективная структура подтверждена', 'Квантовое моделирование выявило неожиданную конформацию', 'Рекордная активность научных модулей', 'Автономный исследователь совершил открытие'][Math.floor(Math.random()*4)]}`;
