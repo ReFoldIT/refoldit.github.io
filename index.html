@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Снежинка · аналитика и игровой профиль</title>
+    <title>Снежинка · игровая аналитика</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_124_10523)'%3e%3cpath d='M18.756 0C26.892 0 30.96 0 33.48 2.52C36 5.04 36 9.108 36 17.244V18.756C36 26.892 36 30.96 33.48 33.48C30.96 36 26.892 36 18.756 36H17.244C9.108 36 5.04 36 2.52 33.48C0 30.96 0 26.892 0 18.756V17.244C0 9.108 0 5.04 2.52 2.52C5.04 0 9.108 0 17.244 0H18.756Z' fill='%230077FF'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M35.8956 10.1542C36 12.0999 36 14.4283 36 17.2439V17.244V18.756V18.756C36 20.9229 36 22.8013 35.9524 24.4387H0.0476112C0 22.8013 0 20.9229 0 18.756V17.244C0 14.4283 0 12.0999 0.104447 10.1542H35.8956ZM0.0474971 24.4394L0.0479452 24.4547C4.76004 26.7552 11.0876 28.1568 17.9898 28.1568C24.8976 28.1568 31.2388 26.7487 35.9521 24.4449L35.9522 24.4394H0.0474971Z' fill='%230009B4'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M25.0373 16.5811C24.1462 16.5811 23.4239 17.3195 23.4239 18.2304C23.4239 19.1412 24.1462 19.8796 25.0373 19.8796C25.9284 19.8796 26.6507 19.1412 26.6507 18.2304C26.6507 17.3195 25.9284 16.5811 25.0373 16.5811ZM19.845 18.2304C19.845 15.299 22.1697 12.9227 25.0373 12.9227C27.9049 12.9227 30.2296 15.299 30.2296 18.2304C30.2296 21.1617 27.9049 23.5381 25.0373 23.5381C22.1697 23.5381 19.845 21.1617 19.845 18.2304Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.1827 15.8495L8.48861 13.1555L5.93991 15.7042L8.63398 18.3982L5.94007 21.0921L8.48877 23.6408L11.1827 20.9469L13.8765 23.6408L16.4252 21.0921L13.7314 18.3982L16.4254 15.7042L13.8767 13.1555L11.1827 15.8495Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_124_10523'%3e%3crect width='36' height='36' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,7 +24,6 @@
             height: 100vh;
             overflow: hidden;
         }
-        /* верхняя панель с фильтрами */
         .top-bar {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
@@ -76,10 +75,8 @@
             gap: 8px;
             white-space: nowrap;
         }
-        .select-trigger img, .select-trigger i {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
+        .select-trigger i, .select-trigger span {
+            font-size: 1rem;
         }
         .select-dropdown {
             position: absolute;
@@ -104,6 +101,9 @@
             transition: background 0.1s;
         }
         .select-option:hover { background: #2a2f35; }
+        .select-option i, .select-option span {
+            font-size: 1rem;
+        }
         .btn-small {
             background: #0077FF;
             border: none;
@@ -132,30 +132,29 @@
             max-width: 1600px;
             margin: 0 auto;
         }
-        /* крупный блок профиля */
         .player-card {
-            background: linear-gradient(135deg, rgba(20,25,35,0.95) 0%, rgba(10,15,25,0.95) 100%);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(20,30,45,0.95) 0%, rgba(10,18,28,0.95) 100%);
+            backdrop-filter: blur(12px);
             border-radius: 48px;
-            padding: 32px 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(0,119,255,0.3);
-            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.5);
+            padding: 40px 48px;
+            margin-bottom: 48px;
+            border: 1px solid rgba(0,119,255,0.4);
+            box-shadow: 0 25px 40px -15px rgba(0,0,0,0.6);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 32px;
+            gap: 40px;
         }
         .player-avatar {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             background: #2a3035;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 0 0 4px #0077FF, 0 0 0 8px rgba(0,119,255,0.2);
+            box-shadow: 0 0 0 5px #0077FF, 0 0 0 12px rgba(0,119,255,0.2);
         }
         .player-avatar img {
             width: 100%;
@@ -163,82 +162,88 @@
             object-fit: cover;
         }
         .player-avatar i {
-            font-size: 100px;
+            font-size: 110px;
             color: #aaa;
         }
         .player-info {
-            flex: 1;
+            flex: 2;
         }
         .player-name-row {
             display: flex;
             align-items: baseline;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         .player-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #0077FF);
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #60a5fa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.5px;
         }
         .edit-name-icon {
             cursor: pointer;
             color: #0077FF;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             transition: 0.2s;
         }
         .edit-name-icon:hover { color: #3399FF; }
         .player-id {
             color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         .player-stats-large {
             display: flex;
             flex-wrap: wrap;
-            gap: 24px;
-            margin-top: 8px;
+            gap: 32px;
+            margin-top: 12px;
         }
         .stat-large {
-            background: rgba(0,0,0,0.4);
-            border-radius: 60px;
-            padding: 12px 24px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 80px;
+            padding: 16px 32px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
+            backdrop-filter: blur(4px);
         }
         .stat-large i {
-            font-size: 2rem;
+            font-size: 2.8rem;
             color: #0077FF;
         }
         .stat-large .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2.4rem;
+            font-weight: 800;
             line-height: 1;
         }
         .stat-large .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #aaa;
-            margin-top: 4px;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
         }
         .player-actions {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
+            min-width: 180px;
         }
         .btn-large {
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 700;
             border-radius: 60px;
             background: #0077FF;
             border: none;
             color: white;
             cursor: pointer;
             transition: 0.2s;
+            text-align: center;
         }
         .btn-large:hover {
             background: #005fcc;
@@ -253,8 +258,6 @@
             background: #0077FF;
             color: white;
         }
-        
-        /* остальные стили */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -325,7 +328,7 @@
             margin-bottom: 32px;
         }
         @media (max-width: 800px) { .two-cols { grid-template-columns: 1fr; } }
-        canvas { max-height: 250px; width: 100%; background: #111417; border-radius: 20px; padding: 8px; }
+        canvas { max-height: 280px; width: 100%; background: #111417; border-radius: 20px; padding: 8px; }
         .events-list {
             background: rgba(0,0,0,0.3);
             border-radius: 24px;
@@ -362,17 +365,20 @@
                 padding: 24px;
                 flex-direction: column;
                 text-align: center;
+                gap: 24px;
             }
-            .player-avatar { width: 100px; height: 100px; }
-            .player-name { font-size: 1.8rem; }
+            .player-avatar { width: 110px; height: 110px; }
+            .player-name { font-size: 2rem; }
             .player-stats-large { justify-content: center; }
-            .player-actions { flex-direction: row; }
+            .stat-large { padding: 10px 20px; gap: 12px; }
+            .stat-large i { font-size: 2rem; }
+            .stat-large .stat-value { font-size: 1.8rem; }
+            .player-actions { flex-direction: row; justify-content: center; }
         }
     </style>
 </head>
 <body>
 <div class="app">
-    <!-- Верхняя панель: только фильтры и кнопка входа/выхода -->
     <div class="top-bar">
         <div class="filters-bar">
             <div class="filter-group">
@@ -386,7 +392,7 @@
                     <div class="select-trigger" id="geoTrigger"><i class="fas fa-globe"></i> <span>Все страны</span></div>
                     <div class="select-dropdown" id="geoDropdown">
                         <div class="select-option" data-value="all"><i class="fas fa-globe"></i> <span>Все страны</span></div>
-                        <div class="select-option" data-value="ru"><img src="https://qfoldit.github.io/img/flags/ru.svg" alt="ru"> <span>Россия</span></div>
+                        <div class="select-option" data-value="ru"><span>🇷🇺</span> <span>Россия</span></div>
                         <div class="select-option" data-value="brics"><i class="fas fa-handshake"></i> <span>БРИКС+</span></div>
                         <div class="select-option" data-value="arctic"><i class="fas fa-snowflake"></i> <span>Арктический совет</span></div>
                         <div class="select-option" data-value="ecowas"><i class="fas fa-tree"></i> <span>ЭКОВАС</span></div>
@@ -410,7 +416,6 @@
 
     <div class="main-scroll">
         <div class="dashboard">
-            <!-- Блок профиля (крупный) -->
             <div id="playerProfileCard" style="display: none;" class="player-card">
                 <div class="player-avatar" id="avatarLarge">
                     <i class="fas fa-user-circle"></i>
@@ -419,9 +424,9 @@
                     <div class="player-name-row">
                         <span class="player-name" id="nicknameLarge">Загрузка...</span>
                         <i class="fas fa-pencil-alt edit-name-icon" id="editNickLargeBtn"></i>
-                        <input type="text" id="nickLargeInput" style="display: none; background:#1f1f1f; border-radius: 40px; border: 1px solid #0077FF; padding: 8px 16px; color: white; font-size: 1.2rem;" maxlength="20">
+                        <input type="text" id="nickLargeInput" style="display: none; background:#1f1f1f; border-radius: 40px; border: 1px solid #0077FF; padding: 8px 20px; color: white; font-size: 1.2rem;" maxlength="20">
                     </div>
-                    <div class="player-id">ID: <span id="userIdLarge">—</span></div>
+                    <div class="player-id">ID VK: <span id="userIdLarge">—</span></div>
                     <div class="player-stats-large">
                         <div class="stat-large">
                             <i class="fas fa-chart-line"></i>
@@ -447,11 +452,10 @@
                     </div>
                 </div>
                 <div class="player-actions">
-                    <button id="rechargeLargeBtn" class="btn-large">+50 энергии (20⚛)</button>
+                    <button id="rechargeLargeBtn" class="btn-large">⚡ +50 энергии (20⚛)</button>
                 </div>
             </div>
 
-            <!-- Табы (удалены монетизация, технические, экология, инвесторам) -->
             <div class="tabs">
                 <button class="tab-btn active" data-tab="game"><i class="fas fa-gamepad"></i> Игровые</button>
                 <button class="tab-btn" data-tab="science"><i class="fas fa-dna"></i> Наука & Геймплей</button>
@@ -459,7 +463,6 @@
                 <button class="tab-btn" data-tab="edu"><i class="fas fa-graduation-cap"></i> EdTech & Блокчейн</button>
             </div>
 
-            <!-- Игровые -->
             <div id="tab-game" class="tab-content active">
                 <div class="metrics-grid" id="gameMetrics"></div>
                 <div class="two-cols">
@@ -467,20 +470,14 @@
                     <div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div>
                 </div>
             </div>
-
-            <!-- Наука & Геймплей -->
             <div id="tab-science" class="tab-content">
                 <div class="metrics-grid" id="scienceMetrics"></div>
                 <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Активность научных модулей (задачи/день)</div><canvas id="scienceActivityChart" height="180"></canvas></div>
             </div>
-
-            <!-- Соц. & Партнёры -->
             <div id="tab-social" class="tab-content">
                 <div class="metrics-grid" id="socialMetrics"></div>
                 <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Вовлечённость с брендированными объектами</div><canvas id="brandEngagementChart" height="180"></canvas></div>
             </div>
-
-            <!-- EdTech & Блокчейн -->
             <div id="tab-edu" class="tab-content">
                 <div class="metrics-grid" id="eduMetrics"></div>
                 <div class="card"><div class="card-title"><i class="fas fa-cube"></i> Блокчейн транзакции (30d)</div><canvas id="blockchainChart" height="150"></canvas></div>
@@ -536,14 +533,12 @@
 
     function updateProfileUI() {
         if (!currentPlayer || !currentVkUser) return;
-        // Обновляем все элементы профиля
         document.getElementById('nicknameLarge').innerText = currentPlayer.nickname;
         document.getElementById('levelLarge').innerText = currentPlayer.level;
         document.getElementById('energyLarge').innerText = currentPlayer.energy;
         document.getElementById('maxEnergyLarge').innerText = currentPlayer.maxEnergy;
         document.getElementById('photonsLarge').innerText = currentPlayer.photons;
         document.getElementById('userIdLarge').innerText = currentVkUser.uid;
-        // Аватар
         const avatarDiv = document.getElementById('avatarLarge');
         avatarDiv.innerHTML = '';
         let avatarUrl = currentVkUser.photo || currentVkUser.photo_100 || null;
@@ -611,8 +606,66 @@
         currentPlayer = null;
     }
 
-    // ---------- Аналитический движок ----------
-    let state = {
+    // ---------- Аналитика ----------
+    let currentGeo = 'all', currentSegment = 'all', currentTimeRange = 'month';
+    let dauData = [18420, 18950, 19320, 19680, 19850, 20120, 20400];
+    let mauData = [112450, 113200, 114100, 115000, 115800, 116500, 117200];
+    let geoLabels = ['Россия', 'Бразилия', 'Индия', 'Китай', 'ЮАР'];
+    let geoValues = [56, 11, 10, 12, 4];
+    let scienceLabels = ['Фолдинг', 'De novo', 'Квант.химия'];
+    let scienceValues = [15840, 612, 3512];
+    let brandValues = [3820];
+    let blockchainValues = [6120];
+
+    let charts = {};
+
+    function initCharts() {
+        const ctxDau = document.getElementById('dauMauChart').getContext('2d');
+        charts.dauMau = new Chart(ctxDau, {
+            type: 'line',
+            data: { labels: ['1', '2', '3', '4', '5', '6', '7'], datasets: [{ label: 'DAU', data: dauData, borderColor: '#0077FF', backgroundColor: 'transparent', tension: 0.2 }, { label: 'MAU', data: mauData, borderColor: '#FFA500', backgroundColor: 'transparent', tension: 0.2 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } }
+        });
+        const ctxGeo = document.getElementById('geoChart').getContext('2d');
+        charts.geo = new Chart(ctxGeo, { type: 'bar', data: { labels: geoLabels, datasets: [{ label: '% игроков', data: geoValues, backgroundColor: '#0077FF' }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } } });
+        const ctxScience = document.getElementById('scienceActivityChart').getContext('2d');
+        charts.science = new Chart(ctxScience, { type: 'bar', data: { labels: scienceLabels, datasets: [{ label: 'задач/день', data: scienceValues, backgroundColor: '#0077FF' }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } } });
+        const ctxBrand = document.getElementById('brandEngagementChart').getContext('2d');
+        charts.brand = new Chart(ctxBrand, { type: 'bar', data: { labels: ['Взаимодействия'], datasets: [{ label: 'кол-во', data: brandValues, backgroundColor: '#0077FF' }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } } });
+        const ctxBlock = document.getElementById('blockchainChart').getContext('2d');
+        charts.block = new Chart(ctxBlock, { type: 'bar', data: { labels: ['Транзакции'], datasets: [{ label: 'шт', data: blockchainValues, backgroundColor: '#0077FF' }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } } });
+    }
+
+    function updateCharts() {
+        let deltaDau = (Math.random() - 0.5) * 200;
+        let deltaMau = (Math.random() - 0.5) * 800;
+        dauData = dauData.map(v => Math.max(15000, Math.min(23000, v + deltaDau * 0.3)));
+        mauData = mauData.map(v => Math.max(95000, Math.min(135000, v + deltaMau * 0.3)));
+        geoValues = geoValues.map(v => Math.max(1, Math.min(70, v + (Math.random() - 0.5) * 1.2)));
+        let totalGeo = geoValues.reduce((a,b)=>a+b,0);
+        geoValues = geoValues.map(v => Math.round(v / totalGeo * 100));
+        scienceValues = scienceValues.map((v, i) => {
+            let change = (Math.random() - 0.5) * 0.03;
+            if (i===0) return Math.max(10000, Math.min(23000, v * (1 + change)));
+            if (i===1) return Math.max(250, Math.min(1100, v * (1 + change)));
+            return Math.max(2000, Math.min(6000, v * (1 + change)));
+        });
+        brandValues[0] = Math.max(2000, Math.min(6000, brandValues[0] + (Math.random() - 0.5) * 80));
+        blockchainValues[0] = Math.max(2800, Math.min(10500, blockchainValues[0] + (Math.random() - 0.5) * 150));
+        charts.dauMau.data.datasets[0].data = dauData;
+        charts.dauMau.data.datasets[1].data = mauData;
+        charts.dauMau.update();
+        charts.geo.data.datasets[0].data = geoValues;
+        charts.geo.update();
+        charts.science.data.datasets[0].data = scienceValues;
+        charts.science.update();
+        charts.brand.data.datasets[0].data = brandValues;
+        charts.brand.update();
+        charts.block.data.datasets[0].data = blockchainValues;
+        charts.block.update();
+    }
+
+    let metricsState = {
         dau: 18420, mau: 112450, wau: 49120, newUsers: 832,
         retention1: 42.5, retention7: 27.3, retention30: 14.8,
         sessionMins: 18.6, sessionsPerUser: 2.9, churn7: 34.2, churn30: 54.6,
@@ -635,11 +688,11 @@
         missionsCompleted: 0.017, avgScore: 0.004, vrSessions: 0.021, certificates: 0.015,
         blockchainTx: 0.019, tokenVolume: 0.012, activeWallets: 0.016
     };
-    function updateRealistic() {
-        for (let key in state) {
+    function updateMetrics() {
+        for (let key in metricsState) {
             let trend = trends[key] || 0;
             let change = (Math.random() - 0.5) * 0.03 + trend * 0.1;
-            let newVal = state[key] * (1 + change);
+            let newVal = metricsState[key] * (1 + change);
             switch(key) {
                 case 'dau': newVal = Math.min(Math.max(newVal, 15000), 22000); break;
                 case 'mau': newVal = Math.min(Math.max(newVal, 95000), 135000); break;
@@ -651,12 +704,11 @@
                 case 'avgSolveTime': newVal = Math.min(Math.max(newVal, 35), 100); break;
                 default: break;
             }
-            state[key] = parseFloat(newVal.toFixed(2));
+            metricsState[key] = parseFloat(newVal.toFixed(2));
         }
     }
 
-    let currentGeo = 'all', currentSegment = 'all', currentTimeRange = 'month';
-    function getFilterFactor() {
+    function updateMetricCards() {
         let factor = 1.0;
         if (currentGeo === 'ru') factor *= 0.68;
         if (currentGeo === 'brics') factor *= 1.2;
@@ -668,71 +720,43 @@
         if (currentTimeRange === 'day') factor *= 0.14;
         if (currentTimeRange === 'week') factor *= 0.7;
         if (currentTimeRange === 'quarter') factor *= 1.7;
-        return factor;
-    }
-    function applyFilter(value) { return Math.round(value * getFilterFactor() * 10) / 10; }
-
-    let charts = {};
-    function updateChart(chartId, type, labels, data, yLabel='') {
-        const ctx = document.getElementById(chartId)?.getContext('2d');
-        if(!ctx) return;
-        if(charts[chartId]) charts[chartId].destroy();
-        charts[chartId] = new Chart(ctx, {
-            type: type,
-            data: { labels: labels, datasets: [{ label: yLabel || 'значение', data: data, backgroundColor: '#0077FF', borderColor: '#3399FF', tension: 0.2, fill: false }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#ccc' } } } }
-        });
-    }
-
-    function refreshAllMetrics() {
-        updateRealistic();
-        let dau = applyFilter(state.dau);
-        let mau = applyFilter(state.mau);
-        let wau = applyFilter(state.wau);
-        let newUsers = applyFilter(state.newUsers);
-        let geoTop = { Россия: 56, Бразилия: 11, Индия: 10, Китай: 12, "ЮАР": 4 };
+        const apply = (v) => Math.round(v * factor * 10) / 10;
+        let dau = apply(metricsState.dau);
+        let mau = apply(metricsState.mau);
+        let wau = apply(metricsState.wau);
+        let newUsers = apply(metricsState.newUsers);
         document.getElementById('gameMetrics').innerHTML = `
             <div class="card"><div class="card-title"><i class="fas fa-users"></i> DAU / MAU / WAU</div><div class="card-value">${dau.toLocaleString()} / ${mau.toLocaleString()} / ${wau.toLocaleString()}</div><div class="card-sub"><i class="fas fa-user-plus"></i> Новые: +${newUsers.toLocaleString()}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${state.retention1.toFixed(1)}% / D7: ${state.retention7.toFixed(1)}%</div><div class="card-sub">D30: ${state.retention30.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${state.sessionMins.toFixed(1)} мин</div><div class="card-sub">${state.sessionsPerUser.toFixed(1)} сессий/день</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${state.churn7.toFixed(1)}% / 30д: ${state.churn30.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Retention</div><div class="card-value">D1: ${metricsState.retention1.toFixed(1)}% / D7: ${metricsState.retention7.toFixed(1)}%</div><div class="card-sub">D30: ${metricsState.retention30.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-hourglass-half"></i> Сессия</div><div class="card-value">${metricsState.sessionMins.toFixed(1)} мин</div><div class="card-sub">${metricsState.sessionsPerUser.toFixed(1)} сессий/день</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle"></i> Churn</div><div class="card-value">7д: ${metricsState.churn7.toFixed(1)}% / 30д: ${metricsState.churn30.toFixed(1)}%</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-desktop"></i> Платформы</div><div class="card-value">PC 53% / Cloud 32% / Browser 15%</div></div>
         `;
-        updateChart('dauMauChart', 'line', ['DAU', 'MAU'], [dau, mau], 'Игроки');
-        updateChart('geoChart', 'bar', Object.keys(geoTop), Object.values(geoTop), '%');
-
-        let foldings = applyFilter(state.foldings);
-        let newMolecules = applyFilter(state.newMolecules);
-        let quantumCalls = applyFilter(state.quantumCalls);
-        let artifacts = applyFilter(state.artifacts);
-        let autoResearch = applyFilter(state.autoResearch);
+        let foldings = apply(metricsState.foldings);
+        let newMolecules = apply(metricsState.newMolecules);
+        let quantumCalls = apply(metricsState.quantumCalls);
+        let artifacts = apply(metricsState.artifacts);
+        let autoResearch = apply(metricsState.autoResearch);
         document.getElementById('scienceMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${state.successPredict.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Завершённые фолдинги</div><div class="card-value">${foldings.toLocaleString()}</div><div class="card-sub">Успех предсказаний: ${metricsState.successPredict.toFixed(1)}%</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-flask"></i> Новые молекулы (de novo)</div><div class="card-value">${newMolecules.toLocaleString()}</div><div class="card-sub">Артефактов: ${artifacts}</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-atom"></i> Квантовый адаптер</div><div class="card-value">${quantumCalls.toLocaleString()}</div><div class="card-sub">вызовов API</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${autoResearch.toLocaleString()}</div><div class="card-sub">Ср. время: ${state.avgSolveTime.toFixed(1)} сек</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-robot"></i> Автономные исслед.</div><div class="card-value">${autoResearch.toLocaleString()}</div><div class="card-sub">Ср. время: ${metricsState.avgSolveTime.toFixed(1)} сек</div></div>
         `;
-        let scienceModules = { Фолдинг: foldings, "De novo": newMolecules, "Квант.химия": Math.floor(quantumCalls/3.2) };
-        updateChart('scienceActivityChart', 'bar', Object.keys(scienceModules), Object.values(scienceModules), 'задач');
-
-        let activeTeams = applyFilter(state.activeTeams);
-        let licensed = applyFilter(state.licensed);
-        let royaltySum = applyFilter(state.royaltySum);
+        let activeTeams = apply(metricsState.activeTeams);
+        let licensed = apply(metricsState.licensed);
+        let royaltySum = apply(metricsState.royaltySum);
         document.getElementById('socialMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${state.openStructures}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-users"></i> Активные команды</div><div class="card-value">${activeTeams}</div><div class="card-sub">Открыто структур: ${metricsState.openStructures}</div></div>
             <div class="card"><div class="card-title"><i class="fas fa-file-signature"></i> Лицензировано партнёрам</div><div class="card-value">${licensed}</div><div class="card-sub">Роялти игрокам: $${royaltySum.toFixed(2)}M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${state.kFactor.toFixed(2)}</div><div class="card-sub">Форум: ${state.forumActivity} постов/нед</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> K-factor / Активность</div><div class="card-value">${metricsState.kFactor.toFixed(2)}</div><div class="card-sub">Форум: ${metricsState.forumActivity} постов/нед</div></div>
         `;
-        updateChart('brandEngagementChart', 'bar', ['Взаимодействия'], [applyFilter(state.brandEngagement)], 'кол-во');
-
         document.getElementById('eduMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${state.missionsCompleted}</div><div class="card-sub">Средний балл: ${state.avgScore.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${state.vrSessions}</div><div class="card-sub">Сертификатов: ${state.certificates}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${state.blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${state.tokenVolume.toFixed(2)}M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${state.activeWallets}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${metricsState.missionsCompleted}</div><div class="card-sub">Средний балл: ${metricsState.avgScore.toFixed(1)}%</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-vr-cardboard"></i> VR/AR сессии</div><div class="card-value">${metricsState.vrSessions}</div><div class="card-sub">Сертификатов: ${metricsState.certificates}</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-link"></i> Блокчейн транзакций</div><div class="card-value">${metricsState.blockchainTx.toLocaleString()}</div><div class="card-sub">Токены: ${metricsState.tokenVolume.toFixed(2)}M</div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${metricsState.activeWallets}</div></div>
         `;
-        updateChart('blockchainChart', 'bar', ['Транзакции'], [state.blockchainTx], 'шт');
-
         if (Math.random() < 0.3) {
             const eventsDiv = document.getElementById('liveEvents');
             const eventDesc = `🔬 ${['Новая перспективная структура подтверждена', 'Квантовое моделирование выявило неожиданную конформацию', 'Рекордная активность научных модулей', 'Автономный исследователь совершил открытие'][Math.floor(Math.random()*4)]}`;
@@ -741,10 +765,16 @@
         }
     }
 
+    function refreshAll() {
+        updateMetrics();
+        updateMetricCards();
+        updateCharts();
+    }
+
     // Инициализация VK Play
     (function apiHandshake(iframeApi) {
         if (typeof iframeApi === 'undefined') {
-            showToast('VK Play API не загружен, но аналитика работает в демо-режиме');
+            showToast('VK Play API не загружен, аналитика в демо-режиме');
             showUnauthorizedUI();
             return;
         }
@@ -775,14 +805,13 @@
 
     document.getElementById('vkLoginBtn')?.addEventListener('click', () => { if(vkApi) vkApi.authUser(); else showToast('API не готов'); });
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
-        localStorage.removeItem(`snowflake_player_${currentVkUser?.uid}`);
+        if (currentVkUser) localStorage.removeItem(`snowflake_player_${currentVkUser.uid}`);
         showUnauthorizedUI();
-        if(vkApi) vkApi.getLoginStatus(); // обновляем статус
+        if(vkApi) vkApi.getLoginStatus();
     });
     document.getElementById('editNickLargeBtn')?.addEventListener('click', editNickname);
     document.getElementById('rechargeLargeBtn')?.addEventListener('click', rechargeEnergy);
 
-    // Фильтры и табы
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -793,7 +822,7 @@
     });
     const timeSelect = document.getElementById('timeRange');
     const segmentSelect = document.getElementById('segmentFilter');
-    function updateFilters() { currentTimeRange = timeSelect.value; currentSegment = segmentSelect.value; refreshAllMetrics(); }
+    function updateFilters() { currentTimeRange = timeSelect.value; currentSegment = segmentSelect.value; refreshAll(); }
     timeSelect.addEventListener('change', updateFilters);
     segmentSelect.addEventListener('change', updateFilters);
     const geoSelectDiv = document.getElementById('geoSelect');
@@ -802,8 +831,8 @@
     function updateGeoTrigger(value) {
         const opt = Array.from(geoDropdown.children).find(o => o.dataset.value === value);
         if(opt) {
-            const icon = opt.querySelector('img, i')?.cloneNode(true);
-            const text = opt.querySelector('span')?.cloneNode(true);
+            const icon = opt.querySelector('i, span')?.cloneNode(true);
+            const text = opt.querySelectorAll('span')[opt.querySelectorAll('span').length-1]?.cloneNode(true);
             geoTrigger.innerHTML = '';
             if(icon) geoTrigger.appendChild(icon);
             geoTrigger.appendChild(document.createTextNode(' '));
@@ -817,12 +846,13 @@
             currentGeo = opt.dataset.value;
             updateGeoTrigger(currentGeo);
             geoDropdown.classList.remove('active');
-            refreshAllMetrics();
+            refreshAll();
         });
     });
     updateGeoTrigger('all');
-    refreshAllMetrics();
-    setInterval(refreshAllMetrics, 12000);
+    initCharts();
+    refreshAll();
+    setInterval(refreshAll, 8000);
 </script>
 </body>
 </html>
