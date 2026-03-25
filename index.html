@@ -35,6 +35,25 @@
             overflow-y: scroll;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            /* hero фон: если картинка недоступна, используется тёмный фон */
+            background-image: url('https://comiccon2025.github.io/img/styles/target_white.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+        }
+        /* затемнение для читаемости текста поверх фона */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 12, 15, 0.75);
+            z-index: 0;
+            pointer-events: none;
         }
         .dashboard {
             flex: 1;
@@ -42,6 +61,8 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 30px 24px 40px;
+            position: relative;
+            z-index: 1;
         }
         .page-title {
             font-size: 3rem;
@@ -223,6 +244,7 @@
             border-color: #0077FF;
             box-shadow: 0 0 15px #0077FF33;
         }
+        /* Футер: общие стили */
         .footer {
             background-color: #0077ff;
             padding: 12px 32px;
@@ -235,6 +257,8 @@
             flex-shrink: 0;
             flex-wrap: wrap;
             gap: 15px;
+            position: relative;
+            z-index: 2;
         }
         .footer-left, .footer-center, .footer-right {
             display: flex;
@@ -242,7 +266,13 @@
         }
         .footer-left { flex: 1 1 auto; justify-content: flex-start; }
         .footer-center { flex: 1 1 auto; justify-content: center; gap: 20px; }
-        .footer-right { flex: 1 1 auto; justify-content: flex-end; gap: 12px; }
+        .footer-right { 
+            flex: 1 1 auto; 
+            justify-content: flex-end; 
+            gap: 12px;
+            flex-direction: column;   /* всегда вертикальное расположение иконок в правом блоке */
+            align-items: flex-end;
+        }
         .footer img { max-height: 40px; width: auto; display: block; }
         .footer-left .logo-link {
             display: flex;
@@ -277,22 +307,63 @@
         .footer-right .nau-logo { max-height: 20px; }
         .footer-right .desktop-logo { display: block; }
         .footer-right .mobile-logo { display: none; }
+
+        /* Мобильное отображение: только иконки, равномерные отступы, вертикальный стек */
         @media (max-width: 700px) {
             .dashboard { padding: 20px 16px; }
             .page-title { font-size: 2.2rem; }
             .game-grid, .shop-grid { grid-template-columns: 1fr; }
             .auth-buttons { flex-direction: column; align-items: center; }
             .btn { width: 100%; max-width: 250px; }
+            
             .footer {
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
+                gap: 20px;
+                padding: 20px 16px;
             }
-            .footer-left, .footer-center, .footer-right { width: 100%; justify-content: center; }
-            .footer-left .logo-text { display: none; }
-            .footer-left .divider { display: none; }
-            .footer-right .desktop-logo { display: none; }
-            .footer-right .mobile-logo { display: block; }
+            .footer-left, .footer-center, .footer-right {
+                width: 100%;
+                justify-content: center;
+                gap: 15px;
+            }
+            /* Скрываем текст в левом блоке */
+            .footer-left .logo-text {
+                display: none;
+            }
+            .footer-left .divider {
+                display: none;
+            }
+            /* Центрируем картинки в левом блоке, убираем лишние отступы */
+            .footer-left .logo-link {
+                justify-content: center;
+                width: 100%;
+            }
+            .footer-left .logo-composite {
+                justify-content: center;
+            }
+            /* В правом блоке иконки всегда вертикально (уже задано) и равномерно отдалены */
+            .footer-right {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            /* Показываем только маленькие иконки (mobile-версии) */
+            .footer-right .desktop-logo {
+                display: none;
+            }
+            .footer-right .mobile-logo {
+                display: block;
+                max-height: 28px;
+                width: auto;
+            }
+            /* Для центрального блока оставляем маленькие иконки (они уже есть) */
+            .footer-center {
+                gap: 20px;
+            }
+            .partner-logo {
+                height: 28px;
+            }
         }
         @media (max-width: 480px) {
             .card-title { font-size: 1.3rem; }
@@ -319,13 +390,13 @@
 </head>
 <body>
 <div class="dashboard">
-    <h1 class="page-title">Снежинка</h1>
+    <!-- заголовок H1 удалён по требованию -->
 
     <div id="loading" class="auth-card"><div class="loader"></div><p>Проверка авторизации...</p></div>
 
     <div id="notAuthorized" class="auth-card hidden">
         <div style="font-size: 3rem; color: #0077FF; margin-bottom: 20px;"><i class="fas fa-user-circle"></i></div>
-        <h2 style="color: white; margin-bottom: 10px;">Добро пожаловать в Арктику</h2>
+        <h2 style="color: white; margin-bottom: 10px;">МАС «Снежинка»</h2>
         <p style="color: #aaa; max-width: 500px; margin: 0 auto;">Войдите с помощью VK Play, чтобы начать исследование и сохранять прогресс.</p>
         <div class="auth-buttons"><button class="btn" id="loginBtn">Войти</button><button class="btn btn-outline" id="registerBtn">Регистрация</button></div>
     </div>
@@ -352,7 +423,8 @@
         <div class="game-card"><div class="card-icon"><i class="fas fa-cloud"></i></div><div class="card-title">Интеграция с VK Play</div><div class="card-text">Входите через VK Play, сохраняйте прогресс и получайте достижения прямо на платформе.</div></div>
     </div>
 
-    <div class="legal-block">
+    <!-- Правовой блок – показывается только авторизованным -->
+    <div id="legalBlock" class="legal-block hidden">
         <a href="https://qfoldit.github.io/legal.html" title="Правовая информация"><i class="fas fa-gavel"></i><span>Правовая информация</span></a>
     </div>
 </div>
@@ -446,7 +518,6 @@
         const item = SHOP_ITEMS.find(i => i.id === itemId);
         if (!item) return;
 
-        // Показываем кнопку загрузки
         const btn = document.querySelector(`.btn-shop[data-id="${itemId}"]`);
         const originalText = btn.textContent;
         btn.textContent = 'Обработка...';
@@ -468,7 +539,6 @@
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             if (data.payment_url) {
-                // Открываем платёжное окно в новом окне (оверлей VK Play)
                 window.open(data.payment_url, '_blank', 'noopener,noreferrer');
                 showToast('Платёжное окно открыто. Завершите оплату.');
             } else {
@@ -504,6 +574,7 @@
                     document.getElementById('notAuthorized').classList.remove('hidden');
                     document.getElementById('authorized').classList.add('hidden');
                     document.getElementById('shopSection').classList.add('hidden');
+                    document.getElementById('legalBlock').classList.add('hidden');
                 }
             },
             userInfoCallback: function(info) {
@@ -513,18 +584,19 @@
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('authorized').classList.remove('hidden');
                     document.getElementById('notAuthorized').classList.add('hidden');
-                    document.getElementById('shopSection').classList.remove('hidden'); // показываем магазин
+                    document.getElementById('shopSection').classList.remove('hidden');
+                    document.getElementById('legalBlock').classList.remove('hidden');
                     document.getElementById('profileName').textContent = `${info.first_name || ''} ${info.last_name || ''}`.trim() || 'Игрок';
                     document.getElementById('profileId').textContent = info.uid;
                     let nick = info.nick || info.nickname || info.name || info.display_name || '';
                     document.getElementById('profileNick').textContent = nick || '—';
-                    // Получаем IP и рендерим магазин
                     fetchUserIP().then(() => renderShop());
                 } else {
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('notAuthorized').classList.remove('hidden');
                     document.getElementById('authorized').classList.add('hidden');
                     document.getElementById('shopSection').classList.add('hidden');
+                    document.getElementById('legalBlock').classList.add('hidden');
                 }
             },
             registerUserCallback: function(info) {
@@ -542,6 +614,7 @@
             document.getElementById('notAuthorized').classList.remove('hidden');
             document.getElementById('authorized').classList.add('hidden');
             document.getElementById('shopSection').classList.add('hidden');
+            document.getElementById('legalBlock').classList.add('hidden');
         }
 
         function connected(api) {
