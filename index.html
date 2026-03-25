@@ -337,27 +337,40 @@
 
     <div class="main-scroll">
         <div class="dashboard">
-            <!-- Табы -->
+            <!-- Табы (удалены монетизация, технические, экология, инвесторам) -->
             <div class="tabs">
                 <button class="tab-btn active" data-tab="game"><i class="fas fa-gamepad"></i> Игровые</button>
-                <button class="tab-btn" data-tab="money"><i class="fas fa-coins"></i> Монетизация</button>
                 <button class="tab-btn" data-tab="science"><i class="fas fa-dna"></i> Наука & Геймплей</button>
-                <button class="tab-btn" data-tab="tech"><i class="fas fa-microchip"></i> Технические</button>
                 <button class="tab-btn" data-tab="social"><i class="fas fa-users"></i> Соц. & Партнёры</button>
-                <button class="tab-btn" data-tab="eco"><i class="fas fa-leaf"></i> Экология & Арктика</button>
                 <button class="tab-btn" data-tab="edu"><i class="fas fa-graduation-cap"></i> EdTech & Блокчейн</button>
-                <button class="tab-btn" data-tab="invest"><i class="fas fa-chart-line"></i> Инвесторам</button>
             </div>
 
-            <!-- Контент табов (такой же как во втором файле, но с динамическими данными) -->
-            <div id="tab-game" class="tab-content active"><div class="metrics-grid" id="gameMetrics"></div><div class="two-cols"><div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div><div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div></div></div>
-            <div id="tab-money" class="tab-content"><div class="metrics-grid" id="moneyMetrics"></div><div class="two-cols"><div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> Доход по типам</div><canvas id="revenuePieChart" height="200"></canvas></div><div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> ARPU / ARPPU динамика</div><canvas id="arpuChart" height="200"></canvas></div></div></div>
-            <div id="tab-science" class="tab-content"><div class="metrics-grid" id="scienceMetrics"></div><div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Активность научных модулей (задачи/день)</div><canvas id="scienceActivityChart" height="180"></canvas></div></div>
-            <div id="tab-tech" class="tab-content"><div class="metrics-grid" id="techMetrics"></div><div class="two-cols"><div class="card"><div class="card-title"><i class="fas fa-tachometer-alt"></i> Время ответа API (мс)</div><canvas id="apiLatencyChart" height="150"></canvas></div><div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Ошибки 4xx/5xx (за час)</div><canvas id="errorsChart" height="150"></canvas></div></div></div>
-            <div id="tab-social" class="tab-content"><div class="metrics-grid" id="socialMetrics"></div><div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Вовлечённость с брендированными объектами</div><canvas id="brandEngagementChart" height="180"></canvas></div></div>
-            <div id="tab-eco" class="tab-content"><div class="metrics-grid" id="ecoMetrics"></div><div class="card"><div class="card-title"><i class="fas fa-leaf"></i> Динамика выбросов CO₂ (т / день)</div><canvas id="co2Chart" height="160"></canvas></div></div>
-            <div id="tab-edu" class="tab-content"><div class="metrics-grid" id="eduMetrics"></div><div class="card"><div class="card-title"><i class="fas fa-cube"></i> Блокчейн транзакции (30d)</div><canvas id="blockchainChart" height="150"></canvas></div></div>
-            <div id="tab-invest" class="tab-content"><div class="metrics-grid" id="investMetrics"></div><div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Выручка по кварталам (M$)</div><canvas id="revenueQuarterChart" height="180"></canvas></div></div>
+            <!-- Игровые -->
+            <div id="tab-game" class="tab-content active">
+                <div class="metrics-grid" id="gameMetrics"></div>
+                <div class="two-cols">
+                    <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div>
+                    <div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Наука & Геймплей -->
+            <div id="tab-science" class="tab-content">
+                <div class="metrics-grid" id="scienceMetrics"></div>
+                <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Активность научных модулей (задачи/день)</div><canvas id="scienceActivityChart" height="180"></canvas></div>
+            </div>
+
+            <!-- Соц. & Партнёры -->
+            <div id="tab-social" class="tab-content">
+                <div class="metrics-grid" id="socialMetrics"></div>
+                <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Вовлечённость с брендированными объектами</div><canvas id="brandEngagementChart" height="180"></canvas></div>
+            </div>
+
+            <!-- EdTech & Блокчейн -->
+            <div id="tab-edu" class="tab-content">
+                <div class="metrics-grid" id="eduMetrics"></div>
+                <div class="card"><div class="card-title"><i class="fas fa-cube"></i> Блокчейн транзакции (30d)</div><canvas id="blockchainChart" height="150"></canvas></div>
+            </div>
 
             <div class="events-list" style="margin-top: 30px;">
                 <div class="card-title"><i class="fas fa-bell"></i> Последние события платформы</div>
@@ -479,43 +492,34 @@
         currentPlayer = null;
     }
 
-    // ---------- Аналитический движок (второй файл) ----------
+    // ---------- Аналитический движок (без монетизации, тех, экологии, инвесторам) ----------
     let state = {
         dau: 18420, mau: 112450, wau: 49120, newUsers: 832,
         retention1: 42.5, retention7: 27.3, retention30: 14.8,
         sessionMins: 18.6, sessionsPerUser: 2.9, churn7: 34.2, churn30: 54.6,
-        arpu: 2.98, arppu: 18.4, conversion: 11.2, avgCheck: 12.5, ltv: 38.2,
-        brandRevenue: 0.82, royalties: 0.48,
+        // Наука
         foldings: 15840, newMolecules: 612, successPredict: 77.2,
         quantumCalls: 11240, artifacts: 842, autoResearch: 448, avgSolveTime: 61.5,
-        apiReqs: 3.42, latency: 128, err4xx: 52, err5xx: 18,
-        cpuUsage: 44.2, ramUsage: 59.3, queueSize: 287, s3Avail: 99.54,
+        // Социальные
         activeTeams: 238, openStructures: 1720, licensed: 39, royaltySum: 1.28,
         forumActivity: 5470, kFactor: 0.39, brandEngagement: 3820,
-        energyMwh: 168, renewablePct: 74.5, hydrogenKg: 432, co2Saved: 23.6,
-        refuels: 71, permafrostTemp: -3.4, co2Level: 418,
+        // EdTech
         missionsCompleted: 2480, avgScore: 79.4, vrSessions: 382, certificates: 105,
         blockchainTx: 6120, tokenVolume: 2.45, activeWallets: 1490,
-        dauGrowth: 8.7, roi: 24.3, publications: 6, partnerships: 11
+        // дополнительные для графиков
+        co2Level: 418  // оставим для возможного использования, но без отдельной вкладки
     };
     let trends = {
         dau: 0.02, mau: 0.015, wau: 0.018, newUsers: 0.1,
         retention1: -0.02, retention7: -0.01, retention30: -0.01,
         sessionMins: 0.01, sessionsPerUser: 0.008,
         churn7: -0.02, churn30: -0.01,
-        arpu: 0.012, arppu: 0.009, conversion: 0.005, avgCheck: 0.007, ltv: 0.01,
-        brandRevenue: 0.018, royalties: 0.015,
         foldings: 0.02, newMolecules: 0.022, successPredict: 0.005,
         quantumCalls: 0.023, artifacts: 0.017, autoResearch: 0.019, avgSolveTime: -0.008,
-        apiReqs: 0.014, latency: -0.003, err4xx: -0.012, err5xx: -0.015,
-        cpuUsage: 0.002, ramUsage: 0.003, queueSize: 0.004, s3Avail: 0.001,
         activeTeams: 0.011, openStructures: 0.016, licensed: 0.018, royaltySum: 0.014,
         forumActivity: 0.009, kFactor: 0.007, brandEngagement: 0.013,
-        energyMwh: 0.008, renewablePct: 0.006, hydrogenKg: 0.012, co2Saved: 0.009,
-        refuels: 0.01, permafrostTemp: -0.002, co2Level: 0.001,
         missionsCompleted: 0.017, avgScore: 0.004, vrSessions: 0.021, certificates: 0.015,
-        blockchainTx: 0.019, tokenVolume: 0.012, activeWallets: 0.016,
-        dauGrowth: 0.01, roi: 0.008, publications: 0.01, partnerships: 0.012
+        blockchainTx: 0.019, tokenVolume: 0.012, activeWallets: 0.016
     };
     function updateRealistic() {
         for (let key in state) {
@@ -585,20 +589,6 @@
         updateChart('dauMauChart', 'line', ['DAU', 'MAU'], [dau, mau], 'Игроки');
         updateChart('geoChart', 'bar', Object.keys(geoTop), Object.values(geoTop), '%');
 
-        // Монетизация
-        let arpu = applyFilter(state.arpu);
-        let arppu = applyFilter(state.arppu);
-        let brandRevenue = applyFilter(state.brandRevenue);
-        let royalties = applyFilter(state.royalties);
-        let revenueByType = { Подписки: 36, Валюта: 46, Скины: 12, Лицензии: 6 };
-        document.getElementById('moneyMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> ARPU / ARPPU</div><div class="card-value">$${arpu.toFixed(2)} / $${arppu.toFixed(2)}</div><div class="card-sub"><i class="fas fa-percent"></i> Конверсия: ${state.conversion.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-receipt"></i> Средний чек</div><div class="card-value">$${state.avgCheck.toFixed(2)}</div><div class="card-sub">LTV: $${state.ltv.toFixed(1)}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-tag"></i> Бренд. доход / Роялти</div><div class="card-value">$${brandRevenue.toFixed(2)}M / $${royalties.toFixed(2)}M</div></div>
-        `;
-        updateChart('revenuePieChart', 'pie', Object.keys(revenueByType), Object.values(revenueByType));
-        updateChart('arpuChart', 'line', ['ARPU', 'ARPPU'], [arpu, arppu], '$');
-
         // Научные (динамичные карточки)
         let foldings = applyFilter(state.foldings);
         let newMolecules = applyFilter(state.newMolecules);
@@ -614,17 +604,6 @@
         let scienceModules = { Фолдинг: foldings, "De novo": newMolecules, "Квант.химия": Math.floor(quantumCalls/3.2) };
         updateChart('scienceActivityChart', 'bar', Object.keys(scienceModules), Object.values(scienceModules), 'задач');
 
-        // Технические
-        let apiReqs = applyFilter(state.apiReqs);
-        document.getElementById('techMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> API запросов / Latency</div><div class="card-value">${apiReqs.toFixed(2)}M/день</div><div class="card-sub">${state.latency} мс</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-exclamation-circle"></i> Ошибки 4xx/5xx</div><div class="card-value">${state.err4xx} / ${state.err5xx}</div><div class="card-sub">за час</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-microchip"></i> CPU / RAM</div><div class="card-value">${state.cpuUsage.toFixed(1)}% / ${state.ramUsage.toFixed(1)}%</div><div class="card-sub">Очередь задач: ${state.queueSize}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-database"></i> S3 Доступность</div><div class="card-value">${state.s3Avail.toFixed(2)}%</div></div>
-        `;
-        updateChart('apiLatencyChart', 'line', ['мс'], [state.latency], 'мс');
-        updateChart('errorsChart', 'line', ['4xx','5xx'], [state.err4xx, state.err5xx], 'кол-во');
-
         // Социальные
         let activeTeams = applyFilter(state.activeTeams);
         let licensed = applyFilter(state.licensed);
@@ -636,15 +615,6 @@
         `;
         updateChart('brandEngagementChart', 'bar', ['Взаимодействия'], [applyFilter(state.brandEngagement)], 'кол-во');
 
-        // Экология
-        document.getElementById('ecoMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Выработка энергии</div><div class="card-value">${state.energyMwh} МВт·ч</div><div class="card-sub">ВИЭ ${state.renewablePct.toFixed(1)}%</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-water"></i> Водород / CO₂ снижение</div><div class="card-value">${state.hydrogenKg} кг/день</div><div class="card-sub">-${state.co2Saved.toFixed(1)} т CO₂/день</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-charging-station"></i> Заправок / Мерзлота</div><div class="card-value">${state.refuels}</div><div class="card-sub">Темп. мерзлоты: ${state.permafrostTemp.toFixed(1)}°C</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-smog"></i> CO₂ атмосфера</div><div class="card-value">${state.co2Level} ppm</div></div>
-        `;
-        updateChart('co2Chart', 'line', ['CO₂'], [state.co2Level], 'ppm');
-
         // EdTech
         document.getElementById('eduMetrics').innerHTML = `
             <div class="card"><div class="card-title"><i class="fas fa-graduation-cap"></i> Обучающие миссии</div><div class="card-value">${state.missionsCompleted}</div><div class="card-sub">Средний балл: ${state.avgScore.toFixed(1)}%</div></div>
@@ -653,15 +623,6 @@
             <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> Активные кошельки</div><div class="card-value">${state.activeWallets}</div></div>
         `;
         updateChart('blockchainChart', 'bar', ['Транзакции'], [state.blockchainTx], 'шт');
-
-        // Инвесторам
-        let revenueQuarter = [2.2, 3.0, 4.1, 5.7];
-        document.getElementById('investMetrics').innerHTML = `
-            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Рост DAU (MoM)</div><div class="card-value">+${state.dauGrowth.toFixed(1)}%</div><div class="card-sub">Выручка Q4: $5.7M</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> ROI маркетинг</div><div class="card-value">${state.roi.toFixed(1)}%</div><div class="card-sub">Научных публикаций: ${state.publications}</div></div>
-            <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Партнёрские интеграции</div><div class="card-value">${state.partnerships}</div></div>
-        `;
-        updateChart('revenueQuarterChart', 'bar', ['Q1','Q2','Q3','Q4'], revenueQuarter, 'M$');
 
         if (Math.random() < 0.3) {
             const eventsDiv = document.getElementById('liveEvents');
