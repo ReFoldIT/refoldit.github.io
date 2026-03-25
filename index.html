@@ -263,29 +263,44 @@
             font-size: 0.9rem;
         }
 
+        /* Мобильное отображение: футер в строку, блоки равномерно распределены */
         @media (max-width: 700px) {
-            .dashboard { padding: 20px 16px; }
-            .profile-dashboard { flex-direction: column; text-align: center; }
-            .profile-name { justify-content: center; }
-            .profile-stats { justify-content: center; }
             .footer {
-                flex-direction: column;
+                flex-direction: row;          /* отменяем вертикальную колонку */
+                flex-wrap: wrap;
+                justify-content: space-between;
                 align-items: center;
-                gap: 20px;
+                gap: 12px;
+                padding: 12px 16px;
             }
-            .footer-left, .footer-center, .footer-legal, .footer-right {
-                width: 100%;
+            .footer-left,
+            .footer-center,
+            .footer-legal,
+            .footer-right {
+                flex: 1 1 auto;              /* блоки занимают равное пространство */
+                width: auto;
                 justify-content: center;
+                text-align: center;
             }
-            .footer-left .logo-text, .footer-left .divider { display: none; }
+            /* Скрываем текст в левом блоке, оставляем только иконку */
+            .footer-left .logo-text,
+            .footer-left .divider {
+                display: none;
+            }
+            /* Центрируем вертикальный столбец в правом блоке */
             .footer-right {
                 flex-direction: column;
                 align-items: center;
-                gap: 15px;
+                gap: 8px;
             }
-            .footer-right .desktop-logo { display: none; }
-            .footer-right .mobile-logo { display: block; }
-            /* На мобильных скрываем текст правовой ссылки, оставляем только иконку */
+            /* У правого блока показываем только маленькие иконки */
+            .footer-right .desktop-logo {
+                display: none;
+            }
+            .footer-right .mobile-logo {
+                display: block;
+            }
+            /* Правовая ссылка: на мобильных только иконка, без текста */
             .legal-link span {
                 display: none;
             }
@@ -347,7 +362,6 @@
                 </div>
                 <div style="margin-top: 12px;">
                     <button id="rechargeEnergyBtn" class="btn btn-outline"><i class="fas fa-plus-circle"></i> +50 энергии (20 фотонов)</button>
-                    <!-- кнопка "Выйти из игры" удалена -->
                 </div>
             </div>
         </div>
