@@ -67,23 +67,68 @@
             display: flex;
             flex-wrap: wrap;
             gap: 24px;
-            justify-content: space-between;
             align-items: center;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #2a3035;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .profile-name h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .profile-name input {
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 4px 16px;
+            color: white;
+            width: auto;
+            max-width: 250px;
+        }
+        .profile-id {
+            color: #aaa;
+            margin-bottom: 8px;
         }
         .profile-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 24px;
+            gap: 16px;
+            margin-top: 12px;
         }
         .stat {
             background: rgba(0,0,0,0.5);
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 40px;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 0.9rem;
         }
-        .stat i { color: #0077FF; width: 20px; }
+        .stat i { color: #0077FF; width: 18px; }
         .btn {
             padding: 8px 20px;
             border-radius: 40px;
@@ -104,23 +149,6 @@
             color: white;
         }
         .hidden { display: none; }
-        .input-group {
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-        }
-        .input-group input {
-            padding: 10px 16px;
-            border-radius: 40px;
-            border: none;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 1rem;
-            min-width: 200px;
-        }
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -215,7 +243,8 @@
         .footer-right .mobile-logo { display: none; }
         @media (max-width: 700px) {
             .dashboard { padding: 20px 16px; }
-            .profile-dashboard { flex-direction: column; align-items: stretch; gap: 16px; }
+            .profile-dashboard { flex-direction: column; text-align: center; }
+            .profile-name { justify-content: center; }
             .profile-stats { justify-content: center; }
             .footer {
                 flex-direction: column;
@@ -251,36 +280,47 @@
             opacity: 0;
             transition: opacity 0.2s;
         }
+        .edit-icon {
+            cursor: pointer;
+            color: #0077FF;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
 <div class="dashboard">
-    <!-- Регистрационная форма (показывается, если нет профиля) -->
-    <div id="registrationForm" class="card">
+    <!-- Состояние: неавторизован в VK Play -->
+    <div id="unauthorizedBlock" class="card">
         <h2 style="text-align: center;">МАС «Снежинка»</h2>
-        <p style="text-align: center; margin-bottom: 20px;">Создайте игровой профиль</p>
-        <div class="input-group">
-            <input type="text" id="regNickname" placeholder="Введите никнейм" maxlength="20">
-            <button id="startGameBtn" class="btn">Начать игру</button>
+        <p style="text-align: center; margin-bottom: 20px;">Для игры необходимо войти через VK Play</p>
+        <div style="display: flex; justify-content: center;">
+            <button id="vkLoginBtn" class="btn">Войти через VK Play</button>
         </div>
     </div>
 
-    <!-- Дашборд игрока (показывается после регистрации) -->
+    <!-- Дашборд игрока (показывается после авторизации VK) -->
     <div id="playerDashboard" class="card hidden">
         <div class="profile-dashboard">
-            <div class="profile-stats">
-                <div class="stat"><i class="fas fa-user"></i> <span id="displayNick">—</span></div>
-                <div class="stat"><i class="fas fa-id-card"></i> ID: <span id="displayId">—</span></div>
-                <div class="stat"><i class="fas fa-chart-line"></i> Уровень <span id="displayLevel">1</span></div>
-                <div class="stat"><i class="fas fa-bolt"></i> Энергия <span id="displayEnergy">100</span>/<span id="maxEnergy">100</span></div>
-                <div class="stat"><i class="fas fa-sun"></i> Фотоны: <span id="displayPhotons">500</span></div>
+            <div class="avatar" id="avatarContainer">
+                <i class="fas fa-user-circle" style="font-size: 64px; color: #aaa;"></i>
             </div>
-            <div>
-                <button id="logoutBtn" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            <div class="profile-info">
+                <div class="profile-name">
+                    <h2 id="displayNickDisplay" style="display: inline-block;"></h2>
+                    <input type="text" id="editNickInput" class="hidden" maxlength="20">
+                    <i class="fas fa-pencil-alt edit-icon" id="editNickBtn"></i>
+                </div>
+                <div class="profile-id">ID: <span id="displayId">—</span></div>
+                <div class="profile-stats">
+                    <div class="stat"><i class="fas fa-chart-line"></i> Уровень <span id="displayLevel">1</span></div>
+                    <div class="stat"><i class="fas fa-bolt"></i> Энергия <span id="displayEnergy">100</span>/<span id="maxEnergy">100</span></div>
+                    <div class="stat"><i class="fas fa-sun"></i> Фотоны: <span id="displayPhotons">500</span></div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <button id="rechargeEnergyBtn" class="btn btn-outline" style="margin-right: 10px;"><i class="fas fa-plus-circle"></i> +50 энергии (20 фотонов)</button>
+                    <button id="logoutGameBtn" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i> Выйти из игры</button>
+                </div>
             </div>
-        </div>
-        <div style="margin-top: 20px; text-align: center;">
-            <button id="rechargeEnergyBtn" class="btn btn-outline" style="margin-right: 10px;"><i class="fas fa-plus-circle"></i> +50 энергии (20 фотонов)</button>
         </div>
     </div>
 
@@ -319,8 +359,9 @@
 </footer>
 <div id="toast" class="toast"></div>
 
+<script type="text/javascript" src="https://vkplay.ru/app/47268/static/mailru.core.js"></script>
 <script>
-    // Конфигурация товаров (цены в фотонах, кроме "100 фотонов" – пополнение)
+    // Товары магазина
     const SHOP_ITEMS = [
         { id: 1001, name: "Battle Pass", description: "Сезонный пропуск с эксклюзивными наградами", price: 500, currency: "photons" },
         { id: 1002, name: "Квантовый стабилизатор", description: "Замедляет нарастание риска при фолдинге", price: 200, currency: "photons" },
@@ -328,6 +369,8 @@
         { id: 1004, name: "100 фотонов", description: "Пополнение премиальной валюты", price: 199, currency: "rub", photonsReward: 100 }
     ];
 
+    let vkApi = null;
+    let currentVkUser = null;
     let currentPlayer = null;
 
     function showToast(msg) {
@@ -338,28 +381,95 @@
     }
 
     function savePlayer(player) {
-        localStorage.setItem('snowflake_player', JSON.stringify(player));
+        if (!currentVkUser) return;
+        localStorage.setItem(`snowflake_player_${currentVkUser.uid}`, JSON.stringify(player));
         currentPlayer = player;
-        updateDashboard();
+        updateDashboardUI();
     }
 
-    function loadPlayer() {
-        const saved = localStorage.getItem('snowflake_player');
+    function loadPlayer(vkUser) {
+        const saved = localStorage.getItem(`snowflake_player_${vkUser.uid}`);
         if (saved) {
             currentPlayer = JSON.parse(saved);
-            return true;
+        } else {
+            // Создаём нового игрока
+            const defaultNick = vkUser.nick || vkUser.first_name || `player_${vkUser.uid}`;
+            currentPlayer = {
+                nickname: defaultNick,
+                level: 1,
+                energy: 100,
+                maxEnergy: 100,
+                photons: 500
+            };
+            savePlayer(currentPlayer);
         }
-        return false;
+        return currentPlayer;
     }
 
-    function updateDashboard() {
-        if (!currentPlayer) return;
-        document.getElementById('displayNick').innerText = currentPlayer.nickname;
-        document.getElementById('displayId').innerText = currentPlayer.id;
+    function updateDashboardUI() {
+        if (!currentPlayer || !currentVkUser) return;
+        // Никнейм
+        document.getElementById('displayNickDisplay').innerText = currentPlayer.nickname;
+        document.getElementById('editNickInput').value = currentPlayer.nickname;
+        // ID из VK
+        document.getElementById('displayId').innerText = currentVkUser.uid;
+        // Статы
         document.getElementById('displayLevel').innerText = currentPlayer.level;
         document.getElementById('displayEnergy').innerText = currentPlayer.energy;
         document.getElementById('maxEnergy').innerText = currentPlayer.maxEnergy;
         document.getElementById('displayPhotons').innerText = currentPlayer.photons;
+
+        // Аватарка
+        const avatarContainer = document.getElementById('avatarContainer');
+        avatarContainer.innerHTML = '';
+        if (currentVkUser.photo) {
+            const img = document.createElement('img');
+            img.src = currentVkUser.photo;
+            img.alt = "avatar";
+            avatarContainer.appendChild(img);
+        } else {
+            avatarContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 64px; color: #aaa;"></i>';
+        }
+    }
+
+    function editNickname() {
+        const displaySpan = document.getElementById('displayNickDisplay');
+        const inputField = document.getElementById('editNickInput');
+        const editBtn = document.getElementById('editNickBtn');
+
+        displaySpan.classList.add('hidden');
+        inputField.classList.remove('hidden');
+        editBtn.classList.add('hidden');
+        inputField.focus();
+        inputField.addEventListener('blur', function onBlur() {
+            const newNick = inputField.value.trim();
+            if (newNick !== '') {
+                currentPlayer.nickname = newNick;
+                savePlayer(currentPlayer);
+            }
+            displaySpan.classList.remove('hidden');
+            inputField.classList.add('hidden');
+            editBtn.classList.remove('hidden');
+            inputField.removeEventListener('blur', onBlur);
+        });
+        inputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') inputField.blur();
+        });
+    }
+
+    function rechargeEnergy() {
+        if (!currentPlayer) return;
+        const cost = 20;
+        if (currentPlayer.photons >= cost) {
+            currentPlayer.photons -= cost;
+            let newEnergy = currentPlayer.energy + 50;
+            if (newEnergy > currentPlayer.maxEnergy) newEnergy = currentPlayer.maxEnergy;
+            currentPlayer.energy = newEnergy;
+            savePlayer(currentPlayer);
+            showToast(`Энергия восстановлена на +50. Осталось фотонов: ${currentPlayer.photons}`);
+        } else {
+            showToast(`Не хватает фотонов. Нужно ${cost} фотонов.`);
+        }
     }
 
     function renderShop() {
@@ -399,7 +509,6 @@
         if (item.currency === 'photons') {
             if (currentPlayer.photons >= item.price) {
                 currentPlayer.photons -= item.price;
-                // Эффект покупки (можно добавить логику для реальных предметов, пока просто уведомление)
                 showToast(`Вы купили ${item.name}! Спасибо за покупку.`);
                 savePlayer(currentPlayer);
             } else {
@@ -413,76 +522,100 @@
         }
     }
 
-    function rechargeEnergy() {
-        if (!currentPlayer) return;
-        const cost = 20;
-        if (currentPlayer.photons >= cost) {
-            currentPlayer.photons -= cost;
-            let newEnergy = currentPlayer.energy + 50;
-            if (newEnergy > currentPlayer.maxEnergy) newEnergy = currentPlayer.maxEnergy;
-            currentPlayer.energy = newEnergy;
-            savePlayer(currentPlayer);
-            showToast(`Энергия восстановлена на +50. Осталось фотонов: ${currentPlayer.photons}`);
-        } else {
-            showToast(`Не хватает фотонов. Нужно ${cost} фотонов.`);
-        }
-    }
-
-    function createNewPlayer(nickname) {
-        const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-        return {
-            id: id,
-            nickname: nickname,
-            level: 1,
-            energy: 100,
-            maxEnergy: 100,
-            photons: 500
-        };
-    }
-
     function showAuthorizedUI() {
-        document.getElementById('registrationForm').classList.add('hidden');
+        document.getElementById('unauthorizedBlock').classList.add('hidden');
         document.getElementById('playerDashboard').classList.remove('hidden');
         document.getElementById('shopSection').classList.remove('hidden');
         document.getElementById('legalBlock').classList.remove('hidden');
         renderShop();
-        updateDashboard();
+        updateDashboardUI();
     }
 
     function showUnauthorizedUI() {
-        document.getElementById('registrationForm').classList.remove('hidden');
+        document.getElementById('unauthorizedBlock').classList.remove('hidden');
         document.getElementById('playerDashboard').classList.add('hidden');
         document.getElementById('shopSection').classList.add('hidden');
         document.getElementById('legalBlock').classList.add('hidden');
+        currentVkUser = null;
         currentPlayer = null;
     }
 
-    // Инициализация
-    window.addEventListener('DOMContentLoaded', () => {
-        if (loadPlayer()) {
-            showAuthorizedUI();
-        } else {
+    function logoutFromGame() {
+        // Очищаем данные текущего игрока, но не выходим из VK Play (оставляем авторизацию)
+        if (currentVkUser) {
+            localStorage.removeItem(`snowflake_player_${currentVkUser.uid}`);
+        }
+        showUnauthorizedUI();
+        // Принудительно перезапрашиваем статус авторизации VK, чтобы показать кнопку входа
+        if (vkApi) {
+            vkApi.getLoginStatus();
+        }
+    }
+
+    // Инициализация VK Play API
+    (function apiHandshake(iframeApi) {
+        if (typeof iframeApi === 'undefined') {
+            console.error('VK Play API не загружен');
+            document.getElementById('unauthorizedBlock').classList.remove('hidden');
+            document.getElementById('playerDashboard').classList.add('hidden');
+            document.getElementById('shopSection').classList.add('hidden');
+            document.getElementById('legalBlock').classList.add('hidden');
+            return;
+        }
+
+        const callbacks = {
+            appid: 47268,
+            getLoginStatusCallback: function(status) {
+                console.log('Статус авторизации:', status);
+                const isAuth = status && (status.session || status.auth === true || status === 2 || (typeof status === 'object' && status.uid));
+                if (isAuth) {
+                    vkApi.userInfo();
+                } else {
+                    showUnauthorizedUI();
+                }
+            },
+            userInfoCallback: function(info) {
+                console.log('Данные пользователя VK:', info);
+                if (info && info.uid) {
+                    currentVkUser = info;
+                    loadPlayer(info);
+                    showAuthorizedUI();
+                } else {
+                    showUnauthorizedUI();
+                }
+            },
+            registerUserCallback: function(info) {
+                vkApi.userInfo();
+            },
+            getAuthTokenCallback: function(token) {
+                if (token && token.hash) vkApi.userInfo();
+            }
+        };
+
+        function error(err) {
+            console.error('Ошибка подключения API:', err);
             showUnauthorizedUI();
         }
 
-        document.getElementById('startGameBtn').addEventListener('click', () => {
-            const nickname = document.getElementById('regNickname').value.trim();
-            if (nickname === '') {
-                showToast('Введите никнейм');
-                return;
-            }
-            const newPlayer = createNewPlayer(nickname);
-            savePlayer(newPlayer);
-            showAuthorizedUI();
-        });
+        function connected(api) {
+            vkApi = api;
+            console.log('VK Play API подключён');
+            vkApi.getLoginStatus();
+            setTimeout(() => vkApi.getAuthToken(), 1000);
+        }
 
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.removeItem('snowflake_player');
-            showUnauthorizedUI();
-            document.getElementById('regNickname').value = '';
-        });
+        iframeApi(callbacks).then(connected, error);
+    }(window.iframeApi));
 
-        document.getElementById('rechargeEnergyBtn').addEventListener('click', rechargeEnergy);
+    // Обработчики UI
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('vkLoginBtn')?.addEventListener('click', () => {
+            if (vkApi) vkApi.authUser();
+            else showToast('API не инициализирован');
+        });
+        document.getElementById('editNickBtn')?.addEventListener('click', editNickname);
+        document.getElementById('rechargeEnergyBtn')?.addEventListener('click', rechargeEnergy);
+        document.getElementById('logoutGameBtn')?.addEventListener('click', logoutFromGame);
     });
 </script>
 </body>
