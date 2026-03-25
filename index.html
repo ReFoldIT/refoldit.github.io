@@ -132,6 +132,7 @@
             max-width: 1600px;
             margin: 0 auto;
         }
+        /* Блок профиля: аватарка сверху, имя и ID под ней */
         .player-card {
             background: linear-gradient(135deg, rgba(20,30,45,0.95) 0%, rgba(10,18,28,0.95) 100%);
             backdrop-filter: blur(12px);
@@ -145,6 +146,13 @@
             align-items: center;
             gap: 40px;
         }
+        .player-avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 160px;
+        }
         .player-avatar {
             width: 140px;
             height: 140px;
@@ -155,6 +163,7 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 0 0 5px #0077FF, 0 0 0 12px rgba(0,119,255,0.2);
+            margin-bottom: 16px;
         }
         .player-avatar img {
             width: 100%;
@@ -165,37 +174,35 @@
             font-size: 110px;
             color: #aaa;
         }
-        .player-info {
-            flex: 2;
-        }
-        .player-name-row {
-            display: flex;
-            align-items: baseline;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+        .player-name-id {
+            text-align: center;
         }
         .player-name {
-            font-size: 3rem;
+            font-size: 1.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, #fff, #60a5fa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: -0.5px;
+            display: inline-block;
         }
         .edit-name-icon {
             cursor: pointer;
             color: #0077FF;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             transition: 0.2s;
         }
         .edit-name-icon:hover { color: #3399FF; }
         .player-id {
             color: #aaa;
-            font-size: 1rem;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            margin-top: 6px;
             font-weight: 500;
+        }
+        .player-info {
+            flex: 2;
         }
         .player-stats-large {
             display: flex;
@@ -258,6 +265,17 @@
             background: #0077FF;
             color: white;
         }
+        /* Структурированные карточки метрик — добавим заголовки и разделение */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 32px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #0077FF;
+            padding-left: 16px;
+        }
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -271,6 +289,7 @@
             padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: 0.2s;
+            position: relative;
         }
         .card:hover { border-color: #0077FF33; transform: translateY(-2px); }
         .card-title {
@@ -335,6 +354,7 @@
             padding: 12px;
             max-height: 280px;
             overflow-y: auto;
+            margin-top: 40px;
         }
         .event-item {
             padding: 8px 0;
@@ -368,7 +388,7 @@
                 gap: 24px;
             }
             .player-avatar { width: 110px; height: 110px; }
-            .player-name { font-size: 2rem; }
+            .player-name { font-size: 1.5rem; }
             .player-stats-large { justify-content: center; }
             .stat-large { padding: 10px 20px; gap: 12px; }
             .stat-large i { font-size: 2rem; }
@@ -417,16 +437,20 @@
     <div class="main-scroll">
         <div class="dashboard">
             <div id="playerProfileCard" style="display: none;" class="player-card">
-                <div class="player-avatar" id="avatarLarge">
-                    <i class="fas fa-user-circle"></i>
+                <div class="player-avatar-section">
+                    <div class="player-avatar" id="avatarLarge">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="player-name-id">
+                        <div>
+                            <span class="player-name" id="nicknameLarge">Загрузка...</span>
+                            <i class="fas fa-pencil-alt edit-name-icon" id="editNickLargeBtn"></i>
+                            <input type="text" id="nickLargeInput" style="display: none; background:#1f1f1f; border-radius: 40px; border: 1px solid #0077FF; padding: 6px 16px; color: white; font-size: 1rem; width: auto; margin-top: 8px;" maxlength="20">
+                        </div>
+                        <div class="player-id">ID VK: <span id="userIdLarge">—</span></div>
+                    </div>
                 </div>
                 <div class="player-info">
-                    <div class="player-name-row">
-                        <span class="player-name" id="nicknameLarge">Загрузка...</span>
-                        <i class="fas fa-pencil-alt edit-name-icon" id="editNickLargeBtn"></i>
-                        <input type="text" id="nickLargeInput" style="display: none; background:#1f1f1f; border-radius: 40px; border: 1px solid #0077FF; padding: 8px 20px; color: white; font-size: 1.2rem;" maxlength="20">
-                    </div>
-                    <div class="player-id">ID VK: <span id="userIdLarge">—</span></div>
                     <div class="player-stats-large">
                         <div class="stat-large">
                             <i class="fas fa-chart-line"></i>
@@ -463,27 +487,36 @@
                 <button class="tab-btn" data-tab="edu"><i class="fas fa-graduation-cap"></i> EdTech & Блокчейн</button>
             </div>
 
+            <!-- Зонированные блоки метрик: добавляем заголовки секций -->
             <div id="tab-game" class="tab-content active">
+                <div class="section-title"><i class="fas fa-chart-simple"></i> Ключевые метрики аудитории</div>
                 <div class="metrics-grid" id="gameMetrics"></div>
+                <div class="section-title"><i class="fas fa-chart-line"></i> Динамика аудитории</div>
                 <div class="two-cols">
                     <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div>
                     <div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div>
                 </div>
             </div>
             <div id="tab-science" class="tab-content">
+                <div class="section-title"><i class="fas fa-dna"></i> Научные достижения сообщества</div>
                 <div class="metrics-grid" id="scienceMetrics"></div>
-                <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Активность научных модулей (задачи/день)</div><canvas id="scienceActivityChart" height="180"></canvas></div>
+                <div class="section-title"><i class="fas fa-chart-bar"></i> Активность научных модулей</div>
+                <div class="card"><div class="card-title"><i class="fas fa-chart-bar"></i> Задачи в день</div><canvas id="scienceActivityChart" height="180"></canvas></div>
             </div>
             <div id="tab-social" class="tab-content">
+                <div class="section-title"><i class="fas fa-users"></i> Социальная активность и партнёрства</div>
                 <div class="metrics-grid" id="socialMetrics"></div>
+                <div class="section-title"><i class="fas fa-handshake"></i> Вовлечённость с брендами</div>
                 <div class="card"><div class="card-title"><i class="fas fa-handshake"></i> Вовлечённость с брендированными объектами</div><canvas id="brandEngagementChart" height="180"></canvas></div>
             </div>
             <div id="tab-edu" class="tab-content">
+                <div class="section-title"><i class="fas fa-graduation-cap"></i> Образовательные программы и блокчейн</div>
                 <div class="metrics-grid" id="eduMetrics"></div>
+                <div class="section-title"><i class="fas fa-cube"></i> Активность блокчейн-сети</div>
                 <div class="card"><div class="card-title"><i class="fas fa-cube"></i> Блокчейн транзакции (30d)</div><canvas id="blockchainChart" height="150"></canvas></div>
             </div>
 
-            <div class="events-list" style="margin-top: 30px;">
+            <div class="events-list">
                 <div class="card-title"><i class="fas fa-bell"></i> Последние события платформы</div>
                 <div id="liveEvents"></div>
             </div>
