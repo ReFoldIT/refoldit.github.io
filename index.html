@@ -48,7 +48,6 @@
             flex-wrap: wrap;
             align-items: center;
         }
-        /* Общие стили для всех выпадающих списков — кастомные, без дефолтных элементов */
         .filter-select, .custom-select .select-trigger {
             background: #1f1f1f;
             border: 1px solid #333;
@@ -67,13 +66,11 @@
             background-position: right 16px center;
             background-size: 14px;
         }
-        /* Для кастомного селекта убираем стандартную стрелку из фона, так как она будет через псевдоэлемент? Но для единообразия добавляем стрелку так же фоном */
         .custom-select .select-trigger {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
         }
-        /* Стили для кастомного выпадающего меню */
         .custom-select {
             position: relative;
             display: inline-block;
@@ -302,17 +299,12 @@
             color: #4caf92;
             margin-top: 8px;
         }
-        /* дополнительные стили для многострочных метрик */
         .metric-line {
             display: block;
             margin-bottom: 6px;
         }
         .metric-line:last-child {
             margin-bottom: 0;
-        }
-        .metric-label {
-            color: #aaa;
-            font-size: 0.85rem;
         }
         .tabs {
             display: flex;
@@ -489,11 +481,11 @@
 
             <!-- Вкладка Игровые -->
             <div id="tab-game" class="tab-content active">
-                <div class="section-title"><i class="fas fa-dna"></i> Достижения сообщества</div>
+                <div class="section-title"><i class="fas fa-dna"></i> Научные достижения сообщества</div>
                 <div class="metrics-grid" id="scienceMetrics"></div>
-                <div class="section-title"><i class="fas fa-chart-simple"></i> Метрики аудитории</div>
+                <div class="section-title"><i class="fas fa-chart-line"></i> Ключевые метрики аудитории</div>
                 <div class="metrics-grid" id="gameMetrics"></div>
-                <div class="section-title"><i class="fas fa-chart-line"></i> Динамика и активность</div>
+                <div class="section-title"><i class="fas fa-chart-line"></i> Динамика аудитории и научная активность</div>
                 <div class="two-cols">
                     <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> DAU / MAU тренд</div><canvas id="dauMauChart" height="180"></canvas></div>
                     <div class="card"><div class="card-title"><i class="fas fa-globe"></i> География игроков (топ-5)</div><canvas id="geoChart" height="180"></canvas></div>
@@ -774,7 +766,7 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-title"><i class="fas fa-chart-simple"></i> Удержание (Retention)</div>
+                <div class="card-title"><i class="fas fa-chart-line"></i> Удержание (Retention)</div>
                 <div class="card-value">
                     <span class="metric-line">D1: ${metricsState.retention1.toFixed(1)}%</span>
                     <span class="metric-line">D7: ${metricsState.retention7.toFixed(1)}%</span>
