@@ -203,12 +203,17 @@
             z-index: 2;
             position: relative;
         }
-        .footer-left, .footer-center, .footer-right {
+        .footer-left, .footer-center, .footer-legal, .footer-right {
             display: flex;
             align-items: center;
         }
         .footer-left { flex: 1; justify-content: flex-start; }
         .footer-center { flex: 1; justify-content: center; gap: 20px; }
+        .footer-legal {
+            flex: 0 0 auto;
+            justify-content: center;
+            gap: 12px;
+        }
         .footer-right {
             flex: 1;
             justify-content: flex-end;
@@ -241,6 +246,23 @@
         .footer-right .nau-logo { max-height: 20px; }
         .footer-right .desktop-logo { display: block; }
         .footer-right .mobile-logo { display: none; }
+
+        .legal-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .legal-link i {
+            font-size: 1.2rem;
+        }
+        .legal-link span {
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 700px) {
             .dashboard { padding: 20px 16px; }
             .profile-dashboard { flex-direction: column; text-align: center; }
@@ -251,7 +273,7 @@
                 align-items: center;
                 gap: 20px;
             }
-            .footer-left, .footer-center, .footer-right {
+            .footer-left, .footer-center, .footer-legal, .footer-right {
                 width: 100%;
                 justify-content: center;
             }
@@ -263,6 +285,13 @@
             }
             .footer-right .desktop-logo { display: none; }
             .footer-right .mobile-logo { display: block; }
+            /* На мобильных скрываем текст правовой ссылки, оставляем только иконку */
+            .legal-link span {
+                display: none;
+            }
+            .legal-link i {
+                font-size: 1.5rem;
+            }
         }
         .toast {
             position: fixed;
@@ -317,8 +346,8 @@
                     <div class="stat"><i class="fas fa-sun"></i> Фотоны: <span id="displayPhotons">500</span></div>
                 </div>
                 <div style="margin-top: 12px;">
-                    <button id="rechargeEnergyBtn" class="btn btn-outline" style="margin-right: 10px;"><i class="fas fa-plus-circle"></i> +50 энергии (20 фотонов)</button>
-                    <button id="logoutGameBtn" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i> Выйти из игры</button>
+                    <button id="rechargeEnergyBtn" class="btn btn-outline"><i class="fas fa-plus-circle"></i> +50 энергии (20 фотонов)</button>
+                    <!-- кнопка "Выйти из игры" удалена -->
                 </div>
             </div>
         </div>
@@ -337,11 +366,6 @@
         <div class="game-card"><div class="card-icon"><i class="fas fa-robot"></i></div><div class="card-title">Киберспорт и исследования</div><div class="card-text">Гонки на вездеходах, управление дронами, водородная энергетика.</div></div>
         <div class="game-card"><div class="card-icon"><i class="fas fa-cloud"></i></div><div class="card-title">Интеграция с VK Play</div><div class="card-text">Входите через VK Play, сохраняйте прогресс и получайте достижения.</div></div>
     </div>
-
-    <!-- Правовой блок (только для авторизованных) -->
-    <div id="legalBlock" class="hidden" style="text-align: center; margin: 40px 0 20px;">
-        <a href="https://qfoldit.github.io/legal.html" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(20,25,30,0.9); backdrop-filter: blur(8px); padding: 12px 30px; border-radius: 40px; color: white; text-decoration: none;"><i class="fas fa-gavel"></i><span>Правовая информация</span></a>
-    </div>
 </div>
 
 <footer class="footer">
@@ -351,6 +375,12 @@
     <div class="footer-center">
         <img src="https://refoldit.github.io/img/logo/fks-logo-n.svg" alt="ФКС" class="partner-logo">
         <img src="https://refoldit.github.io/img/logo/rostech_logo.svg" alt="Ростех" class="partner-logo">
+    </div>
+    <div class="footer-legal">
+        <a href="https://qfoldit.github.io/legal.html" class="legal-link" target="_blank">
+            <i class="fas fa-gavel"></i>
+            <span>Правовая информация</span>
+        </a>
     </div>
     <div class="footer-right">
         <a href="https://unigine.com/products/sim/advantages/" target="_blank"><img src="https://refoldit.github.io/img/logo/unigine_horizontal_white.png" alt="UNIGINE" class="desktop-logo unigine-logo"><img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE" class="mobile-logo unigine-logo"></a>
@@ -392,8 +422,8 @@
         if (saved) {
             currentPlayer = JSON.parse(saved);
         } else {
-            // Создаём нового игрока
-            const defaultNick = vkUser.nick || vkUser.first_name || `player_${vkUser.uid}`;
+            // По умолчанию: "Scientist" + uid
+            const defaultNick = `Scientist${vkUser.uid}`;
             currentPlayer = {
                 nickname: defaultNick,
                 level: 1,
@@ -422,9 +452,10 @@
         // Аватарка
         const avatarContainer = document.getElementById('avatarContainer');
         avatarContainer.innerHTML = '';
-        if (currentVkUser.photo) {
+        let avatarUrl = currentVkUser.photo || currentVkUser.photo_100 || null;
+        if (avatarUrl) {
             const img = document.createElement('img');
-            img.src = currentVkUser.photo;
+            img.src = avatarUrl;
             img.alt = "avatar";
             avatarContainer.appendChild(img);
         } else {
@@ -526,7 +557,6 @@
         document.getElementById('unauthorizedBlock').classList.add('hidden');
         document.getElementById('playerDashboard').classList.remove('hidden');
         document.getElementById('shopSection').classList.remove('hidden');
-        document.getElementById('legalBlock').classList.remove('hidden');
         renderShop();
         updateDashboardUI();
     }
@@ -535,31 +565,15 @@
         document.getElementById('unauthorizedBlock').classList.remove('hidden');
         document.getElementById('playerDashboard').classList.add('hidden');
         document.getElementById('shopSection').classList.add('hidden');
-        document.getElementById('legalBlock').classList.add('hidden');
         currentVkUser = null;
         currentPlayer = null;
-    }
-
-    function logoutFromGame() {
-        // Очищаем данные текущего игрока, но не выходим из VK Play (оставляем авторизацию)
-        if (currentVkUser) {
-            localStorage.removeItem(`snowflake_player_${currentVkUser.uid}`);
-        }
-        showUnauthorizedUI();
-        // Принудительно перезапрашиваем статус авторизации VK, чтобы показать кнопку входа
-        if (vkApi) {
-            vkApi.getLoginStatus();
-        }
     }
 
     // Инициализация VK Play API
     (function apiHandshake(iframeApi) {
         if (typeof iframeApi === 'undefined') {
             console.error('VK Play API не загружен');
-            document.getElementById('unauthorizedBlock').classList.remove('hidden');
-            document.getElementById('playerDashboard').classList.add('hidden');
-            document.getElementById('shopSection').classList.add('hidden');
-            document.getElementById('legalBlock').classList.add('hidden');
+            showUnauthorizedUI();
             return;
         }
 
@@ -615,7 +629,6 @@
         });
         document.getElementById('editNickBtn')?.addEventListener('click', editNickname);
         document.getElementById('rechargeEnergyBtn')?.addEventListener('click', rechargeEnergy);
-        document.getElementById('logoutGameBtn')?.addEventListener('click', logoutFromGame);
     });
 </script>
 </body>
