@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Снежинка — игра на VK Play</title>
+    <!-- фавикон VK Play -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_124_10523)'%3e%3cpath d='M18.756 0C26.892 0 30.96 0 33.48 2.52C36 5.04 36 9.108 36 17.244V18.756C36 26.892 36 30.96 33.48 33.48C30.96 36 26.892 36 18.756 36H17.244C9.108 36 5.04 36 2.52 33.48C0 30.96 0 26.892 0 18.756V17.244C0 9.108 0 5.04 2.52 2.52C5.04 0 9.108 0 17.244 0H18.756Z' fill='%230077FF'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M35.8956 10.1542C36 12.0999 36 14.4283 36 17.2439V17.244V18.756V18.756C36 20.9229 36 22.8013 35.9524 24.4387H0.0476112C0 22.8013 0 20.9229 0 18.756V17.244C0 14.4283 0 12.0999 0.104447 10.1542H35.8956ZM0.0474971 24.4394L0.0479452 24.4547C4.76004 26.7552 11.0876 28.1568 17.9898 28.1568C24.8976 28.1568 31.2388 26.7487 35.9521 24.4449L35.9522 24.4394H0.0474971Z' fill='%230009B4'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M25.0373 16.5811C24.1462 16.5811 23.4239 17.3195 23.4239 18.2304C23.4239 19.1412 24.1462 19.8796 25.0373 19.8796C25.9284 19.8796 26.6507 19.1412 26.6507 18.2304C26.6507 17.3195 25.9284 16.5811 25.0373 16.5811ZM19.845 18.2304C19.845 15.299 22.1697 12.9227 25.0373 12.9227C27.9049 12.9227 30.2296 15.299 30.2296 18.2304C30.2296 21.1617 27.9049 23.5381 25.0373 23.5381C22.1697 23.5381 19.845 21.1617 19.845 18.2304Z' fill='white'/%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.1827 15.8495L8.48861 13.1555L5.93991 15.7042L8.63398 18.3982L5.94007 21.0921L8.48877 23.6408L11.1827 20.9469L13.8765 23.6408L16.4252 21.0921L13.7314 18.3982L16.4254 15.7042L13.8767 13.1555L11.1827 15.8495Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_124_10523'%3e%3crect width='36' height='36' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e">
+    <!-- шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0A0C0F;
+            font-family: "Inter", sans-serif;
+            color: #E1E3E6;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .dashboard {
+            flex: 1;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 24px 40px;
+        }
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 20px 0 40px;
+            color: white;
+            letter-spacing: 1px;
+            word-break: break-word;
+        }
+        .auth-card {
+            background: rgba(20, 25, 30, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .auth-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #0077FF;
+            color: white;
+            box-shadow: 0 8px 20px -8px #0077FF;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #0077FF;
+            color: #0077FF;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: #0077FF;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        .loader {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #0077FF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .game-card {
+            background: rgba(20, 25, 30, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 24px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+        .game-card:hover {
+            border-color: rgba(0, 119, 255, 0.3);
+            box-shadow: 0 20px 30px -10px #0077ff33;
+        }
+        .card-icon {
+            font-size: 2.2rem;
+            color: #0077FF;
+            margin-bottom: 16px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #2a3035;
+            padding-bottom: 8px;
+        }
+        .card-text {
+            color: #c0c4cc;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .shop-item {
+            background: rgba(20, 25, 30, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .shop-item:hover {
+            border-color: #0077FF;
+        }
+        .shop-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .shop-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0077FF;
+            margin: 15px 0;
+        }
+        .shop-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .btn-shop {
+            background: #0077FF;
+            border: none;
+            border-radius: 40px;
+            padding: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        .btn-shop:hover {
+            background: #005fcc;
+            transform: scale(1.02);
+        }
+        .btn-shop:disabled {
+            background: #3a3f45;
+            cursor: not-allowed;
+        }
+        .legal-block {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+        .legal-block a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 25, 30, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 12px 30px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .legal-block a:hover {
+            border-color: #0077FF;
+            box-shadow: 0 0 15px #0077FF33;
+        }
+        .footer {
+            background-color: #0077ff;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+        .footer-left { flex: 1 1 auto; justify-content: flex-start; }
+        .footer-center { flex: 1 1 auto; justify-content: center; gap: 20px; }
+        .footer-right { flex: 1 1 auto; justify-content: flex-end; gap: 12px; }
+        .footer img { max-height: 40px; width: auto; display: block; }
+        .footer-left .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+        .footer-left .logo-composite {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .footer-left .divider {
+            width: 2px;
+            height: 40px;
+            background-color: white;
+            opacity: 0.9;
+            border-radius: 1px;
+        }
+        .footer-left .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-weight: 700;
+            color: white;
+            font-size: 8px;
+            letter-spacing: 0.5px;
+        }
+        .partner-logo { height: 32px; width: auto; object-fit: contain; }
+        .footer-right .unigine-logo { max-height: 28px; }
+        .footer-right .nau-logo { max-height: 20px; }
+        .footer-right .desktop-logo { display: block; }
+        .footer-right .mobile-logo { display: none; }
+        @media (max-width: 700px) {
+            .dashboard { padding: 20px 16px; }
+            .page-title { font-size: 2.2rem; }
+            .game-grid, .shop-grid { grid-template-columns: 1fr; }
+            .auth-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 250px; }
+            .footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-left, .footer-center, .footer-right { width: 100%; justify-content: center; }
+            .footer-left .logo-text { display: none; }
+            .footer-left .divider { display: none; }
+            .footer-right .desktop-logo { display: none; }
+            .footer-right .mobile-logo { display: block; }
+        }
+        @media (max-width: 480px) {
+            .card-title { font-size: 1.3rem; }
+            .footer-center { gap: 15px; }
+            .partner-logo { height: 26px; }
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(12px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <h1 class="page-title">Снежинка</h1>
+
+    <div id="loading" class="auth-card"><div class="loader"></div><p>Проверка авторизации...</p></div>
+
+    <div id="notAuthorized" class="auth-card hidden">
+        <div style="font-size: 3rem; color: #0077FF; margin-bottom: 20px;"><i class="fas fa-user-circle"></i></div>
+        <h2 style="color: white; margin-bottom: 10px;">Добро пожаловать в Арктику</h2>
+        <p style="color: #aaa; max-width: 500px; margin: 0 auto;">Войдите с помощью VK Play, чтобы начать исследование и сохранять прогресс.</p>
+        <div class="auth-buttons"><button class="btn" id="loginBtn">Войти</button><button class="btn btn-outline" id="registerBtn">Регистрация</button></div>
+    </div>
+
+    <div id="authorized" class="auth-card hidden">
+        <div style="font-size: 3rem; color: #0077FF; margin-bottom: 20px;"><i class="fas fa-user-astronaut"></i></div>
+        <h2 style="color: white; margin-bottom: 10px;">Привет, <span id="profileName"></span>!</h2>
+        <p style="color: #aaa;">Ваш ID: <span id="profileId"></span></p>
+        <p style="color: #aaa; margin-top: 10px;">Ник: <span id="profileNick"></span></p>
+        <div style="margin-top: 20px;"><button class="btn btn-outline" id="logoutBtn">Выйти</button></div>
+    </div>
+
+    <!-- МАГАЗИН (виден только авторизованным) -->
+    <div id="shopSection" class="hidden" style="margin-top: 30px;">
+        <h2 class="page-title" style="font-size: 2rem; margin-bottom: 20px;">Магазин</h2>
+        <div class="shop-grid" id="shopItemsContainer"></div>
+    </div>
+
+    <h2 class="page-title" style="font-size: 2rem; margin: 60px 0 30px;">Особенности проекта</h2>
+    <div class="game-grid">
+        <div class="game-card"><div class="card-icon"><i class="fas fa-snowflake"></i></div><div class="card-title">Реалистичная Арктика</div><div class="card-text">Цифровой двойник полярной станции «Снежинка» с динамической погодой, основанной на реальных климатических моделях.</div></div>
+        <div class="game-card"><div class="card-icon"><i class="fas fa-dna"></i></div><div class="card-title">Научный геймплей</div><div class="card-text">Решайте задачи по биоинформатике, участвуйте в фолдинге белков и открывайте новые молекулы вместе с qFoldIT.</div></div>
+        <div class="game-card"><div class="card-icon"><i class="fas fa-robot"></i></div><div class="card-title">Киберспорт и исследования</div><div class="card-text">Соревнуйтесь в гонках на вездеходах, управлении дронами и стратегическом планировании водородной энергетики.</div></div>
+        <div class="game-card"><div class="card-icon"><i class="fas fa-cloud"></i></div><div class="card-title">Интеграция с VK Play</div><div class="card-text">Входите через VK Play, сохраняйте прогресс и получайте достижения прямо на платформе.</div></div>
+    </div>
+
+    <div class="legal-block">
+        <a href="https://qfoldit.github.io/legal.html" title="Правовая информация"><i class="fas fa-gavel"></i><span>Правовая информация</span></a>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-left">
+        <a href="#" class="logo-link"><div class="logo-composite"><img src="https://refoldit.github.io/img/logo/rosatom_white.png" alt="РОСАТОМ"><div class="divider"></div><div class="logo-text"><span>КВАНТОВЫЕ</span><span>ТЕХНОЛОГИИ</span><span>РОСАТОМ</span></div></div></a>
+    </div>
+    <div class="footer-center">
+        <img src="https://refoldit.github.io/img/logo/fks-logo-n.svg" alt="Федерация компьютерного спорта России" class="partner-logo">
+        <img src="https://refoldit.github.io/img/logo/rostech_logo.svg" alt="Ростех" class="partner-logo">
+    </div>
+    <div class="footer-right">
+        <a href="https://unigine.com/products/sim/advantages/" target="_blank"><img src="https://refoldit.github.io/img/logo/unigine_horizontal_white.png" alt="UNIGINE" class="desktop-logo unigine-logo"><img src="https://refoldit.github.io/img/logo/unigine_sign_white.png" alt="UNIGINE" class="mobile-logo unigine-logo"></a>
+        <a href="https://nauengine.org/" target="_blank"><img src="https://refoldit.github.io/img/logo/nau-horizontal-white.png" alt="Nau Engine" class="desktop-logo nau-logo"><img src="https://refoldit.github.io/img/logo/nau-sign-white.png" alt="Nau Engine" class="mobile-logo nau-logo"></a>
+    </div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script type="text/javascript" src="https://vkplay.ru/app/47268/static/mailru.core.js"></script>
+<script>
+    // ---------- Конфигурация ----------
+    // URL вашего бэкенда для инициализации платежа
+    const BACKEND_URL = "https://your-backend.com/api/payment/init";  // <-- замените на реальный
+    // Список товаров (ID из панели VK Play)
+    const SHOP_ITEMS = [
+        { id: 1001, name: "Battle Pass", description: "Сезонный пропуск с эксклюзивными наградами", price: "199 ₽ / $3" },
+        { id: 1002, name: "Квантовый стабилизатор", description: "Замедляет нарастание риска при фолдинге", price: "99 ₽ / $1.5" },
+        { id: 1003, name: "Страховка от риска", description: "Сохраняет прогресс при неудачном эксперименте", price: "49 ₽ / $0.8" },
+        { id: 1004, name: "100 кристаллов", description: "Внутриигровая валюта для покупок", price: "199 ₽ / $3" }
+    ];
+
+    let externalApi = null;
+    let currentUserId = null;
+    let userIp = null;
+
+    // Вспомогательные функции
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
+
+    // Получение IP пользователя (через публичное API)
+    async function fetchUserIP() {
+        try {
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            userIp = data.ip;
+        } catch (e) {
+            console.warn('Не удалось получить IP, используем заглушку', e);
+            userIp = '0.0.0.0';
+        }
+    }
+
+    // Инициализация магазина
+    function renderShop() {
+        const container = document.getElementById('shopItemsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        SHOP_ITEMS.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'shop-item';
+            div.innerHTML = `
+                <h3>${item.name}</h3>
+                <div class="shop-price">${item.price}</div>
+                <div class="shop-desc">${item.description}</div>
+                <button class="btn-shop" data-id="${item.id}">Купить</button>
+            `;
+            container.appendChild(div);
+        });
+        // Добавляем обработчики
+        document.querySelectorAll('.btn-shop').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const itemId = parseInt(btn.dataset.id);
+                await purchaseItem(itemId);
+            });
+        });
+    }
+
+    // Покупка товара
+    async function purchaseItem(itemId) {
+        if (!currentUserId) {
+            showToast('Ошибка: пользователь не авторизован');
+            return;
+        }
+        if (!userIp) await fetchUserIP();
+
+        const item = SHOP_ITEMS.find(i => i.id === itemId);
+        if (!item) return;
+
+        // Показываем кнопку загрузки
+        const btn = document.querySelector(`.btn-shop[data-id="${itemId}"]`);
+        const originalText = btn.textContent;
+        btn.textContent = 'Обработка...';
+        btn.disabled = true;
+
+        try {
+            const payload = {
+                item_id: itemId,
+                user_id: currentUserId,
+                user_ip: userIp,
+                description: item.name,
+                extra: { source: "web" }
+            };
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            if (data.payment_url) {
+                // Открываем платёжное окно в новом окне (оверлей VK Play)
+                window.open(data.payment_url, '_blank', 'noopener,noreferrer');
+                showToast('Платёжное окно открыто. Завершите оплату.');
+            } else {
+                throw new Error('Не получен payment_url');
+            }
+        } catch (err) {
+            console.error('Ошибка при инициализации платежа:', err);
+            showToast('Не удалось инициировать платёж. Проверьте бэкенд или повторите позже.');
+        } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    // ---------- VK Play API интеграция ----------
+    (function apiHandshake(iframeApi) {
+        if (typeof iframeApi === 'undefined') {
+            console.error('VK Play API не загружен (возможно, страница открыта не в iframe)');
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('notAuthorized').classList.remove('hidden');
+            return;
+        }
+
+        const callbacks = {
+            appid: 47268,
+            getLoginStatusCallback: function(status) {
+                console.log('Статус авторизации:', status);
+                const isAuth = status && (status.session || status.auth === true || status === 2 || (typeof status === 'object' && status.uid));
+                if (isAuth) {
+                    externalApi.userInfo();
+                } else {
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('notAuthorized').classList.remove('hidden');
+                    document.getElementById('authorized').classList.add('hidden');
+                    document.getElementById('shopSection').classList.add('hidden');
+                }
+            },
+            userInfoCallback: function(info) {
+                console.log('Данные пользователя:', info);
+                if (info && info.uid) {
+                    currentUserId = info.uid;
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('authorized').classList.remove('hidden');
+                    document.getElementById('notAuthorized').classList.add('hidden');
+                    document.getElementById('shopSection').classList.remove('hidden'); // показываем магазин
+                    document.getElementById('profileName').textContent = `${info.first_name || ''} ${info.last_name || ''}`.trim() || 'Игрок';
+                    document.getElementById('profileId').textContent = info.uid;
+                    let nick = info.nick || info.nickname || info.name || info.display_name || '';
+                    document.getElementById('profileNick').textContent = nick || '—';
+                    // Получаем IP и рендерим магазин
+                    fetchUserIP().then(() => renderShop());
+                } else {
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('notAuthorized').classList.remove('hidden');
+                    document.getElementById('authorized').classList.add('hidden');
+                    document.getElementById('shopSection').classList.add('hidden');
+                }
+            },
+            registerUserCallback: function(info) {
+                console.log('Регистрация:', info);
+                externalApi.userInfo();
+            },
+            getAuthTokenCallback: function(token) {
+                if (token && token.hash) externalApi.userInfo();
+            }
+        };
+
+        function error(err) {
+            console.error('Ошибка подключения API:', err);
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('notAuthorized').classList.remove('hidden');
+            document.getElementById('authorized').classList.add('hidden');
+            document.getElementById('shopSection').classList.add('hidden');
+        }
+
+        function connected(api) {
+            externalApi = api;
+            console.log('VK Play API подключён');
+            externalApi.getLoginStatus();
+            setTimeout(() => externalApi.getAuthToken(), 1000);
+        }
+
+        iframeApi(callbacks).then(connected, error);
+    }(window.iframeApi));
+
+    // Кнопки входа/выхода
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('loginBtn')?.addEventListener('click', () => externalApi?.authUser());
+        document.getElementById('registerBtn')?.addEventListener('click', () => externalApi?.registerUser());
+        document.getElementById('logoutBtn')?.addEventListener('click', () => location.reload());
+    });
+</script>
+</body>
+</html>
